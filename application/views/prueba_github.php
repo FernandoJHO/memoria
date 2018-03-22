@@ -14,7 +14,7 @@
 
 		<!--<textarea id="output" rows="60" cols="60"> <?php echo $content ?> </textarea> -->
 
-		<textarea id="output" name="code" rows="60" cols="60" form="usrform"> </textarea>
+		<textarea id="output" name="code" rows="30" cols="80" form="usrform"> <?php echo $contenido ?> </textarea>
 
 		<form method="post" action="<?php echo base_url() ?>prueba_github/commit" id="usrform">
             <input type="submit" class="btn btn-primary btn-block" value="Enviar">

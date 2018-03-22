@@ -2,6 +2,7 @@
 
 require "./application/utils/sdk.php";
 require "./application/utils/hackapi.php";
+require "./application/utils/github.php";
 
 class prueba_controller extends CI_Controller {
 
@@ -19,7 +20,13 @@ class prueba_controller extends CI_Controller {
      }
 
 	public function index(){
-		$this->load->view('prueba');
+		$github = new Github("FernandoJHO","pollo12");
+		$file_content = $github->request('https://api.github.com/repos/FernandoJHO/memoria_development/contents/archivo3.py');	
+		$data = Array(
+			'contenido' => trim(base64_decode($file_content['content']))
+			);
+
+		$this->load->view('prueba',$data);
 	}
 
 	public function ejecutar(){
@@ -127,6 +134,46 @@ class prueba_controller extends CI_Controller {
 		curl_close($curl);
 
 		echo $result;
+
+	}
+
+	public function commit(){
+
+		$code = $this->input->post('code');
+
+		$github = new Github("FernandoJHO","pollo12");
+		//$repos = $github->request('https://api.github.com/user/repos');
+		//$data = Array(
+		//	'repositorios' => $repos
+		//	);
+		/*$latest_commit = $github->request('https://api.github.com/repos/FernandoJHO/prueba_memoria/git/refs/heads/master');
+		$sha = $latest_commit['object']['sha'];*/
+		//$data = Array(
+		//	'sha' => $latest_commit['object']['sha']
+		//	);
+		/*$commit_info = $github->request('https://api.github.com/repos/FernandoJHO/prueba_memoria/git/commits/'.$sha);
+		$tree_sha = $commit_info['tree']['sha'];
+		$data = Array(
+			'tree_sha' => $tree_sha
+			);
+		$this->load->view('prueba_github',$data);*/
+
+		$file_content = $github->request('https://api.github.com/repos/FernandoJHO/memoria_development/contents/archivo3.py');
+		$file_sha = $file_content['sha'];
+		/*$data = Array(
+			'file_sha' => $file_sha,
+			'content' => trim(base64_decode($file_content['content']))
+			);
+		$this->load->view('prueba_github',$data);*/
+
+		$update_parameters = Array(
+			'message' => 'commit de prueba',
+			'content' => base64_encode($code),
+			'sha' => $file_sha
+			);
+		$response = $github->request_put('https://api.github.com/repos/FernandoJHO/memoria_development/contents/archivo3.py',$update_parameters);
+		//redirect('prueba_controller');
+		echo json_encode($response);
 
 	}
 

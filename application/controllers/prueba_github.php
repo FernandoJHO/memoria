@@ -26,7 +26,14 @@ class prueba_github extends CI_Controller{
 		// 	'sha' => $file_sha
 		// 	);
 		// $response = $github->request_put('https://api.github.com/repos/FernandoJHO/prueba_memoria/contents/application/codigosfuente/archivo2.py',$update_parameters);
-		$this->load->view('prueba_github');
+		
+		$github = new Github("FernandoJHO","pollo12");
+		$file_content = $github->request('https://api.github.com/repos/FernandoJHO/memoria_development/contents/archivo3.py');	
+		$data = Array(
+			'contenido' => trim(base64_decode($file_content['content']))
+			);
+
+		$this->load->view('prueba_github',$data);
 
 	}
 
@@ -51,7 +58,7 @@ class prueba_github extends CI_Controller{
 			);
 		$this->load->view('prueba_github',$data);*/
 
-		$file_content = $github->request('https://api.github.com/repos/FernandoJHO/prueba_memoria/contents/application/codigosfuente/archivo2.py');
+		$file_content = $github->request('https://api.github.com/repos/FernandoJHO/memoria_development/contents/archivo3.py');
 		$file_sha = $file_content['sha'];
 		/*$data = Array(
 			'file_sha' => $file_sha,
@@ -64,7 +71,7 @@ class prueba_github extends CI_Controller{
 			'content' => base64_encode($code),
 			'sha' => $file_sha
 			);
-		$response = $github->request_put('https://api.github.com/repos/FernandoJHO/prueba_memoria/contents/application/codigosfuente/archivo2.py',$update_parameters);
+		$response = $github->request_put('https://api.github.com/repos/FernandoJHO/memoria_development/contents/archivo3.py',$update_parameters);
 		redirect('prueba_github');
 
 	}
