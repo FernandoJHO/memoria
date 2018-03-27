@@ -3,6 +3,7 @@
 require "./application/utils/sdk.php";
 require "./application/utils/hackapi.php";
 require "./application/utils/github.php";
+require "./application/utils/jdoodle.php";
 
 class prueba_controller extends CI_Controller {
 
@@ -106,40 +107,44 @@ class prueba_controller extends CI_Controller {
 		$src = $this->input->post('src');
 		$input = $this->input->post('inp');
 
-		$data_input = array(
-				'clientId' => '95c3bcc22916713b4d3951b9be974069',
-				'clientSecret' => '4849e05351a38d0828bdf3b55ec897b65b105f6289706bb3611d8226b407b02a', 
-				'script' => $src,
-				'stdin' => $input, 
-				'language' => 'python2',
-				'versionIndex' => '0'
-			);
-		$url = "https://api.jdoodle.com/v1/execute";
-		$input_data = json_encode($data_input);
+		// $data_input = array(
+		// 		'clientId' => '95c3bcc22916713b4d3951b9be974069',
+		// 		'clientSecret' => '4849e05351a38d0828bdf3b55ec897b65b105f6289706bb3611d8226b407b02a', 
+		// 		'script' => $src,
+		// 		'stdin' => $input, 
+		// 		'language' => 'python2',
+		// 		'versionIndex' => '0'
+		// 	);
+		// $url = "https://api.jdoodle.com/v1/execute";
+		// $input_data = json_encode($data_input);
 
-		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $input_data);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-		curl_setopt($curl, CURLOPT_URL, $url);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array(                                                                          
-		    'Content-Type: application/json')                                                                       
-		);
+		// $curl = curl_init();
+		// curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		// curl_setopt($curl, CURLOPT_POST, 1);
+		// curl_setopt($curl, CURLOPT_POSTFIELDS, $input_data);
+		// curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		// curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+		// curl_setopt($curl, CURLOPT_URL, $url);
+		// curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		// curl_setopt($curl, CURLOPT_HTTPHEADER, array(                                                                          
+		//     'Content-Type: application/json')                                                                       
+		// );
 
-		$result = curl_exec($curl);
+		// $result = curl_exec($curl);
 
-		curl_close($curl);
+		// curl_close($curl);
 
-		echo $result;
+		$jdoodle = new JDoodle($src,$input);
+		$result = $jdoodle->run();
+
+		echo json_encode($result);
 
 	}
 
 	public function commit(){
 
 		$code = $this->input->post('code');
+		$msj = $this->input->post('mensaje');
 
 		$github = new Github("FernandoJHO","pollo12");
 		//$repos = $github->request('https://api.github.com/user/repos');
@@ -167,7 +172,7 @@ class prueba_controller extends CI_Controller {
 		$this->load->view('prueba_github',$data);*/
 
 		$update_parameters = Array(
-			'message' => 'commit de prueba',
+			'message' => $msj,
 			'content' => base64_encode($code),
 			'sha' => $file_sha
 			);
