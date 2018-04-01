@@ -1,7 +1,7 @@
 <?php
 
 
-class editar_github extends CI_Controller {
+class github extends CI_Controller {
 
 
      public function __construct()
@@ -52,7 +52,7 @@ class editar_github extends CI_Controller {
                     );   
           }
 
-		$this->load->view('editar_github',$datos);
+		$this->load->view('github',$datos);
 	}
 
      public function set_user_data(){
@@ -61,7 +61,7 @@ class editar_github extends CI_Controller {
           $mail = $this->session->userdata('mail');
 
           $this->alumno_model->set_github($usuario,$password,$mail);
-          redirect(editar_github);
+          redirect(github);
      }
 
      public function get_data($mail){
@@ -99,7 +99,7 @@ class editar_github extends CI_Controller {
           $grupo_id = $this->alumno_model->get_grupo($mail);
 
           $this->grupo_model->set_repo_info($grupo_id->ID_GRUPO,$repo_name,$repo_owner);
-          redirect(editar_github);
+          redirect(github);
      }
 
 }

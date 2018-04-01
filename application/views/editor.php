@@ -145,7 +145,7 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item">
-                                <a href="editar_github">
+                                <a href="github">
                                     <i class="la la-github"></i>
                                     <p>Github</p>
                                 </a>
@@ -156,6 +156,12 @@
                                     <p>Entregas</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="codigos">
+                                    <i class="la la-file-code-o"></i>
+                                    <p>Códigos fuente</p>
+                                </a>
+                            </li>                                  
                         </ul>
                     </div>
                 </div>
@@ -169,7 +175,7 @@
                                     <div class="card">
                                         <div class="card-header">
                                             <h4 class="card-title">Edita tu código</h4>
-                                            <p class="card-category">Python 2.7</p>
+                                            <p class="card-category"><?php echo $archivo; ?></p>
                                         </div>
                                         <div class="card-body">
                                             <div id="editor">
@@ -241,9 +247,10 @@
     function commit(){
         var codigo = myCodeMirror.getValue();
         var mensaje = document.getElementById("commitmsj").value;
+        var filename = <?php echo json_encode($archivo); ?>;
         var url = '<?php echo base_url() ?>editor/commit';
         
-        commitCode(codigo,url,mensaje);
+        commitCode(codigo,url,mensaje,filename);
     }
 
     function execute(){

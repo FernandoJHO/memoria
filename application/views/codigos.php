@@ -130,7 +130,7 @@
                                     <p>Entregas</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item active">
                                 <a href="codigos">
                                     <i class="la la-file-code-o"></i>
                                     <p>Códigos fuente</p>
@@ -144,13 +144,39 @@
                     <div class="content">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <button class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">Modal</button>
+                                <?php if ($credenciales): ?>
+                                    <?php if ($grupo): ?>
+                                        <?php if (count($archivos)): ?>
+                                            <?php foreach($archivos as $archivo): ?>
+                                                <div class="col-md-3">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <p> <?php echo $archivo ?> </p>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                        <form method="post" action="<?php echo base_url() ?>editor">
+                                                            <input type="hidden" class="form-control" name="filename" value="<?php echo $archivo; ?>">
+                                                            <button class="btn btn-default" type="submit">Editar</button>
+                                                        </form>
+                                                        </div>                                                        
+                                                    </div>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <div class="col-md-12">
+                                                <p align="center">No cuentas con archivos.</p>
+                                            </div>
+                                        <?php endif; ?> 
+                                    <?php else: ?>
+                                        <div class="col-md-12">
+                                            <p align="center">Aún no formas parte de un grupo.</p>
                                         </div>
-                                    </div>
-                                </div>
+                                    <?php endif; ?>
+                                <?php else: ?>
+                                        <div class="col-md-12">
+                                            <p align="center">No has proporcionado tus credenciales de Github.</p>
+                                        </div>                            
+                                <?php endif; ?> 
                             </div>
                         </div>
                     </div>

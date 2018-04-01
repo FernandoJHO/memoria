@@ -20,12 +20,14 @@ class editor extends CI_Controller {
      }
 
 	public function index(){
+
+		$archivo = $this->input->post('filename');
 		if($this->session->userdata('loginuser')){
 			$mail = $this->session->userdata('mail');
 			$datos_github = $this->get_github_data($mail);
 			$github = new Github($datos_github['github_acc'],$datos_github['github_pass']);
 
-			$file_content = $github->request('https://api.github.com/repos/'.$datos_github['owner_repo'].'/'.$datos_github['repositorio'].'/contents/archivo3.py');
+			$file_content = $github->request('https://api.github.com/repos/'.$datos_github['owner_repo'].'/'.$datos_github['repositorio'].'/contents/'.$archivo);
 			//$file_content = $github->request('https://api.github.com/repos/FernandoJHO/memoria_development/contents/archivo3.py');
 			// $dumb = is_dir('./application/archivos_subidos');	
 			// if(!$dumb){
@@ -41,6 +43,7 @@ class editor extends CI_Controller {
 				'mail' => $this->session->userdata('mail'),
 				'logeado' => $this->session->userdata('loginuser'),
 				'rol' => $this->session->userdata('rol'),
+				'archivo' => $archivo
 				);
 
 			$this->load->view('editor',$data);
@@ -63,12 +66,13 @@ class editor extends CI_Controller {
 
 		$code = $this->input->post('code');
 		$msj = $this->input->post('mensaje');
+		$file = $this->input->post('filename');
 
 		$mail = $this->session->userdata('mail');
 		$datos_github = $this->get_github_data($mail);
 		$github = new Github($datos_github['github_acc'],$datos_github['github_pass']);
 
-		$file_content = $github->request('https://api.github.com/repos/'.$datos_github['owner_repo'].'/'.$datos_github['repositorio'].'/contents/archivo3.py');
+		$file_content = $github->request('https://api.github.com/repos/'.$datos_github['owner_repo'].'/'.$datos_github['repositorio'].'/contents/'.$file);
 		//$file_content = $github->request('https://api.github.com/repos/FernandoJHO/memoria_development/contents/archivo3.py');
 		$file_sha = $file_content['sha'];
 
@@ -77,7 +81,7 @@ class editor extends CI_Controller {
 			'content' => base64_encode($code),
 			'sha' => $file_sha
 			);
-		$response = $github->request_put('https://api.github.com/repos/'.$datos_github['owner_repo'].'/'.$datos_github['repositorio'].'/contents/archivo3.py',$update_parameters);
+		$response = $github->request_put('https://api.github.com/repos/'.$datos_github['owner_repo'].'/'.$datos_github['repositorio'].'/contents/'.$file,$update_parameters);
 		//$response = $github->request_put('https://api.github.com/repos/FernandoJHO/memoria_development/contents/archivo3.py',$update_parameters);
 		//redirect('prueba_controller');
 		echo json_encode($response);

@@ -145,7 +145,7 @@
                                             <div class="card-title">Tus datos</div>
                                         </div>
                                         <div class="card-body">
-                                            <form method="post" action="<?php echo base_url() ?>editar_github/set_user_data/">
+                                            <form method="post" action="<?php echo base_url() ?>github/set_user_data/">
 
                                                 <div class="form-group">
                                                     <label for="email">Tu usuario Github</label>
@@ -171,7 +171,7 @@
                                         </div>
                                         <div class="card-body">
                                             <?php if ($grupo): ?> 
-                                                <form method="post" action="<?php echo base_url() ?>editar_github/set_repo_data/">
+                                                <form method="post" action="<?php echo base_url() ?>github/set_repo_data/">
 
                                                     <div class="form-group">
                                                         <label for="email">Nombre repositorio</label>
