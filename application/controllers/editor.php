@@ -27,6 +27,9 @@ class editor extends CI_Controller {
 			$datos_github = $this->get_github_data($mail);
 			$github = new Github($datos_github['github_acc'],$datos_github['github_pass']);
 
+			//$commits_usuario = $this->get_user_commits($datos_github['owner_repo'],$datos_github['repositorio'],$github,$datos_github['github_acc']);
+			//$this->alumno_model->set_commits($mail,$commits_usuario); 
+
 			$file_content = $github->request('https://api.github.com/repos/'.$datos_github['owner_repo'].'/'.$datos_github['repositorio'].'/contents/'.$archivo);
 			//$file_content = $github->request('https://api.github.com/repos/FernandoJHO/memoria_development/contents/archivo3.py');
 			// $dumb = is_dir('./application/archivos_subidos');	
@@ -36,6 +39,7 @@ class editor extends CI_Controller {
 			// if($dumb){
 			// 	$prueba = "existe";
 			// }
+
 			$data = Array(
 				'contenido' => trim(base64_decode($file_content['content'])),
 				'nombre' => $this->session->userdata('nombre'),
@@ -82,8 +86,17 @@ class editor extends CI_Controller {
 			'sha' => $file_sha
 			);
 		$response = $github->request_put('https://api.github.com/repos/'.$datos_github['owner_repo'].'/'.$datos_github['repositorio'].'/contents/'.$file,$update_parameters);
+
+		$commits_usuario = $this->get_user_commits($datos_github['owner_repo'],$datos_github['repositorio'],$github,$datos_github['github_acc']);
+
+		sleep(25); //SE ESPERA PARA QUE SE LLENE NUEVAMENTE EL CACHE DEL REPOSITORIO DE GITHUB //EVALUAR OBTENER COMMITS ANTES DE REALIZAR PUSH 
+
+		$commits_usuario = $this->get_user_commits($datos_github['owner_repo'],$datos_github['repositorio'],$github,$datos_github['github_acc']);
+		$this->alumno_model->set_commits($mail,$commits_usuario); 
+
 		//$response = $github->request_put('https://api.github.com/repos/FernandoJHO/memoria_development/contents/archivo3.py',$update_parameters);
 		//redirect('prueba_controller');
+
 		echo json_encode($response);
 
 	}
@@ -103,5 +116,24 @@ class editor extends CI_Controller {
 		return $data;
 	}
 
+	public function get_user_commits($owner_repo,$repo,$github_object,$user){
+		$contributors = $github_object->request('https://api.github.com/repos/'.$owner_repo.'/'.$repo.'/stats/contributors');
+		$check = 0;
+		
+		foreach($contributors as $contributor){
+			if((strtolower($contributor['author']['login']))==(strtolower($user))){
+				$commits = $contributor['total'];
+				$check = 1;
+				break;
+			}
+		}
 
+		if($check==0){
+			$commits = 0;
+		}
+
+		//$commits = count($contributors);
+
+		return $commits;
+	}
 }

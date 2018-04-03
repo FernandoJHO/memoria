@@ -19,40 +19,42 @@ class github extends CI_Controller {
 
 	public function index(){
 
-          $mail = $this->session->userdata('mail');
-          $data = $this->get_data($mail);
 
-          if($data['grupo']){
+          if($this->session->userdata('loginuser')&&($this->session->userdata('rol')=='Alumno')){
+               $mail = $this->session->userdata('mail');
+               $data = $this->get_data($mail);
+               if($data['grupo']){
 
-               $datos = Array(
-                    'nombre' => $this->session->userdata('nombre'),
-                    'apellido' =>$this->session->userdata('apellido'),
-                    'mail' => $this->session->userdata('mail'),
-                    'github_acc' => $data['github_acc'],
-                    'github_pass' => $data['github_pass'],
-                    'repositorio' => $data['repositorio'],
-                    'owner_repo' => $data['owner_repo'],
-                    'logeado' => $this->session->userdata('loginuser'),
-                    'rol' => $this->session->userdata('rol'),
-                    'grupo' => $data['grupo']
-                    );  
+                    $datos = Array(
+                         'nombre' => $this->session->userdata('nombre'),
+                         'apellido' =>$this->session->userdata('apellido'),
+                         'mail' => $this->session->userdata('mail'),
+                         'github_acc' => $data['github_acc'],
+                         'github_pass' => $data['github_pass'],
+                         'repositorio' => $data['repositorio'],
+                         'owner_repo' => $data['owner_repo'],
+                         'logeado' => $this->session->userdata('loginuser'),
+                         'rol' => $this->session->userdata('rol'),
+                         'grupo' => $data['grupo']
+                         );  
 
+               }
+
+               else{
+                    $datos = Array(
+                         'nombre' => $this->session->userdata('nombre'),
+                         'apellido' =>$this->session->userdata('apellido'),
+                         'mail' => $this->session->userdata('mail'),
+                         'github_acc' => $data['github_acc'],
+                         'github_pass' => $data['github_pass'],
+                         'logeado' => $this->session->userdata('loginuser'),
+                         'rol' => $this->session->userdata('rol'),
+                         'grupo' => $data['grupo']
+                         );   
+               }
+
+		   $this->load->view('github',$datos);
           }
-
-          else{
-               $datos = Array(
-                    'nombre' => $this->session->userdata('nombre'),
-                    'apellido' =>$this->session->userdata('apellido'),
-                    'mail' => $this->session->userdata('mail'),
-                    'github_acc' => $data['github_acc'],
-                    'github_pass' => $data['github_pass'],
-                    'logeado' => $this->session->userdata('loginuser'),
-                    'rol' => $this->session->userdata('rol'),
-                    'grupo' => $data['grupo']
-                    );   
-          }
-
-		$this->load->view('github',$datos);
 	}
 
      public function set_user_data(){

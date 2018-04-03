@@ -174,12 +174,15 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h4 class="card-title">Edita tu código</h4>
-                                            <p class="card-category"><?php echo $archivo; ?></p>
+                                            <h4 class="card-title"><?php echo $archivo; ?></h4>
+                                            <!--<p class="card-category"></p> -->
                                         </div>
                                         <div class="card-body">
                                             <div id="editor">
                                             </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button class="btn btn-primary"><i class="la la-check"></i> Entregar </button>
                                         </div>
                                     </div>
                                 </div>

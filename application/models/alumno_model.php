@@ -44,4 +44,12 @@ class alumno_model extends CI_Model {
           return $query->row();
      }
 
+     function set_commits($mail,$commits){
+          $data = Array(
+               'COMMITS' => $commits
+               );
+          $this->db->where('MAIL',$mail);
+          $this->db->update('alumno',$data);
+     }
+
 }

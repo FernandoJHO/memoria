@@ -10,6 +10,10 @@
         <link rel="stylesheet" href="lib/ready-theme/assets/css/ready.css">
         <link rel="stylesheet" href="lib/ready-theme/assets/css/demo.css">
 
+        <script src="lib/alertify/alertify.min.js"></script>
+        <link rel="stylesheet" href="lib/alertify/alertify.min.css">
+        <script src="lib/js/utils.js"></script>
+
         <script src="lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
         <script src="lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
         <script src="lib/ready-theme/assets/js/core/popper.min.js"></script>
@@ -23,6 +27,20 @@
         <script src="lib/ready-theme/assets/js/plugin/chart-circle/circles.min.js"></script>
         <script src="lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="lib/ready-theme/assets/js/ready.min.js"></script>
+
+
+        <style>
+        .alertify-notifier .ajs-message.ajs-error{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        .alertify-notifier .ajs-message.ajs-success{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        </style>
 
 	</head>
 	<body>
@@ -143,6 +161,7 @@
                 <div class="main-panel">
                     <div class="content">
                         <div class="container-fluid">
+                            <h4 class="page-title">Archivos del grupo   <?php if ($credenciales && $grupo): ?><button class="btn btn-success btn-round btn-sm" data-toggle="modal" data-target="#newFileModal"><i class="la la-plus"></i> Nuevo</button><?php endif; ?>  </h4>
                             <div class="row">
                                 <?php if ($credenciales): ?>
                                     <?php if ($grupo): ?>
@@ -150,31 +169,33 @@
                                             <?php foreach($archivos as $archivo): ?>
                                                 <div class="col-md-3">
                                                     <div class="card">
-                                                        <div class="card-body">
-                                                            <p> <?php echo $archivo ?> </p>
+                                                        <div class="card-header">
+                                                            <h2 align="center"><i class="la la-file-code-o"></i></h2>
+                                                            <h6 align="center"> <?php echo $archivo ?> </h6>
                                                         </div>
+                                                        <form id="editForm" method="post" action="<?php echo base_url() ?>editor"></form>
+                                                        <!--<form id="deleteForm" method="post" action="<?php echo base_url() ?>codigos/delete_file"></form>-->
                                                         <div class="card-footer">
-                                                        <form method="post" action="<?php echo base_url() ?>editor">
-                                                            <input type="hidden" class="form-control" name="filename" value="<?php echo $archivo; ?>">
-                                                            <button class="btn btn-default" type="submit">Editar</button>
-                                                        </form>
+                                                            <button class="btn btn-default" name="filename" form="editForm" value="<?php echo $archivo; ?>" type="submit">Editar</button>
+                                                            <button class="btn btn-danger" onclick="delete_file('<?php echo $archivo; ?>')">Eliminar</button> 
+                                                            <!--<button class="btn btn-danger" name="nombre_archivo" form="deleteForm" value="<?php echo $archivo; ?>" onclick="return confirm('¿Estás seguro que deseas eliminar <?php echo $archivo; ?>?')" type="submit">Eliminar</button>-->
                                                         </div>                                                        
                                                     </div>
                                                 </div>
                                             <?php endforeach; ?>
                                         <?php else: ?>
                                             <div class="col-md-12">
-                                                <p align="center">No cuentas con archivos.</p>
+                                                <p class="text-danger" align="center">No cuentas con archivos.</p>
                                             </div>
                                         <?php endif; ?> 
                                     <?php else: ?>
                                         <div class="col-md-12">
-                                            <p align="center">Aún no formas parte de un grupo.</p>
+                                            <p class="text-danger" align="center">Aún no formas parte de un grupo.</p>
                                         </div>
                                     <?php endif; ?>
                                 <?php else: ?>
                                         <div class="col-md-12">
-                                            <p align="center">No has proporcionado tus credenciales de Github.</p>
+                                            <p class="text-danger" align="center">No has proporcionado tus credenciales de Github.</p>
                                         </div>                            
                                 <?php endif; ?> 
                             </div>
@@ -182,26 +203,55 @@
                     </div>
                 </div>
 
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="newFileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Crear archivo</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
-                ...
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div>
+              <form method="post" action="<?php echo base_url() ?>codigos/new_file/">
+                  <div class="modal-body">
+                    <div class="form-group">
+                        <label for="email">Nombre del archivo (sin extensión)</label>
+                        <input type="text" class="form-control" id="user" name="nombre_archivo" placeholder="Ej.: nombrearchivo1" required="true">
+                    </div>  
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Crear</button>
+                  </div>
+              </form>
             </div>
           </div>
         </div>
 
-    <?php endif ?>            
+    <?php endif ?>         
+
+
 	</body>
+
+<script type="text/javascript">
+
+alertify.defaults.theme.ok = "btn btn-success";
+alertify.defaults.theme.cancel = "btn btn-danger";
+
+function delete_file(file){
+    var archivo = file;
+    var url = '<?php echo base_url() ?>codigos/delete_file';
+
+    alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar '+archivo.bold()+'?', function(){             
+        alertify.success("Eliminando...");
+        deleteFile(archivo,url);
+        }
+        , function(){
+        });
+
+
+}
+
+</script>
+
 </html>

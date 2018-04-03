@@ -130,6 +130,12 @@
                                     <p>Entregas</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="codigos">
+                                    <i class="la la-file-code-o"></i>
+                                    <p>Códigos fuente</p>
+                                </a>
+                            </li>    
                         </ul>
                     </div>
                 </div>
@@ -188,7 +194,7 @@
                                                     </div>
                                                 </form>
                                             <?php else: ?>
-                                                <p align="center"> Aún no formas parte de un grupo. </p>
+                                                <p class="text-danger" align="center"> Aún no formas parte de un grupo. </p>
                                             <?php endif ?>
                                         </div>
                                     </div>                                    
