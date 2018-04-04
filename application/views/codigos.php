@@ -162,7 +162,7 @@
                     <div class="content">
                         <div class="container-fluid">
                             <h4 class="page-title">Archivos del grupo   <?php if ($credenciales && $grupo): ?><button class="btn btn-success btn-round btn-sm" data-toggle="modal" data-target="#newFileModal"><i class="la la-plus"></i> Nuevo</button><?php endif; ?>  </h4>
-                            <div class="row">
+                            <div id="refresh" class="row">
                                 <?php if ($credenciales): ?>
                                     <?php if ($grupo): ?>
                                         <?php if (count($archivos)): ?>
@@ -235,6 +235,7 @@
 
 <script type="text/javascript">
 
+alertify.defaults.transition = "slide";
 alertify.defaults.theme.ok = "btn btn-success";
 alertify.defaults.theme.cancel = "btn btn-danger";
 
@@ -242,12 +243,13 @@ function delete_file(file){
     var archivo = file;
     var url = '<?php echo base_url() ?>codigos/delete_file';
 
+    alertify.set('notifier','position', 'top-right');
     alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar '+archivo.bold()+'?', function(){             
         alertify.success("Eliminando...");
         deleteFile(archivo,url);
         }
         , function(){
-        });
+        }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
 
 
 }

@@ -253,6 +253,7 @@
         var filename = <?php echo json_encode($archivo); ?>;
         var url = '<?php echo base_url() ?>editor/commit';
         
+        
         commitCode(codigo,url,mensaje,filename);
     }
 
