@@ -10,6 +10,10 @@
         <link rel="stylesheet" href="lib/ready-theme/assets/css/ready.css">
         <link rel="stylesheet" href="lib/ready-theme/assets/css/demo.css">
 
+        <script src="lib/alertify/alertify.min.js"></script>
+        <link rel="stylesheet" href="lib/alertify/alertify.min.css">
+        <script src="lib/js/utils.js"></script>
+
         <script src="lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
         <script src="lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
         <script src="lib/ready-theme/assets/js/core/popper.min.js"></script>
@@ -23,6 +27,25 @@
         <script src="lib/ready-theme/assets/js/plugin/chart-circle/circles.min.js"></script>
         <script src="lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="lib/ready-theme/assets/js/ready.min.js"></script>
+
+    <style>
+
+    a:link{
+      color:inherit;
+    }
+    a:visited{
+      color:inherit;
+    }
+    a:hover{
+      color:inherit;
+    }
+    a:focus{
+      color:inherit;
+    }
+    a:active{
+      color:inherit;
+    }
+    </style>
 
 	</head>
 	<body>
@@ -62,13 +85,17 @@
                                             <div class="u-img"><img src="lib/ready-theme/assets/img/user_logo.png" alt="user"></div>
                                             <div class="u-text">
                                                 <h4><?php echo $nombre; ?> <?php echo $apellido; ?></h4>
-                                                <p class="text-muted"><?php echo $mail; ?></p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">Ver perfil</a></div>
+                                                <p class="text-muted"><?php echo $mail; ?></p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
                                             </div>
                                         </li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="ti-settings"></i>Configuración</a>
+                                        <a class="dropdown-item" href="#"><i class="ti-user"></i> My Profile</a>
+                                        <a class="dropdown-item" href="#"></i> My Balance</a>
+                                        <a class="dropdown-item" href="#"><i class="ti-email"></i> Inbox</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="logout"><i class="fa fa-power-off"></i>Cerrar sesión</a>
+                                        <a class="dropdown-item" href="#"><i class="ti-settings"></i> Account Setting</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> Logout</a>
                                     </ul>
                                     <!-- /.dropdown-user -->
                                 </li>
@@ -96,12 +123,17 @@
                                     <ul class="nav">
                                         <li>
                                             <a href="#profile">
-                                                <span class="link-collapse">Perfil</span>
+                                                <span class="link-collapse">My Profile</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#edit">
+                                                <span class="link-collapse">Edit Profile</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#settings">
-                                                <span class="link-collapse">Configuración</span>
+                                                <span class="link-collapse">Settings</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -115,7 +147,7 @@
                                     <p>Github</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item active">
                                 <a href="entregas">
                                     <i class="la la-suitcase"></i>
                                     <p>Entregas</p>
@@ -134,39 +166,42 @@
                 <div class="main-panel">
                     <div class="content">
                         <div class="container-fluid">
+                            <h4 class="page-title">Entregas</h4>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <button class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">Modal</button>
+
+                                <?php if ($grupo): ?>
+                                    <?php foreach($entregas as $entrega): ?>
+                                        <div class="col-md-6">
+                                            <a href="" style="text-decoration:none;">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h2 align="center"><i class="la la-suitcase"></i></h2>
+                                                        <h6 align="center"> <?php echo $entrega['descripcion']; ?> </h6>
+                                                    </div>  
+                                                    <div class="card-body">
+                                                        <p align="center"> Fecha: <?php echo $entrega['fecha']['dia']; ?>/<?php echo $entrega['fecha']['mes']; ?>/<?php echo $entrega['fecha']['año']; ?> </p>
+                                                        <p align="center"> Hora: <?php echo $entrega['hora']['horas']; ?>:<?php echo $entrega['hora']['minutos']; ?> </p>
+                                                    </div>                             
+                                                </div>
+                                            </a>
                                         </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <div class="col-md-12">
+                                        <p class="text-danger" align="center">Aún no formas parte de un grupo.</p>
                                     </div>
-                                </div>
-                            </div>
+                                <?php endif; ?>
+                                                        
+                            </div> 
+                      
                         </div>
                     </div>
                 </div>
 
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                ...
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div>
 
-    <?php endif ?>            
+    <?php endif ?>         
+
+
 	</body>
+
 </html>

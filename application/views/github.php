@@ -125,7 +125,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#">
+                                <a href="entregas">
                                     <i class="la la-suitcase"></i>
                                     <p>Entregas</p>
                                 </a>

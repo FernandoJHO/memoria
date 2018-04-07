@@ -32,10 +32,13 @@ class codigos extends CI_Controller {
                          $repo_content = $github->request('https://api.github.com/repos/'.$datos_git['owner_repo'].'/'.$datos_git['repositorio'].'/contents');
                          $archivos = Array();
                          foreach ($repo_content as $resultado){
-                              if($resultado['type']=='file'){
-                                   array_push($archivos,$resultado['name']);
-                              }
+                               if(is_string($resultado)==FALSE){
+                                    if($resultado['type']=='file'){
+                                         array_push($archivos,$resultado['name']);
+                                    }
+                               }
                          }
+                    
                          $datos = Array(
                               'nombre' => $this->session->userdata('nombre'),
                               'apellido' =>$this->session->userdata('apellido'),

@@ -143,7 +143,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#">
+                                <a href="entregas">
                                     <i class="la la-suitcase"></i>
                                     <p>Entregas</p>
                                 </a>
@@ -176,8 +176,8 @@
                                                         <form id="editForm" method="post" action="<?php echo base_url() ?>editor"></form>
                                                         <!--<form id="deleteForm" method="post" action="<?php echo base_url() ?>codigos/delete_file"></form>-->
                                                         <div class="card-footer">
-                                                            <button class="btn btn-default" name="filename" form="editForm" value="<?php echo $archivo; ?>" type="submit">Editar</button>
-                                                            <button class="btn btn-danger" onclick="delete_file('<?php echo $archivo; ?>')">Eliminar</button> 
+                                                            <button class="btn btn-default btn-round btn-sm" name="filename" form="editForm" value="<?php echo $archivo; ?>" type="submit">Editar</button>
+                                                            <button class="btn btn-danger btn-round btn-sm" onclick="delete_file('<?php echo $archivo; ?>')">Eliminar</button> 
                                                             <!--<button class="btn btn-danger" name="nombre_archivo" form="deleteForm" value="<?php echo $archivo; ?>" onclick="return confirm('¿Estás seguro que deseas eliminar <?php echo $archivo; ?>?')" type="submit">Eliminar</button>-->
                                                         </div>                                                        
                                                     </div>
