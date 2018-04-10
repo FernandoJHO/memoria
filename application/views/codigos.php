@@ -161,7 +161,7 @@
                 <div class="main-panel">
                     <div class="content">
                         <div class="container-fluid">
-                            <h4 class="page-title">Archivos del grupo   <?php if ($credenciales && $grupo): ?><button class="btn btn-success btn-round btn-sm" data-toggle="modal" data-target="#newFileModal"><i class="la la-plus"></i> Nuevo</button><?php endif; ?>  </h4>
+                            <h4 class="page-title">Archivos del grupo <?php if ($credenciales && $grupo): ?><button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newFileModal"><i class="la la-plus"></i> Nuevo</button><?php endif; ?>  </h4>
                             <div id="refresh" class="row">
                                 <?php if ($credenciales): ?>
                                     <?php if ($grupo): ?>
@@ -169,16 +169,21 @@
                                             <?php foreach($archivos as $archivo): ?>
                                                 <div class="col-md-3">
                                                     <div class="card">
-                                                        <div class="card-header">
+                                                        <!--<div class="card-header">
                                                             <h2 align="center"><i class="la la-file-code-o"></i></h2>
                                                             <h6 align="center"> <?php echo $archivo ?> </h6>
-                                                        </div>
+                                                        </div> -->
                                                         <form id="editForm" method="post" action="<?php echo base_url() ?>editor"></form>
                                                         <!--<form id="deleteForm" method="post" action="<?php echo base_url() ?>codigos/delete_file"></form>-->
-                                                        <div class="card-footer">
-                                                            <button class="btn btn-default btn-round btn-sm" name="filename" form="editForm" value="<?php echo $archivo; ?>" type="submit">Editar</button>
-                                                            <button class="btn btn-danger btn-round btn-sm" onclick="delete_file('<?php echo $archivo; ?>')">Eliminar</button> 
-                                                            <!--<button class="btn btn-danger" name="nombre_archivo" form="deleteForm" value="<?php echo $archivo; ?>" onclick="return confirm('¿Estás seguro que deseas eliminar <?php echo $archivo; ?>?')" type="submit">Eliminar</button>-->
+                                                        <div class="card-body">
+                                                            <h2 align="center"><i class="la la-file-code-o"></i></h2>
+                                                            <h6 align="center"> <?php echo $archivo ?> </h6>
+                                                            <div class="card-action">
+                                                                <button class="btn btn-default btn-sm" name="filename" form="editForm" value="<?php echo $archivo; ?>" type="submit" style="width:100%;">Editar</button>
+                                                                <p></p>
+                                                                <button class="btn btn-danger btn-sm" onclick="delete_file('<?php echo $archivo; ?>')" style="width:100%;">Eliminar</button> 
+                                                                <!--<button class="btn btn-danger" name="nombre_archivo" form="deleteForm" value="<?php echo $archivo; ?>" onclick="return confirm('¿Estás seguro que deseas eliminar <?php echo $archivo; ?>?')" type="submit">Eliminar</button>-->
+                                                            </div>
                                                         </div>                                                        
                                                     </div>
                                                 </div>

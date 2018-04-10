@@ -161,7 +161,6 @@
                                                     <label for="email">Tu contraseña Github</label>
                                                     <input type="password" class="form-control" id="password" name="password" value="<?php echo $github_pass; ?>">
                                                 </div>
-
                                                 <div class="card-action">
                                                     <button class="btn btn-success" type="submit" >Guardar</button>
                                                     <button class="btn btn-danger" type="reset">Cancelar</button>
@@ -207,4 +206,6 @@
 
     <?php endif ?>            
 	</body>
+
+
 </html>

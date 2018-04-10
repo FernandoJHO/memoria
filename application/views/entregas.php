@@ -28,7 +28,7 @@
         <script src="lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="lib/ready-theme/assets/js/ready.min.js"></script>
 
-    <style>
+    <!--<style>
 
     a:link{
       color:inherit;
@@ -45,7 +45,20 @@
     a:active{
       color:inherit;
     }
-    </style>
+    </style> -->
+
+        <style>
+        .alertify-notifier .ajs-message.ajs-error{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        .alertify-notifier .ajs-message.ajs-success{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        </style>
 
 	</head>
 	<body>
@@ -167,23 +180,44 @@
                     <div class="content">
                         <div class="container-fluid">
                             <h4 class="page-title">Entregas</h4>
-                            <div class="row">
+                            <!--<?php echo $this->session->flashdata('msg'); ?>-->
+                            <div class="row" id="refresh">
 
                                 <?php if ($grupo): ?>
                                     <?php foreach($entregas as $entrega): ?>
                                         <div class="col-md-6">
-                                            <a href="" style="text-decoration:none;">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h2 align="center"><i class="la la-suitcase"></i></h2>
-                                                        <h6 align="center"> <?php echo $entrega['descripcion']; ?> </h6>
-                                                    </div>  
-                                                    <div class="card-body">
-                                                        <p align="center"> Fecha: <?php echo $entrega['fecha']['dia']; ?>/<?php echo $entrega['fecha']['mes']; ?>/<?php echo $entrega['fecha']['año']; ?> </p>
-                                                        <p align="center"> Hora: <?php echo $entrega['hora']['horas']; ?>:<?php echo $entrega['hora']['minutos']; ?> </p>
-                                                    </div>                             
-                                                </div>
-                                            </a>
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h2 align="center"><i class="la la-suitcase"></i></h2>
+                                                    <h6 align="center"><?php echo $entrega['descripcion']; ?> </h6>
+                                                </div>  
+                                                <div class="card-body">
+                                                    <p > Fecha: <?php echo $entrega['fecha']['dia']; ?>/<?php echo $entrega['fecha']['mes']; ?>/<?php echo $entrega['fecha']['año']; ?> </p>
+                                                    <p > Hora: <?php echo $entrega['hora']['horas']; ?>:<?php echo $entrega['hora']['minutos']; ?> </p>
+
+                                                    <div class="form-group">
+                                                        <input type="file" id="userfile<?php echo $entrega['numero']; ?>" name="userfile" size="20"/>
+                                                    </div>
+                                                    <?php if ($entrega['codigofuente']): ?>
+                                                    <div class="card-action">
+                                                        <!--<form method="post" action="<?php echo base_url() ?>entregas/entregar_codigo/"> -->
+                                                            <!--<input type="hidden" class="form-control" id="entrega" name="numero_entrega" value="<?php echo $entrega['numero']; ?>">
+                                                            <input type="hidden" class="form-control" id="identrega" name="id_entrega" value="<?php echo $entrega['id']; ?>"> -->
+                                                            <?php if ($entrega['entregada'] || $entrega['activa']==FALSE): ?>
+                                                                <!--<button type="submit" class="btn btn-default" style="width:100%;" disabled><i class="la la-check"></i> Entregar</button> -->
+                                                                <button class="btn btn-default" style="width:100%;" disabled><i class="la la-check"></i> Entregar</button> 
+                                                            <?php else: ?>
+                                                                <!--<button type="submit" class="btn btn-default" style="width:100%;"><i class="la la-check"></i> Entregar</button>-->
+                                                                <p align="center">Quedan <?php echo $entrega['restante']; ?> </p>
+                                                                <button class="btn btn-default" onclick="entregar('<?php echo $entrega['numero']; ?>','<?php echo $entrega['id']; ?>')" style="width:100%;"><i class="la la-check"></i> Entregar</button> 
+                                                            <?php endif; ?> 
+                                                            
+                                                       <!-- </form> -->
+                                                    </div>
+                                                    <?php endif; ?> 
+                                            
+                                                </div>                          
+                                            </div>
                                         </div>
                                     <?php endforeach; ?>
                                 <?php else: ?>
@@ -203,5 +237,28 @@
 
 
 	</body>
+
+<script type="text/javascript">
+
+alertify.defaults.transition = "slide";
+alertify.defaults.theme.ok = "btn btn-success";
+alertify.defaults.theme.cancel = "btn btn-danger";
+
+function entregar(n_entrega,id_entrega){
+    var url = '<?php echo base_url() ?>entregas/entregar_codigo/';
+    var url_file = '<?php echo base_url() ?>entregas/upload_other_file/';
+    var id_input = "userfile"+n_entrega;
+
+    alertify.set('notifier','position', 'top-right');
+    alertify.confirm('Confirma', '¿Estás seguro que deseas realizar la entrega?', function(){             
+        alertify.success("Subiendo entrega...");
+        realizarEntrega(n_entrega,id_entrega,url);
+        //uploadFile(id_input,url_file,n_entrega);
+        }
+        , function(){
+        }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
+}
+
+</script>
 
 </html>

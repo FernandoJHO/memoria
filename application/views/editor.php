@@ -181,9 +181,6 @@
                                             <div id="editor">
                                             </div>
                                         </div>
-                                        <div class="card-footer">
-                                            <button class="btn btn-primary"><i class="la la-check"></i> Entregar </button>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

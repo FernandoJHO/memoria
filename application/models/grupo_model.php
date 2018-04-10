@@ -26,4 +26,18 @@ class grupo_model extends CI_Model {
           $this->db->update('grupo',$data);
      }
 
+     function get_seccion($id_grupo){
+          $this->db->where('ID_GRUPO',$id_grupo);
+          $this->db->select('ID_SECCION');
+
+          $query = $this->db->get('alumno_grupo');
+
+          $id_seccion = $query->row()->ID_SECCION;
+
+          $this->db->where('ID_SECCION',$id_seccion);
+          $query2 = $this->db->get('seccion');
+
+          return $query2->row();
+     }
+
 }
