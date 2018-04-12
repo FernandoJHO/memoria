@@ -14,7 +14,7 @@ class logout extends CI_Controller
      {
           $this->session->sess_destroy();
 
-          redirect(Welcome);
+          redirect(base_url());
 
      }
 }

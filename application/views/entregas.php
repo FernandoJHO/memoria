@@ -102,13 +102,9 @@
                                             </div>
                                         </li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="ti-user"></i> My Profile</a>
-                                        <a class="dropdown-item" href="#"></i> My Balance</a>
-                                        <a class="dropdown-item" href="#"><i class="ti-email"></i> Inbox</a>
+                                        <a class="dropdown-item" href="#"><i class="ti-settings"></i>Configuración</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="ti-settings"></i> Account Setting</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> Logout</a>
+                                        <a class="dropdown-item" href="logout"><i class="fa fa-power-off"></i>Cerrar sesión</a>
                                     </ul>
                                     <!-- /.dropdown-user -->
                                 </li>
@@ -136,17 +132,12 @@
                                     <ul class="nav">
                                         <li>
                                             <a href="#profile">
-                                                <span class="link-collapse">My Profile</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#edit">
-                                                <span class="link-collapse">Edit Profile</span>
+                                                <span class="link-collapse">Perfil</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#settings">
-                                                <span class="link-collapse">Settings</span>
+                                                <span class="link-collapse">Configuración</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -180,7 +171,7 @@
                     <div class="content">
                         <div class="container-fluid">
                             <h4 class="page-title">Entregas</h4>
-                            <!--<?php echo $this->session->flashdata('msg'); ?>-->
+                            <?php echo $this->session->flashdata('msg'); ?>
                             <div class="row" id="refresh">
 
                                 <?php if ($grupo): ?>
@@ -192,24 +183,40 @@
                                                     <h6 align="center"><?php echo $entrega['descripcion']; ?> </h6>
                                                 </div>  
                                                 <div class="card-body">
-                                                    <p > Fecha: <?php echo $entrega['fecha']['dia']; ?>/<?php echo $entrega['fecha']['mes']; ?>/<?php echo $entrega['fecha']['año']; ?> </p>
-                                                    <p > Hora: <?php echo $entrega['hora']['horas']; ?>:<?php echo $entrega['hora']['minutos']; ?> </p>
+                                                    <p align="center"> Fecha límite de entrega: <?php echo $entrega['fecha']['dia']; ?>/<?php echo $entrega['fecha']['mes']; ?>/<?php echo $entrega['fecha']['año']; ?> </p>
+                                                    <p align="center"> Hora límite de entrega: <?php echo $entrega['hora']['horas']; ?>:<?php echo $entrega['hora']['minutos']; ?> </p>
 
-                                                    <div class="form-group">
-                                                        <input type="file" id="userfile<?php echo $entrega['numero']; ?>" name="userfile" size="20"/>
-                                                    </div>
+                                                    <?php echo form_open_multipart('entregas/upload_other_file');?>
+                                                        <div class="form-group">
+                                                            <label> Selecciona tu presentación o informe a entregar (Tamaño máximo: 50MB) </label>
+                                                            
+                                                            <input type="file" id="userfile" name="userfile<?php echo $entrega['numero']; ?>" size="20" required="true" />
+                                                           
+                                                            
+                                                            <input type="hidden" class="form-control" name="numero_entrega" value="<?php echo $entrega['numero']; ?>">
+                                                            <input type="hidden" class="form-control" name="id_entrega" value="<?php echo $entrega['id']; ?>">
+                                                        </div>
+                                                        <div class="form-group">
+                                                        <?php if ($entrega['archivo_entregado'] || $entrega['activa']==FALSE): ?>
+                                                            <button type="submit" class="btn btn-primary" style="width:100%;" disabled><i class="la la-upload"></i> Subir archivo </button>
+                                                        <?php else: ?>
+                                                            <p align="center">Quedan <?php echo $entrega['restante']; ?> </p>
+                                                            <button type="submit" class="btn btn-primary" style="width:100%;"><i class="la la-upload"></i> Subir archivo </button>
+                                                        <?php endif; ?> 
+                                                        </div>
+
+                                                    </form>
                                                     <?php if ($entrega['codigofuente']): ?>
-                                                    <div class="card-action">
-                                                        <!--<form method="post" action="<?php echo base_url() ?>entregas/entregar_codigo/"> -->
+                                                    <div class="form-group">
+                                                        <!--<form method="post"  action="<?php echo base_url() ?>entregas/entregar_codigo/"> -->
                                                             <!--<input type="hidden" class="form-control" id="entrega" name="numero_entrega" value="<?php echo $entrega['numero']; ?>">
                                                             <input type="hidden" class="form-control" id="identrega" name="id_entrega" value="<?php echo $entrega['id']; ?>"> -->
-                                                            <?php if ($entrega['entregada'] || $entrega['activa']==FALSE): ?>
+                                                            <?php if ($entrega['codigo_entregado'] || $entrega['activa']==FALSE): ?>
                                                                 <!--<button type="submit" class="btn btn-default" style="width:100%;" disabled><i class="la la-check"></i> Entregar</button> -->
-                                                                <button class="btn btn-default" style="width:100%;" disabled><i class="la la-check"></i> Entregar</button> 
+                                                                <button class="btn btn-default" style="width:100%;" disabled><i class="la la-check"></i> Entregar código</button> 
                                                             <?php else: ?>
                                                                 <!--<button type="submit" class="btn btn-default" style="width:100%;"><i class="la la-check"></i> Entregar</button>-->
-                                                                <p align="center">Quedan <?php echo $entrega['restante']; ?> </p>
-                                                                <button class="btn btn-default" onclick="entregar('<?php echo $entrega['numero']; ?>','<?php echo $entrega['id']; ?>')" style="width:100%;"><i class="la la-check"></i> Entregar</button> 
+                                                                <button class="btn btn-default" onclick="entregar('<?php echo $entrega['numero']; ?>','<?php echo $entrega['id']; ?>')" style="width:100%;"><i class="la la-check"></i> Entregar código</button> 
                                                             <?php endif; ?> 
                                                             
                                                        <!-- </form> -->
@@ -250,8 +257,8 @@ function entregar(n_entrega,id_entrega){
     var id_input = "userfile"+n_entrega;
 
     alertify.set('notifier','position', 'top-right');
-    alertify.confirm('Confirma', '¿Estás seguro que deseas realizar la entrega?', function(){             
-        alertify.success("Subiendo entrega...");
+    alertify.confirm('Confirma', '¿Estás seguro que deseas realizar la entrega del código fuente?', function(){             
+        alertify.success("Entregando código fuente...");
         realizarEntrega(n_entrega,id_entrega,url);
         //uploadFile(id_input,url_file,n_entrega);
         }

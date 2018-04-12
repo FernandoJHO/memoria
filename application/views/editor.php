@@ -68,8 +68,8 @@
         <div class="wrapper">
             <div class="main-header">
                 <div class="logo-header">
-                    <a href="index.html" class="logo">
-                        Ready Dashboard
+                    <a href="main_alumno" class="logo">
+                        MEMORIA
                     </a>
                     <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -91,14 +91,10 @@
                                                 <p class="text-muted"><?php echo $mail; ?></p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
                                             </div>
                                         </li>
+                                         <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#"><i class="ti-settings"></i>Configuración</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="ti-user"></i> My Profile</a>
-                                        <a class="dropdown-item" href="#"></i> My Balance</a>
-                                        <a class="dropdown-item" href="#"><i class="ti-email"></i> Inbox</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="ti-settings"></i> Account Setting</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> Logout</a>
+                                        <a class="dropdown-item" href="logout"><i class="fa fa-power-off"></i>Cerrar sesión</a>
                                     </ul>
                                     <!-- /.dropdown-user -->
                                 </li>
@@ -126,17 +122,12 @@
                                     <ul class="nav">
                                         <li>
                                             <a href="#profile">
-                                                <span class="link-collapse">My Profile</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#edit">
-                                                <span class="link-collapse">Edit Profile</span>
+                                                <span class="link-collapse">Perfil</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#settings">
-                                                <span class="link-collapse">Settings</span>
+                                                <span class="link-collapse">Configuración</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -151,7 +142,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#">
+                                <a href="entregas">
                                     <i class="la la-suitcase"></i>
                                     <p>Entregas</p>
                                 </a>
@@ -174,7 +165,7 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h4 class="card-title"><?php echo $archivo; ?></h4>
+                                            <h4 class="card-title"><i class="la la-file-code-o"></i> <?php echo $archivo; ?></h4>
                                             <!--<p class="card-category"></p> -->
                                         </div>
                                         <div class="card-body">
@@ -183,45 +174,73 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title"><i class="la la-cogs"></i> Ejecución</h4>
+                                            <p class="card-category"></p>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="input">Ingresa parámetros de entrada</label>
+                                                <textarea class="form-control" id="input" rows="5"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="output">Salida del código</label>
+                                                <textarea class="form-control" id="output" rows="10" readonly></textarea>
+                                            </div>
+                                            <div class="card-action">
+                                                <button class="btn btn-success" onclick="execute()" style="width:100%;"><i class="la la-cogs"></i> Ejecutar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="col-md-6">
                                     <div class="card">
                                         <div class="card-header">
                                             <h4 class="card-title">Parámetros</h4>
                                             <p class="card-category">Ingresa parámetros de entrada</p>
                                         </div>
                                         <div class="card-body">
-                                            <textarea class="form-control" id="input" rows="5"></textarea>
-                                        </div>
-                                        <div class="card-action">
-                                            <button class="btn btn-success" onclick="execute()"><i class="la la-cogs"></i> Ejecutar</button>
+
+                                            <div class="form-group">
+                                                <textarea class="form-control" id="input" rows="5"></textarea>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4 class="card-title">Mensaje de commit</h4>
-                                            <p class="card-category">Ingresa mensaje para el commit del código</p>
-                                        </div>
-                                        <div class="card-body">
-                                            <input type="text" class="form-control form-control" id="commitmsj">
-                                        </div>
-                                        <div class="card-action">
-                                            <button class="btn btn-default" onclick="commit()"><i class="la la-github"></i> Commit</button>
-                                        </div>                                        
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
+                                </div> -->
+                                <!--<div class="col-md-6">
                                     <div class="card">
                                         <div class="card-header">
                                             <h4 class="card-title">Output</h4>
                                             <p class="card-category">Aquí se muestra el resultado de la ejecución del código</p>
                                         </div>
                                         <div class="card-body">
-                                            <textarea class="form-control" id="output" rows="5" readonly></textarea>
+                                            <div class="form-group">
+                                                <textarea class="form-control" id="output" rows="5" readonly></textarea>
+                                            </div>
+                                            <div class="card-action">
+                                                <button class="btn btn-success" onclick="execute()" style="width:100%;"><i class="la la-cogs"></i> Ejecutar</button>
+                                            </div>
                                         </div>                             
                                     </div>
-                                </div>                                
+                                </div> -->
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title"><i class="la la-github"></i> Commit</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="commitmsj"> Ingresa mensaje para el commit del código </label>
+                                                <input type="text" class="form-control form-control" id="commitmsj">
+                                            </div>
+                                            <div class="card-action">
+                                                <button class="btn btn-default" onclick="commit()" style="width:100%;"><i class="la la-github"></i> Commit</button>
+                                            </div>    
+                                        </div>                                    
+                                    </div>
+                                </div>                               
                             </div>
                         </div>
                     </div>

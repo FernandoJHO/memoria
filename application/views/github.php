@@ -62,17 +62,13 @@
                                             <div class="u-img"><img src="lib/ready-theme/assets/img/user_logo.png" alt="user"></div>
                                             <div class="u-text">
                                                 <h4><?php echo $nombre; ?> <?php echo $apellido; ?></h4>
-                                                <p class="text-muted"><?php echo $mail; ?></p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                                <p class="text-muted"><?php echo $mail; ?></p><a href="#" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
                                             </div>
                                         </li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="ti-user"></i> My Profile</a>
-                                        <a class="dropdown-item" href="#"></i> My Balance</a>
-                                        <a class="dropdown-item" href="#"><i class="ti-email"></i> Inbox</a>
+                                        <a class="dropdown-item" href="#"><i class="ti-settings"></i>Configuración</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="ti-settings"></i> Account Setting</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> Logout</a>
+                                        <a class="dropdown-item" href="logout"><i class="fa fa-power-off"></i>Cerrar sesión</a>
                                     </ul>
                                     <!-- /.dropdown-user -->
                                 </li>
@@ -100,17 +96,12 @@
                                     <ul class="nav">
                                         <li>
                                             <a href="#profile">
-                                                <span class="link-collapse">My Profile</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#edit">
-                                                <span class="link-collapse">Edit Profile</span>
+                                                <span class="link-collapse">Perfil</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#settings">
-                                                <span class="link-collapse">Settings</span>
+                                                <span class="link-collapse">Configuración</span>
                                             </a>
                                         </li>
                                     </ul>

@@ -41,12 +41,20 @@ class alumno_model extends CI_Model {
           $this->db->select('ID_GRUPO');
           $query = $this->db->get('alumno_grupo');
 
-          $id_grupo = $query->row()->ID_GRUPO;
+          if(! is_null($query->row())){
 
-          $this->db->where('ID_GRUPO',$id_grupo);
-          $query2 = $this->db->get('grupo');
+               $id_grupo = $query->row()->ID_GRUPO;
 
-          return $query2->row();
+               $this->db->where('ID_GRUPO',$id_grupo);
+               $query2 = $this->db->get('grupo');
+
+               return $query2->row();
+
+          }
+          else{
+               $array = array();
+               return $array;
+          }
      }
 
      function set_commits($mail,$commits){

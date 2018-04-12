@@ -84,13 +84,9 @@
                                             </div>
                                         </li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="ti-user"></i> My Profile</a>
-                                        <a class="dropdown-item" href="#"></i> My Balance</a>
-                                        <a class="dropdown-item" href="#"><i class="ti-email"></i> Inbox</a>
+                                        <a class="dropdown-item" href="#"><i class="ti-settings"></i>Configuración</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="ti-settings"></i> Account Setting</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> Logout</a>
+                                        <a class="dropdown-item" href="logout"><i class="fa fa-power-off"></i>Cerrar sesión</a>
                                     </ul>
                                     <!-- /.dropdown-user -->
                                 </li>
@@ -118,17 +114,12 @@
                                     <ul class="nav">
                                         <li>
                                             <a href="#profile">
-                                                <span class="link-collapse">My Profile</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#edit">
-                                                <span class="link-collapse">Edit Profile</span>
+                                                <span class="link-collapse">Perfil</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#settings">
-                                                <span class="link-collapse">Settings</span>
+                                                <span class="link-collapse">Configuración</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -179,9 +170,9 @@
                                                             <h2 align="center"><i class="la la-file-code-o"></i></h2>
                                                             <h6 align="center"> <?php echo $archivo ?> </h6>
                                                             <div class="card-action">
-                                                                <button class="btn btn-default btn-sm" name="filename" form="editForm" value="<?php echo $archivo; ?>" type="submit" style="width:100%;">Editar</button>
+                                                                <button class="btn btn-default " name="filename" form="editForm" value="<?php echo $archivo; ?>" type="submit" style="width:100%;">Editar</button>
                                                                 <p></p>
-                                                                <button class="btn btn-danger btn-sm" onclick="delete_file('<?php echo $archivo; ?>')" style="width:100%;">Eliminar</button> 
+                                                                <button class="btn btn-danger " onclick="delete_file('<?php echo $archivo; ?>')" style="width:100%;">Eliminar</button> 
                                                                 <!--<button class="btn btn-danger" name="nombre_archivo" form="deleteForm" value="<?php echo $archivo; ?>" onclick="return confirm('¿Estás seguro que deseas eliminar <?php echo $archivo; ?>?')" type="submit">Eliminar</button>-->
                                                             </div>
                                                         </div>                                                        

@@ -14,7 +14,7 @@ class entrega_model extends CI_Model {
      	return $query->result();
      }
 
-     public function check_entrega($id_grupo,$n_entrega){
+     public function check_entrega_codigo($id_grupo,$n_entrega){
      	$this->db->select('*');
      	$this->db->from('codigofuente');
      	$this->db->join('entrega', 'entrega.ID_ENTREGA = codigofuente.ID_ENTREGA', 'inner');
@@ -24,6 +24,18 @@ class entrega_model extends CI_Model {
      	$query = $this->db->get();
 
      	return $query->result();
+     }
+
+     public function check_entrega_archivo($id_grupo,$n_entrega){
+          $this->db->select('*');
+          $this->db->from('archivo');
+          $this->db->join('entrega', 'entrega.ID_ENTREGA = archivo.ID_ENTREGA', 'inner');
+          $this->db->where('archivo.ID_GRUPO', $id_grupo);
+          $this->db->where('entrega.NUMERO',$n_entrega);
+
+          $query = $this->db->get();
+
+          return $query->result();
      }
 
 }
