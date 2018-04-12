@@ -26,7 +26,7 @@
 
 	</head>
 	<body>
-        <?php if ($logeado && $rol=='Alumno'): ?> 
+        
         <div class="wrapper">
             <div class="main-header">
                 <div class="logo-header">
@@ -42,17 +42,6 @@
                     <div class="container-fluid">
                         
                         <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-                            <!--<li class="nav-item dropdown hidden-caret">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="la la-envelope"></i>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </li> -->
 
                             <li class="nav-item dropdown">
                                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="lib/ready-theme/assets/img/user_logo.png" alt="user-img" width="36" class="img-circle"><span ><?php echo $nombre; ?></span></span> </a>
@@ -86,7 +75,7 @@
                                 <a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                                     <span>
                                         <?php echo $nombre; ?> <?php echo $apellido; ?>
-                                        <span class="user-level">Alumno</span>
+                                        <span class="user-level"><?php echo $rol; ?></span>
                                         <span class="caret"></span>
                                     </span>
                                 </a>
@@ -110,19 +99,19 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item">
-                                <a href="github">
+                                <a href="#">
                                     <i class="la la-github"></i>
                                     <p>Github</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="entregas">
+                                <a href="#">
                                     <i class="la la-suitcase"></i>
                                     <p>Entregas</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="codigos">
+                                <a href="#">
                                     <i class="la la-file-code-o"></i>
                                     <p>Códigos fuente</p>
                                 </a>
@@ -135,13 +124,12 @@
                     <div class="content">
                         <div class="container-fluid">
                             <div class="row">
-                                <a href="application/uploads/entregas/modelo.pdf" class="btn btn-primary" target="_blank"> Clickeeeeeeeeeeeeeeeeeee </a>
                             </div>
                         </div>
                     </div>
                 </div>
 
 
-    <?php endif ?>            
+                
 	</body>
 </html>

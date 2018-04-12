@@ -281,7 +281,7 @@ class entregas extends CI_Controller
                $contenido = $archivo['contenido'];
 
                if(file_put_contents($ruta,$contenido)){
-                    $this->codigofuente_model->new_file($nombre_archivo,$ruta,$id_grupo,$id_entrega);
+                    $this->codigofuente_model->new_file($archivo['nombre'],$ruta,$id_grupo,$id_entrega);
                }
                else{
                     return false;

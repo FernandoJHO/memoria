@@ -16,4 +16,11 @@ class login_model extends CI_Model {
           return $query->row();
      }
 
+     function get_profesor($usr,$pwd)
+     {
+          $sql = "select * from profesor where MAIL = '" . $usr . "' and PASSWORD = '" . md5($pwd) . "'";
+          $query = $this->db->query($sql);
+          return $query->row();
+     }
+
 }

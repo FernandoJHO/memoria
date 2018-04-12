@@ -1,6 +1,6 @@
 <?php
 
-class login_alumno extends CI_Controller {
+class login_profesor extends CI_Controller {
 
      public function __construct()
      {
@@ -36,7 +36,7 @@ class login_alumno extends CI_Controller {
                if ($this->input->post('btn_login') == "Login")
                {
                     //check if username and password is correct
-                    $usr_result = $this->login_model->get_alumno($username, $password);
+                    $usr_result = $this->login_model->get_profesor($username, $password);
                     if (sizeof($usr_result) > 0) //active user record is present
                     {
                          //set the session variables
@@ -46,15 +46,16 @@ class login_alumno extends CI_Controller {
                               'apellido' => $usr_result->APELLIDO,
                               'mail' => $usr_result->MAIL,
                               'loginuser' => TRUE,
-                              'rol' => 'Alumno'
+                              'coordinador' => $usr_result->COORDINADOR,
+                              'rol' => 'Profesor'
                               );
                          $this->session->set_userdata($sessiondata);
-                         redirect("main_alumno"); 
+                         redirect('main_profesor'); 
 
                     }
                     else
                     {
-                         $this->session->set_flashdata('msg_alumno', '<div class="alert alert-danger text-center">Correo electrónico y/o contraseña inválidos.</div>');
+                         $this->session->set_flashdata('msg_profesor', '<div class="alert alert-danger text-center">Correo electrónico y/o contraseña inválidos.</div>');
                          redirect('login');
                     }
                }

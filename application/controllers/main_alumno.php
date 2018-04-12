@@ -20,8 +20,6 @@ class main_alumno extends CI_Controller {
                'nombre' => $this->session->userdata('nombre'),
                'apellido' =>$this->session->userdata('apellido'),
                'mail' => $this->session->userdata('mail'),
-               'github_acc' => $this->session->userdata('github_acc'),
-               'github_pass' => $this->session->userdata('github_pass'),
                'logeado' => $this->session->userdata('loginuser'),
                'rol' => $this->session->userdata('rol')
                );

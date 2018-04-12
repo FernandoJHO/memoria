@@ -11,6 +11,6 @@
         <a href="datos/ver/24">PRUEBA</a>
         <a href="prueba_github">GITHUB</a>
         <a href="main_alumno">MAIN</a>
-        <a href="login_alumno">ALUMNO LOGIN</a>
+        <a href="login">LOGIN</a>
     </body>
 </html>
