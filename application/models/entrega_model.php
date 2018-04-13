@@ -14,6 +14,37 @@ class entrega_model extends CI_Model {
      	return $query->result();
      }
 
+     public function new_entrega($nro,$descripcion,$fecha_limite,$codigo_fuente){
+
+          $data = Array(
+               'NUMERO' => $nro,
+               'DESCRIPCION' => $descripcion,
+               'FECHA_LIMITE' => $fecha_limite,
+               'CODIGO_FUENTE' => $codigo_fuente
+               );
+
+          $this->db->insert('entrega',$data);
+
+          return ($this->db->affected_rows() > 0);
+
+     }
+
+     public function set_entrega($id,$nro,$descripcion,$fecha_limite,$codigo_fuente){
+
+          $data = Array(
+               'NUMERO' => $nro,
+               'DESCRIPCION' => $descripcion,
+               'FECHA_LIMITE' => $fecha_limite,
+               'CODIGO_FUENTE' => $codigo_fuente
+               );
+
+          $this->db->where('ID_ENTREGA',$id);
+          $this->db->update('entrega',$data);
+
+          return ($this->db->affected_rows() > 0);
+
+     }
+
      public function check_entrega_codigo($id_grupo,$n_entrega){
      	$this->db->select('*');
      	$this->db->from('codigofuente');

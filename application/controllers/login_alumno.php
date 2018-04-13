@@ -49,7 +49,7 @@ class login_alumno extends CI_Controller {
                               'rol' => 'Alumno'
                               );
                          $this->session->set_userdata($sessiondata);
-                         redirect("main_alumno"); 
+                         redirect("mainAlumno"); 
 
                     }
                     else

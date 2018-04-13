@@ -99,23 +99,11 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item">
-                                <a href="#">
-                                    <i class="la la-github"></i>
-                                    <p>Github</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#">
+                                <a href="editarEntregas">
                                     <i class="la la-suitcase"></i>
                                     <p>Entregas</p>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#">
-                                    <i class="la la-file-code-o"></i>
-                                    <p>Códigos fuente</p>
-                                </a>
-                            </li>                            
+                            </li>                      
                         </ul>
                     </div>
                 </div>

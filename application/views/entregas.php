@@ -66,7 +66,7 @@
         <div class="wrapper">
             <div class="main-header">
                 <div class="logo-header">
-                    <a href="main_alumno" class="logo">
+                    <a href="mainAlumno" class="logo">
                         MEMORIA
                     </a>
                     <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">

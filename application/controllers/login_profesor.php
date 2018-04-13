@@ -50,7 +50,7 @@ class login_profesor extends CI_Controller {
                               'rol' => 'Profesor'
                               );
                          $this->session->set_userdata($sessiondata);
-                         redirect('main_profesor'); 
+                         redirect('mainProfesor'); 
 
                     }
                     else

@@ -1,7 +1,7 @@
 <?php
 
 
-class main_profesor extends CI_Controller {
+class mainProfesor extends CI_Controller {
 
 
      public function __construct()
@@ -30,14 +30,14 @@ class main_profesor extends CI_Controller {
           else{
                if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') ){
 
-                   /* $datos = Array(
+                    $datos = Array(
                          'nombre' => $this->session->userdata('nombre'),
                          'apellido' =>$this->session->userdata('apellido'),
                          'mail' => $this->session->userdata('mail'),
-                         'rol' => $this->session->userdata('rol')
+                         'rol' => $this->session->userdata('rol').' (Coordinador)'
                          );
 
-                    $this->load->view('main_coordinador',$datos); */
+                    $this->load->view('main_coordinador',$datos); 
                }
           }
      }

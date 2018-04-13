@@ -22,7 +22,7 @@ class editor extends CI_Controller {
 	public function index(){
 
 		$archivo = $this->input->post('filename');
-		if($this->session->userdata('loginuser')){
+		if($this->session->userdata('loginuser')&&($this->session->userdata('rol')=='Alumno')){
 			$mail = $this->session->userdata('mail');
 			$datos_github = $this->get_github_data($mail);
 			$github = new Github($datos_github['github_acc'],$datos_github['github_pass']);
