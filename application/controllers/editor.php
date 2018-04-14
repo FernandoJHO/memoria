@@ -3,7 +3,7 @@
 require "./application/utils/github.php";
 require "./application/utils/jdoodle.php";
 
-class editor extends CI_Controller {
+class Editor extends CI_Controller {
 
 
      public function __construct()

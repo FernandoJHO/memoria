@@ -2,7 +2,7 @@
 
 require "./application/utils/sort.php";
 
-class editarEntregas extends CI_Controller {
+class EditarEntregas extends CI_Controller {
 
      public function __construct()
      {

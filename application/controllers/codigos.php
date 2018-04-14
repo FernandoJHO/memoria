@@ -2,7 +2,7 @@
 
 require "./application/utils/github.php";
 
-class codigos extends CI_Controller {
+class Codigos extends CI_Controller {
 
 
      public function __construct()

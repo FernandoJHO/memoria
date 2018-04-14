@@ -1,7 +1,7 @@
 <?php
 
 
-class github extends CI_Controller {
+class Github extends CI_Controller {
 
 
      public function __construct()

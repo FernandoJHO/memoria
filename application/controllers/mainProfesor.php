@@ -1,7 +1,7 @@
 <?php
 
 
-class mainProfesor extends CI_Controller {
+class MainProfesor extends CI_Controller {
 
 
      public function __construct()

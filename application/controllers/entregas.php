@@ -4,7 +4,7 @@ require "./application/utils/date.php";
 require "./application/utils/github.php";
 require "./application/utils/sort.php";
  
-class entregas extends CI_Controller
+class Entregas extends CI_Controller
 {
 
      public function __construct()

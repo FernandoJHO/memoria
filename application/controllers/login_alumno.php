@@ -1,6 +1,6 @@
 <?php
 
-class login_alumno extends CI_Controller {
+class Login_alumno extends CI_Controller {
 
      public function __construct()
      {
