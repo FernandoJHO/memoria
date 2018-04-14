@@ -89,7 +89,7 @@ class codigos extends CI_Controller {
           $datos_user = $this->alumno_model->get_github($mail);
           $grupo_id = $this->alumno_model->get_grupo($mail);
 
-          if(sizeof($grupo_id)>0){
+          if(!empty($grupo_id)){
                $repo_info = $this->grupo_model->get_repo_info($grupo_id->ID_GRUPO);
                $data = Array(
                     'github_acc' => $datos_user->GITHUB_ACC,
