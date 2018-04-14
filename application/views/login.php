@@ -73,7 +73,7 @@
 				                    <form role="form" action="" method="post" class="login-form">
 				                    	<div class="form-group">
 				                    		<label class="sr-only" for="txt_username">Correo electrónico</label>
-				                        	<input type="text" name="txt_username" placeholder="Correo electrónico" id="txt_username" value="<?php echo set_value('txt_username'); ?>" required="true" class="form-username form-control">
+				                        	<input type="email" name="txt_username" placeholder="Correo electrónico" id="txt_username" value="<?php echo set_value('txt_username'); ?>" required="true" class="form-username form-control">
 				                        </div>
 				                        <div class="form-group">
 				                        	<label class="sr-only" for="txt_password">Contraseña</label>
@@ -115,7 +115,7 @@
                                     <form role="form" action="" method="post" class="login-form">
                                         <div class="form-group">
                                             <label class="sr-only" for="txt_username">Correo electrónico</label>
-                                            <input class="form-username form-control" placeholder="Correo electrónico" type="text" name="txt_username" id="txt_username" value="<?php echo set_value('txt_username'); ?>" required="true">
+                                            <input class="form-username form-control" placeholder="Correo electrónico" type="email" name="txt_username" id="txt_username" value="<?php echo set_value('txt_username'); ?>" required="true">
                                         </div>
                                         <div class="form-group">
                                             <label class="sr-only" for="txt_password">Contraseña</label>
