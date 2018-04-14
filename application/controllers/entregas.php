@@ -3,6 +3,7 @@
 require "./application/utils/date.php";
 require "./application/utils/github.php";
 require "./application/utils/sort.php";
+require "./application/utils/saveFile.php";
  
 class Entregas extends CI_Controller
 {
@@ -241,62 +242,22 @@ class Entregas extends CI_Controller
 
           $seccion_grupo = $this->get_seccion_grupo($user_data['id_grupo']);
 
-          if($this->save_file($archivo_contenido,$user_data['año'],$user_data['semestre'],$user_data['numero_grupo'],$n_entrega,$seccion_grupo,$id_entrega,$user_data['id_grupo'])){
-               //$this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Entrega realizada.</div>');
+          $upload = new SaveFile();
+          $upload_result = $upload->upload_source_code($archivo_contenido,$user_data['año'],$user_data['semestre'],$user_data['numero_grupo'],$n_entrega,$seccion_grupo,$id_entrega,$user_data['id_grupo']);
+
+          if( count($upload_result) == count($archivo_contenido) ){
+               foreach($upload_result as $upload){
+                    $this->codigofuente_model->new_file($upload['nombre_archivo'],$upload['ruta'],$upload['id_grupo'],$upload['id_entrega']);
+               }
                echo json_encode("Ok");
-          }
+          }    
           else{
-               //$this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo realizar entrega.</div>');
-          }
 
-          //redirect(entregas);
+          }
 
      }
 
-     public function save_file($archivos,$año,$semestre,$grupo,$n_entrega,$seccion,$id_entrega,$id_grupo){
-
-
-          if(is_dir('./application/uploads/entregas/'.$año)==FALSE){
-               mkdir('./application/uploads/entregas/'.$año.'/');
-          }
-
-          if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre)==FALSE){
-               mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/');
-          }
-
-          if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion)==FALSE){
-               mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/');
-          }
-
-          if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo)==FALSE){
-               mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/');
-          }
-
-          if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega)==FALSE){
-               mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/');
-          }
-
-          $dir = './application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/';
-
-          foreach($archivos as $archivo){
-               list($nombre,$extension) = explode('.',$archivo['nombre']);
-               $nombre_archivo = $nombre.'_grupo'.$grupo.'_seccion'.$seccion.'.'.$extension;
-               $ruta = $dir.$nombre_archivo;
-               $contenido = $archivo['contenido'];
-
-               if(file_put_contents($ruta,$contenido)){
-                    $this->codigofuente_model->new_file($archivo['nombre'],$ruta,$id_grupo,$id_entrega);
-               }
-               else{
-                    return false;
-               }
-          }
-
-          return true;
-
-     }
-
-     public function upload_other_file(){
+     /* public function upload_file(){
           $n_entrega = $this->input->post('numero_entrega');
           $id_entrega = intval($this->input->post('id_entrega'));
 
@@ -306,6 +267,7 @@ class Entregas extends CI_Controller
           $archivo = 'userfile'.$n_entrega;
 
           $seccion_grupo = $this->get_seccion_grupo($user_data['id_grupo']);
+
 
           if ( ! $this->do_upload($user_data['año'],$user_data['semestre'],$user_data['numero_grupo'],$n_entrega,$seccion_grupo,$id_entrega,$user_data['id_grupo'],$archivo)){
                $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo subir archivo</div>');
@@ -360,7 +322,7 @@ class Entregas extends CI_Controller
 
           return true;
 
-     }
+     } */
 
      public function get_seccion_grupo($id_grupo){
           $resultado = $this->grupo_model->get_seccion($id_grupo);

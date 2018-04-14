@@ -186,7 +186,7 @@
                                                     <p align="center"> Fecha límite de entrega: <?php echo $entrega['fecha']['dia']; ?>/<?php echo $entrega['fecha']['mes']; ?>/<?php echo $entrega['fecha']['año']; ?> </p>
                                                     <p align="center"> Hora límite de entrega: <?php echo $entrega['hora']['horas']; ?>:<?php echo $entrega['hora']['minutos']; ?> </p>
 
-                                                    <?php echo form_open_multipart('entregas/upload_other_file');?>
+                                                    <?php echo form_open_multipart('uploadFiles/upload_file');?>
                                                         <div class="form-group">
                                                             <label> Selecciona tu presentación o informe a entregar (Tamaño máximo: 50MB) </label>
                                                             
