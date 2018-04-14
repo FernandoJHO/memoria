@@ -2,6 +2,7 @@
 
 require "./application/utils/date.php";
 require "./application/utils/github.php";
+require "./application/utils/sort.php";
  
 class entregas extends CI_Controller
 {
@@ -141,6 +142,9 @@ class entregas extends CI_Controller
 
                array_push($entregas,$data);
           }
+
+          $sort = new Sort();
+          $entregas = $sort->subval_sort($entregas,'numero');
 
           return $entregas;
      }

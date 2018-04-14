@@ -1,5 +1,7 @@
 <?php
 
+require "./application/utils/sort.php";
+
 class editarEntregas extends CI_Controller {
 
      public function __construct()
@@ -58,6 +60,9 @@ class editarEntregas extends CI_Controller {
                array_push($entregas,$data);
           }
 
+          $sort = new Sort();
+          $entregas = $sort->subval_sort($entregas,'numero');
+
           return $entregas;
      }
 
@@ -104,6 +109,20 @@ class editarEntregas extends CI_Controller {
           }
 
           redirect(editarEntregas);
+     }
+
+     public function delete_entrega(){
+          $id = intval($this->input->post('id_entrega'));
+
+          if( $this->entrega_model->delete_entrega($id) ){
+               //$this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Entrega eliminada</div>');
+               echo json_encode("Ok");
+          }
+          else{
+               //$this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo eliminar entrega</div>');
+          }
+
+          //redirect(editarEntregas);
      }
 
 }

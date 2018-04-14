@@ -45,6 +45,13 @@ class entrega_model extends CI_Model {
 
      }
 
+     public function delete_entrega($id){
+          $this->db->where('ID_ENTREGA', $id);
+          $this->db->delete('entrega');
+
+          return ($this->db->affected_rows() > 0);
+     }
+
      public function check_entrega_codigo($id_grupo,$n_entrega){
      	$this->db->select('*');
      	$this->db->from('codigofuente');

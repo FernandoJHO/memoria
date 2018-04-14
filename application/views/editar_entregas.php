@@ -10,6 +10,10 @@
         <link rel="stylesheet" href="lib/ready-theme/assets/css/ready.css">
         <link rel="stylesheet" href="lib/ready-theme/assets/css/demo.css">
 
+        <script src="lib/alertify/alertify.min.js"></script>
+        <link rel="stylesheet" href="lib/alertify/alertify.min.css">
+        <script src="lib/js/utils.js"></script>
+
         <script src="lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
         <script src="lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
         <script src="lib/ready-theme/assets/js/core/popper.min.js"></script>
@@ -23,6 +27,19 @@
         <script src="lib/ready-theme/assets/js/plugin/chart-circle/circles.min.js"></script>
         <script src="lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="lib/ready-theme/assets/js/ready.min.js"></script>
+
+        <style>
+        .alertify-notifier .ajs-message.ajs-error{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        .alertify-notifier .ajs-message.ajs-success{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        </style>
 
 	</head>
 	<body>
@@ -113,7 +130,7 @@
                         <div class="container-fluid">
                             <h4 class="page-title">Editar entregas <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newEntregaModal"><i class="la la-plus"></i> Nueva</button></h4>
                             <?php echo $this->session->flashdata('msg'); ?>
-                            <div class="row">
+                            <div class="row" id="refresh">
 
                                 <?php foreach($entregas as $entrega): ?>
                                     <div class="col-md-6">
@@ -122,7 +139,10 @@
                                                 <h2 align="center"><i class="la la-suitcase"></i></h2>
                                             </div>
                                             <div class="card-body">
-                                                <form method="post" action="<?php echo base_url() ?>editarEntregas/set_entrega/">
+                                                <!--<form method="post" id="deleteForm<?php echo $entrega['id']; ?>" action="<?php echo base_url() ?>editarEntregas/delete_entrega/">
+                                                    <input type="hidden" class="form-control" name="id_entrega" value="<?php echo $entrega['id']; ?>">
+                                                </form> -->
+                                                <form method="post" id="editForm<?php echo $entrega['id']; ?>" action="<?php echo base_url() ?>editarEntregas/set_entrega/">
                                                     <div class="form-group">
                                                         <label for="nombre_entrega">Nombre entrega</label>
                                                         <input type="text" class="form-control" name="nombre_entrega" value="<?php echo $entrega['descripcion']; ?>" required="true">
@@ -168,12 +188,13 @@
                                                         </label>
                                                     </div>
                                                     <input type="hidden" class="form-control" name="id_entrega" value="<?php echo $entrega['id']; ?>">
+                                                </form>
                                                     <div class="card-action">
-                                                        <button class="btn btn-success" type="submit" >Guardar</button>
-                                                        <button class="btn btn-danger" type="reset">Cancelar</button>
+                                                        <button class="btn btn-success" form="editForm<?php echo $entrega['id']; ?>" type="submit" >Guardar</button>
+                                                        <button class="btn btn-warning" form="editForm<?php echo $entrega['id']; ?>" type="reset">Cancelar</button>
+                                                        <button class="btn btn-danger" onclick="delete_entrega('<?php echo $entrega['id']; ?>','<?php echo $entrega['numero']; ?>')">Eliminar</button>
                                                     </div>
                                                     
-                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -246,4 +267,28 @@
 
                 
 	</body>
+
+<script type="text/javascript">
+
+alertify.defaults.transition = "slide";
+alertify.defaults.theme.ok = "btn btn-success";
+alertify.defaults.theme.cancel = "btn btn-danger";
+
+function delete_entrega(ent_id,ent_n){
+    var entrega = ent_id;
+    var numero = ent_n;
+    var url = '<?php echo base_url() ?>editarEntregas/delete_entrega';
+
+    alertify.set('notifier','position', 'top-right');
+
+    alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar la entrega '+numero.bold()+ '?', function(){ 
+        alertify.success("Eliminando...");
+        deleteEntrega(entrega,url);
+        }
+        , function(){
+        }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
+}
+
+</script>
+
 </html>
