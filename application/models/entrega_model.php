@@ -1,6 +1,6 @@
 <?php
 
-class entrega_model extends CI_Model {
+class Entrega_model extends CI_Model {
 
      function __construct()
      {
@@ -12,6 +12,30 @@ class entrega_model extends CI_Model {
      	$query = $this->db->get('entrega');
 
      	return $query->result();
+     }
+
+     public function ver_entregas_codigo_realizadas($id_grupo){
+          $this->db->select('entrega.ID_ENTREGA, entrega.NUMERO, entrega.DESCRIPCION, entrega.CODIGO_FUENTE');
+          $this->db->from('entrega');
+          $this->db->join('codigofuente', 'codigofuente.ID_ENTREGA = entrega.ID_ENTREGA', 'inner');
+          //$this->db->join('archivo', 'archivo.ID_ENTREGA = entrega.ID_ENTREGA', 'inner');
+          $this->db->where('codigofuente.ID_GRUPO', $id_grupo);
+          //$this->db->where('archivo.ID_GRUPO', $id_grupo);
+
+          $query = $this->db->get();
+
+          return $query->result();
+     }
+
+     public function ver_entregas_archivo_realizadas($id_grupo){
+          $this->db->select('entrega.ID_ENTREGA, entrega.NUMERO, entrega.DESCRIPCION, entrega.CODIGO_FUENTE');
+          $this->db->from('entrega');
+          $this->db->join('archivo', 'archivo.ID_ENTREGA = entrega.ID_ENTREGA', 'inner');
+          $this->db->where('archivo.ID_GRUPO', $id_grupo);
+
+          $query = $this->db->get();
+
+          return $query->result();
      }
 
      public function new_entrega($nro,$descripcion,$fecha_limite,$codigo_fuente){
@@ -70,6 +94,28 @@ class entrega_model extends CI_Model {
           $this->db->join('entrega', 'entrega.ID_ENTREGA = archivo.ID_ENTREGA', 'inner');
           $this->db->where('archivo.ID_GRUPO', $id_grupo);
           $this->db->where('entrega.NUMERO',$n_entrega);
+
+          $query = $this->db->get();
+
+          return $query->result();
+     }
+
+     public function set_entrega_commits($mail_alumno,$id_entrega,$commits){
+          $data = Array(
+               'MAIL_ALUMNO' => $mail_alumno,
+               'ID_ENTREGA' => $id_entrega,
+               'COMMITS' => $commits
+               );
+
+          $this->db->insert('entrega_commits',$data);
+
+          return ($this->db->affected_rows() > 0);
+     }
+
+     public function get_entrega_commits($mail_alumno){
+          $this->db->select('ID_ENTREGA, COMMITS');
+          $this->db->from('entrega_commits');
+          $this->db->where('MAIL_ALUMNO', $mail_alumno);
 
           $query = $this->db->get();
 

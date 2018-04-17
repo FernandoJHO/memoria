@@ -1,6 +1,6 @@
 <?php
 
-class alumno_model extends CI_Model {
+class Alumno_model extends CI_Model {
 
      function __construct()
      {
@@ -13,6 +13,14 @@ class alumno_model extends CI_Model {
           $sql = "select * from alumno where MAIL = '" . $usr . "' and PASSWORD = '" . md5($pwd) . "'";
           $query = $this->db->query($sql);
           //return $query->num_rows();
+          return $query->row();
+     }
+
+     function get_nombre($mail){
+          $this->db->where('MAIL',$mail);
+          $this->db->select('NOMBRE, APELLIDO');
+          $query = $this->db->get('alumno');
+
           return $query->row();
      }
 
@@ -63,6 +71,15 @@ class alumno_model extends CI_Model {
                );
           $this->db->where('MAIL',$mail);
           $this->db->update('alumno',$data);
+     }
+
+     function get_commits($mail){
+          $this->db->where('MAIL',$mail);
+          $this->db->select('COMMITS');
+
+          $query = $this->db->get('alumno');
+
+          return $query->row();
      }
 
 }

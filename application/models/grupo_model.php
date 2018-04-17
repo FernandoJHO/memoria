@@ -1,11 +1,31 @@
 <?php
 
-class grupo_model extends CI_Model {
+class Grupo_model extends CI_Model {
 
      function __construct()
      {
           // Call the Model constructor
           parent::__construct();
+     }
+
+     function get_grupos($id_seccion,$año,$semestre){
+
+          $this->db->where('ID_SECCION',$id_seccion);
+          $this->db->where('ANNO',$año);
+          $this->db->where('SEMESTRE',$semestre);
+          $this->db->select('ID_GRUPO,NUMERO,NOMBRE,PROYECTO,SEMESTRE,ANNO,REPOSITORIO,REPO_OWNER');
+          $query = $this->db->get('grupo');
+
+          return $query->result();
+
+     }
+
+     function get_integrantes($id_grupo){
+          $this->db->where('ID_GRUPO',$id_grupo);
+          $this->db->select('MAIL_ALUMNO');
+          $query = $this->db->get('alumno_grupo');
+
+          return $query->result();
      }
 
      function get_repo_info($id_grupo){
@@ -30,7 +50,7 @@ class grupo_model extends CI_Model {
           $this->db->where('ID_GRUPO',$id_grupo);
           $this->db->select('ID_SECCION');
 
-          $query = $this->db->get('alumno_grupo');
+          $query = $this->db->get('grupo');
 
           $id_seccion = $query->row()->ID_SECCION;
 

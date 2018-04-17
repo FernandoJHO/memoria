@@ -1,6 +1,6 @@
 <?php
 
-class codigofuente_model extends CI_Model {
+class Codigofuente_model extends CI_Model {
 
      function __construct()
      {

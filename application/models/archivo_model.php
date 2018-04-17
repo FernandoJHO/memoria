@@ -1,6 +1,6 @@
 <?php
 
-class archivo_model extends CI_Model {
+class Archivo_model extends CI_Model {
 
      function __construct()
      {

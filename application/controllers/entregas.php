@@ -245,9 +245,19 @@ class Entregas extends CI_Controller
           $upload = new SaveFile();
           $upload_result = $upload->upload_source_code($archivo_contenido,$user_data['año'],$user_data['semestre'],$user_data['numero_grupo'],$n_entrega,$seccion_grupo,$id_entrega,$user_data['id_grupo']);
 
+          $integrantes = $this->grupo_model->get_integrantes($user_data['id_grupo']);
+
+
           if( count($upload_result) == count($archivo_contenido) ){
                foreach($upload_result as $upload){
                     $this->codigofuente_model->new_file($upload['nombre_archivo'],$upload['ruta'],$upload['id_grupo'],$upload['id_entrega']);
+               }
+
+               foreach($integrantes as $integrante){
+                    $mail_alumno = $integrante->MAIL_ALUMNO;
+                    $commits = ($this->alumno_model->get_commits($mail_alumno))->COMMITS;
+
+                    $this->entrega_model->set_entrega_commits($mail_alumno,$id_entrega,$commits);
                }
                echo json_encode("Ok");
           }    
@@ -402,5 +412,130 @@ class Entregas extends CI_Controller
 
           return $data;
      }
+
+
+     //////////////////////////////////////////////               PROFESOR                 //////////////////////////////////////////////////////////
+
+     public function verEntregas($id_grupo){
+          
+          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor'){
+
+               $entregas = $this->entregas_realizadas(intval($id_grupo));
+
+               //$integrantes_commits = $this->get_integrantes_commits(intval($id_grupo));
+
+               $integrantes_entregas_commits = $this->get_entrega_integrante_commits(intval($id_grupo));
+
+               $datos = Array(
+                    'nombre' => $this->session->userdata('nombre'),
+                    'apellido' =>$this->session->userdata('apellido'),
+                    'mail' => $this->session->userdata('mail'),
+                    'rol' => $this->session->userdata('rol'),
+                    'entregas' => $entregas,
+                    //'integrantes_commits' => $integrantes_commits
+                    'integrantes_entregas_commits' => $integrantes_entregas_commits
+                    );
+
+               $this->load->view('entregas_realizadas',$datos);
+
+          }
+
+
+     }
+
+     public function entregas_realizadas($id_grupo){
+
+          $entregas = array();
+          $aux = array();
+
+          $result_query_codigos = $this->entrega_model->ver_entregas_codigo_realizadas($id_grupo);
+          $result_query_archivos = $this->entrega_model->ver_entregas_archivo_realizadas($id_grupo);
+
+          foreach($result_query_codigos as $entrega_codigo){
+               $aux['id'] = $entrega_codigo->ID_ENTREGA;
+               $aux['numero'] = $entrega_codigo->NUMERO;
+               $aux['descripcion'] = $entrega_codigo->DESCRIPCION;
+               $aux['codigofuente'] = $entrega_codigo->CODIGO_FUENTE;
+
+               array_push($entregas,$aux);
+          }
+
+          foreach($result_query_archivos as $entrega_archivo){
+               $aux['id'] = $entrega_archivo->ID_ENTREGA;
+               $aux['numero'] = $entrega_archivo->NUMERO;
+               $aux['descripcion'] = $entrega_archivo->DESCRIPCION;
+               $aux['codigofuente'] = $entrega_archivo->CODIGO_FUENTE;
+
+               array_push($entregas,$aux);
+          }
+
+          return array_unique($entregas, SORT_REGULAR);
+
+     }
+
+     public function get_entrega_integrante_commits($id_grupo){
+          $integrantes = $this->grupo_model->get_integrantes($id_grupo);
+          $integrante_commits = array();
+          $aux = array();
+
+          foreach($integrantes as $integrante){
+               $mail_alumno = $integrante->MAIL_ALUMNO;
+               $alumno = $this->alumno_model->get_nombre($mail_alumno);
+               $nombre_alumno = $alumno->NOMBRE.' '.$alumno->APELLIDO;
+               $entrega_commits = $this->get_entregas_commits($mail_alumno);
+
+               $aux['nombre'] = $nombre_alumno;
+               $aux['mail'] = $mail_alumno;
+               $aux['entrega_commits'] = $entrega_commits;
+
+               array_push($integrante_commits,$aux);
+          }
+
+          return $integrante_commits;
+     }
+
+     public function get_entregas_commits($mail_alumno){
+          $entregas_commits = array();
+          $aux = array();
+
+          $result_query = $this->entrega_model->get_entrega_commits($mail_alumno);
+
+          foreach($result_query as $entrega_commits){
+               $aux['id_entrega'] = $entrega_commits->ID_ENTREGA;
+               $aux['commits'] = $entrega_commits->COMMITS;
+
+               array_push($entregas_commits,$aux);
+          }
+
+          return $entregas_commits;
+     }
+
+     /*public function get_integrantes_commits($id_grupo){
+          $integrantes = $this->grupo_model->get_integrantes($id_grupo);
+          $integrante_commits = array();
+          $aux = array();
+
+          foreach($integrantes as $integrante){
+               $mail_alumno = $integrante->MAIL_ALUMNO;
+               $alumno = $this->alumno_model->get_nombre($mail_alumno);
+               $nombre_alumno = $alumno->NOMBRE.' '.$alumno->APELLIDO;
+               $commits = ($this->alumno_model->get_commits($mail_alumno))->COMMITS;
+
+               $aux['nombre'] = $nombre_alumno;
+               $aux['mail'] = $mail_alumno;
+               if( $commits==NULL ){
+                    $aux['commits'] = "0";
+               }
+               else{
+                    $aux['commits'] = $commits;
+               }
+
+               array_push($integrante_commits,$aux);
+          }
+
+          return $integrante_commits;
+     } */
+
+     //////////////////////////////////////////////               PROFESOR                 //////////////////////////////////////////////////////////
 
 }
