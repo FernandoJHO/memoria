@@ -135,7 +135,7 @@
                     <div class="content">
                         <div class="container-fluid">
                             <div class="row">
-                                <a href="application/uploads/entregas/modelo.pdf" class="btn btn-primary" target="_blank"> Clickeeeeeeeeeeeeeeeeeee </a>
+                                
                             </div>
                         </div>
                     </div>
