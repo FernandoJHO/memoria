@@ -81,7 +81,7 @@ class Codigos extends CI_Controller {
                     'rol' => $this->session->userdata('rol')
                     ); */
 
-     		$this->load->view('codigos',$datos);
+     		$this->load->view('alumno/codigos',$datos);
           }
 	}
 

@@ -29,7 +29,7 @@ class Secciones extends CI_Controller {
                     'secciones' => $secciones
                     );
 
-               $this->load->view('secciones',$datos);
+               $this->load->view('profesor/secciones',$datos);
 
           }
           else{
@@ -44,7 +44,7 @@ class Secciones extends CI_Controller {
                          'secciones' => $secciones
                          );
 
-                    $this->load->view('secciones_coordinador',$datos);
+                    $this->load->view('coordinador/secciones_coordinador',$datos);
 
                }
           }

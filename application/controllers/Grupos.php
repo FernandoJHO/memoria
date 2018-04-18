@@ -42,7 +42,7 @@ class Grupos extends CI_Controller {
                     'rol' => $this->session->userdata('rol'),
                     'grupos' => $grupos
                     );
-               $this->load->view('grupos_all',$datos);
+               $this->load->view('profesor/grupos_all',$datos);
           }
           else{
                if( $this->session->userdata('coordinador') ){
@@ -56,7 +56,7 @@ class Grupos extends CI_Controller {
                          'grupos' => $grupos
                          );
 
-                    $this->load->view('grupos_all_coordinador',$datos);
+                    $this->load->view('coordinador/grupos_all_coordinador',$datos);
 
                }
           }

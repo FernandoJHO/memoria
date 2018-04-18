@@ -61,7 +61,7 @@ class Entregas extends CI_Controller
                          );
                }
 
-               $this->load->view('entregas',$datos);
+               $this->load->view('alumno/entregas',$datos);
 
           }
      }
@@ -443,7 +443,7 @@ class Entregas extends CI_Controller
                     'numero_grupo' => $n_grupo
                     );
 
-               $this->load->view('entregas_realizadas',$datos);
+               $this->load->view('profesor/entregas_realizadas',$datos);
 
           }
 
@@ -463,7 +463,7 @@ class Entregas extends CI_Controller
                          'numero_grupo' => $n_grupo
                          );
 
-                    $this->load->view('entregas_realizadas_coordinador',$datos);
+                    $this->load->view('coordinador/entregas_realizadas_coordinador',$datos);
 
                }
           }

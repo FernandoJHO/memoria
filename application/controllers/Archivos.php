@@ -39,7 +39,7 @@ class Archivos extends CI_Controller {
                     'numero_entrega' => $n_entrega
                     );
 
-               $this->load->view('ver_archivos',$datos);
+               $this->load->view('profesor/ver_archivos',$datos);
           }
           else{
                if( $this->session->userdata('coordinador') ){
@@ -56,7 +56,7 @@ class Archivos extends CI_Controller {
                          'numero_entrega' => $n_entrega
                          );
 
-                    $this->load->view('ver_archivos_coordinador',$datos);
+                    $this->load->view('coordinador/ver_archivos_coordinador',$datos);
 
                }
           }

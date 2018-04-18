@@ -26,7 +26,7 @@ class MainAlumno extends CI_Controller {
                     'rol' => $this->session->userdata('rol')
                     );
 
-     		$this->load->view('main_alumno',$datos);
+     		$this->load->view('alumno/main_alumno',$datos);
           }
 	}
 

@@ -53,7 +53,7 @@ class Github extends CI_Controller {
                          );   
                }
 
-		   $this->load->view('github',$datos);
+		   $this->load->view('alumno/github',$datos);
           }
 	}
 

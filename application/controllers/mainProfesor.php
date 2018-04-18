@@ -25,7 +25,7 @@ class MainProfesor extends CI_Controller {
                     'rol' => $this->session->userdata('rol')
                     );
 
-               $this->load->view('main_profesor',$datos);
+               $this->load->view('profesor/main_profesor',$datos);
           }
           else{
                if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') ){
@@ -37,7 +37,7 @@ class MainProfesor extends CI_Controller {
                          'rol' => $this->session->userdata('rol').' (Coordinador)'
                          );
 
-                    $this->load->view('main_coordinador',$datos); 
+                    $this->load->view('coordinador/main_coordinador',$datos); 
                }
           }
      }

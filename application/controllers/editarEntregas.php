@@ -31,7 +31,7 @@ class EditarEntregas extends CI_Controller {
                'entregas' => $entregas
                );
 
-              $this->load->view('editar_entregas',$datos);
+              $this->load->view('coordinador/editar_entregas',$datos);
          }
 
      }

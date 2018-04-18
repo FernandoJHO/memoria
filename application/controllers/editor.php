@@ -50,7 +50,7 @@ class Editor extends CI_Controller {
 				'archivo' => $archivo
 				);
 
-			$this->load->view('editor',$data);
+			$this->load->view('alumno/editor',$data);
 		}
 	}
 

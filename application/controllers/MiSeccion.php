@@ -29,7 +29,7 @@ class MiSeccion extends CI_Controller {
                     'secciones' => $secciones
                     );
 
-               $this->load->view('mi_seccion',$datos);
+               $this->load->view('profesor/mi_seccion',$datos);
 
           }
      }
