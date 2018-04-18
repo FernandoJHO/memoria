@@ -416,31 +416,93 @@ class Entregas extends CI_Controller
 
      //////////////////////////////////////////////               PROFESOR                 //////////////////////////////////////////////////////////
 
-     public function verEntregas($id_grupo){
+     public function verEntregas($id_grupo,$n_grupo){
           
-          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor'){
+          $entregas = $this->entregas_realizadas(intval($id_grupo));
+          $integrantes_entregas_commits = $this->get_entrega_integrante_commits(intval($id_grupo));
 
-               $entregas = $this->entregas_realizadas(intval($id_grupo));
+          $entregas_final = $this->join_entregas_integrantes_commits($entregas,$integrantes_entregas_commits);
+
+          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador')){
+
+               //$entregas = $this->entregas_realizadas(intval($id_grupo));
 
                //$integrantes_commits = $this->get_integrantes_commits(intval($id_grupo));
 
-               $integrantes_entregas_commits = $this->get_entrega_integrante_commits(intval($id_grupo));
+               //$integrantes_entregas_commits = $this->get_entrega_integrante_commits(intval($id_grupo));
 
                $datos = Array(
                     'nombre' => $this->session->userdata('nombre'),
                     'apellido' =>$this->session->userdata('apellido'),
                     'mail' => $this->session->userdata('mail'),
                     'rol' => $this->session->userdata('rol'),
-                    'entregas' => $entregas,
+                    'entregas' => $entregas_final,
                     //'integrantes_commits' => $integrantes_commits
-                    'integrantes_entregas_commits' => $integrantes_entregas_commits
+                    //'integrantes_entregas_commits' => $integrantes_entregas_commits,
+                    'id_grupo' => $id_grupo,
+                    'numero_grupo' => $n_grupo
                     );
 
                $this->load->view('entregas_realizadas',$datos);
 
           }
 
+          else{
+               if( $this->session->userdata('coordinador') ){
+                    //$entregas = $this->entregas_realizadas(intval($id_grupo));
+                    //$integrantes_entregas_commits = $this->get_entrega_integrante_commits(intval($id_grupo));
 
+                    $datos = Array(
+                         'nombre' => $this->session->userdata('nombre'),
+                         'apellido' =>$this->session->userdata('apellido'),
+                         'mail' => $this->session->userdata('mail'),
+                         'rol' => $this->session->userdata('rol').' (Coordinador)',
+                         'entregas' => $entregas_final,
+                         //'integrantes_entregas_commits' => $integrantes_entregas_commits,
+                         'id_grupo' => $id_grupo,
+                         'numero_grupo' => $n_grupo
+                         );
+
+                    $this->load->view('entregas_realizadas_coordinador',$datos);
+
+               }
+          }
+
+
+     }
+
+     public function join_entregas_integrantes_commits($entregas,$integrantes_entregas_commits){
+
+          $entregas_final = array();
+          $aux = array();
+          $aux2 = array();
+          $aux3 = array();
+
+          foreach($entregas as $entrega){
+               $aux['id'] = $entrega['id'];
+               $aux['numero'] = $entrega['numero'];
+               $aux['descripcion'] = $entrega['descripcion'];
+               $aux['codigofuente'] = $entrega['codigofuente'];
+               if($entrega['codigofuente']){
+                    foreach($integrantes_entregas_commits as $integrante_entregas_commits){
+                         foreach($integrante_entregas_commits['entrega_commits'] as $entrega_commits){
+                              if($entrega_commits['id_entrega']==$entrega['id']){
+                                   $aux2['nombre'] = $integrante_entregas_commits['nombre'];
+                                   $aux2['commits'] = $entrega_commits['commits'];
+                                   array_push($aux3,$aux2);
+                                   $aux2 = array();
+                              }
+                         }
+                    }
+                    $aux['alumno_commits'] = $aux3;
+                    $aux3 = array();
+               }
+               array_push($entregas_final,$aux);
+               $aux = array();
+
+          }
+
+          return $entregas_final;
      }
 
      public function entregas_realizadas($id_grupo){

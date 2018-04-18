@@ -30,7 +30,7 @@ class Grupos extends CI_Controller {
 
      public function all($id_seccion){
 
-          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor'){
+          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador')){
 
                $grupos = $this->get_integrantes( $this->get_grupos(intval($id_seccion)) );
 
@@ -43,6 +43,22 @@ class Grupos extends CI_Controller {
                     'grupos' => $grupos
                     );
                $this->load->view('grupos_all',$datos);
+          }
+          else{
+               if( $this->session->userdata('coordinador') ){
+                    $grupos = $this->get_integrantes( $this->get_grupos(intval($id_seccion)) );
+
+                    $datos = Array(
+                         'nombre' => $this->session->userdata('nombre'),
+                         'apellido' =>$this->session->userdata('apellido'),
+                         'mail' => $this->session->userdata('mail'),
+                         'rol' => $this->session->userdata('rol').' (Coordinador)',
+                         'grupos' => $grupos
+                         );
+
+                    $this->load->view('grupos_all_coordinador',$datos);
+
+               }
           }
 
      }
@@ -87,11 +103,16 @@ class Grupos extends CI_Controller {
           foreach($grupos as $grupo){
                $result_query = $this->grupo_model->get_integrantes(intval($grupo['id']));
 
-               foreach($result_query as $integrante){
-                    $mail_alumno = $integrante->MAIL_ALUMNO;
-                    $alumno = $this->alumno_model->get_nombre($mail_alumno);
-                    $nombre_alumno = $alumno->NOMBRE.' '.$alumno->APELLIDO;
-                    array_push($integrantes,$nombre_alumno.' ('.$mail_alumno.')');
+               if(!empty($result_query)){
+                    foreach($result_query as $integrante){
+                         $mail_alumno = $integrante->MAIL_ALUMNO;
+                         $alumno = $this->alumno_model->get_nombre($mail_alumno);
+                         $nombre_alumno = $alumno->NOMBRE.' '.$alumno->APELLIDO;
+                         array_push($integrantes,$nombre_alumno.' ('.$mail_alumno.')');
+                    }
+               }
+               else{
+                    $integrantes = array();
                }
 
                
@@ -109,6 +130,17 @@ class Grupos extends CI_Controller {
 
           return $grupos_final;
 
+     }
+
+     public function delete_grupo(){
+          $id_grupo = intval( $this->input->post('id_grupo') );
+
+          if( $this->grupo_model->delete_grupo($id_grupo) ){
+               echo json_encode("Ok");
+          }
+          else{
+
+          }
      }
 
 }

@@ -116,11 +116,11 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item">
-                                <a href="<?php echo base_url();?>miSeccion">
+                                <a href="<?php echo base_url();?>editarEntregas">
                                     <i class="la la-suitcase"></i>
-                                    <p>Mi sección</p>
+                                    <p>Entregas</p>
                                 </a>
-                            </li>
+                            </li> 
                             <li class="nav-item">
                                 <a href="<?php echo base_url();?>secciones">
                                     <i class="la la-group"></i>
@@ -135,7 +135,7 @@
                     <div class="content">
                         <div id="refresh" class="container-fluid">
                             <h4 class="page-title">Grupos <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newGroupModal"><i class="la la-plus"></i> Crear</button></h4>
-                            
+                        
                             <?php if(!count($grupos)): ?>
                                 <p class="text-danger" align="center"> La sección aún no cuenta con grupos formados para el actual semestre. </p>
                             <?php else: ?>
@@ -167,7 +167,9 @@
 
                                 <?php endforeach; ?>
                                 </div>
-                            <?php endif; ?>
+                                
+                            <?php endif; ?> 
+
                         </div>
                     </div>
                 </div>
@@ -220,6 +222,5 @@ function delete_grupo(idgrupo,ngrupo){
 }
 
 </script>
-
 
 </html>

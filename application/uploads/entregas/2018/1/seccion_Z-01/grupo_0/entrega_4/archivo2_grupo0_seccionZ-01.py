@@ -12,5 +12,3 @@ while n <= 100:
     n += 1
 print '\nLa suma de los pares es igual a %i' % p
 print 'La suma de los impares es igual a %i' % i
-
-print "hola"

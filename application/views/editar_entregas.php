@@ -120,7 +120,13 @@
                                     <i class="la la-suitcase"></i>
                                     <p>Entregas</p>
                                 </a>
-                            </li>                      
+                            </li>  
+                            <li class="nav-item">
+                                <a href="secciones">
+                                    <i class="la la-group"></i>
+                                    <p>Secciones</p>
+                                </a>
+                            </li>                          
                         </ul>
                     </div>
                 </div>

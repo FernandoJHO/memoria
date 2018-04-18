@@ -19,4 +19,15 @@ class Codigofuente_model extends CI_Model {
      	$this->db->insert('codigofuente',$data);
      }
 
+     public function get_files($id_entrega, $id_grupo){
+          $this->db->select('NOMBRE_ARCHIVO, RUTA');
+          $this->db->from('codigofuente');
+          $this->db->where('ID_GRUPO', $id_grupo);
+          $this->db->where('ID_ENTREGA', $id_entrega);
+
+          $query = $this->db->get();
+
+          return $query->result();
+     }
+
 }

@@ -10,10 +10,6 @@
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/ready.css">
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/demo.css">
 
-        <script src="<?php echo base_url();?>lib/alertify/alertify.min.js"></script>
-        <link rel="stylesheet" href="<?php echo base_url();?>lib/alertify/alertify.min.css">
-        <script src="<?php echo base_url();?>lib/js/utils.js"></script>
-
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/popper.min.js"></script>
@@ -28,18 +24,81 @@
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/ready.min.js"></script>
 
-        <style>
-        .alertify-notifier .ajs-message.ajs-error{
-            color: #fff;
-            background: rgba(217, 92, 92, 0,95);
-            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+        <script type="text/javascript">
+
+        function generarGrafico(id_container, integrante_commits){
+
+            //alert("flag");
+
+            var container = '#grafico'+id_container;
+            var nombres = [];
+            var commits = [];
+            var datos_finales = [];
+
+
+
+            $.each(integrante_commits, function( ){
+                $.each(this, function(key,value){
+                    if(key=="nombre"){
+                        nombres.push(value);
+                    }
+                    if(key=="commits"){
+                        commits.push(parseInt(value));
+                    }
+                });
+            }); 
+
+
+
+            for(var i=0; i<nombres.length; i++){
+                datos_finales.push({
+                    name: nombres[i],
+                    y: commits[i]
+                });
+            }
+
+
+            $(container).highcharts({
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Aporte por alumno'
+                },
+                tooltip: {
+                    
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Commits',
+                    colorByPoint: true,
+                    data: datos_finales
+                }]
+            });
+
+            
+
         }
-        .alertify-notifier .ajs-message.ajs-success{
-            color: #fff;
-            background: rgba(217, 92, 92, 0,95);
-            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
-        }
-        </style>
+
+        </script>
 
     </head>
     <body>
@@ -116,110 +175,72 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item">
-                                <a href="<?php echo base_url();?>miSeccion">
+                                <a href="<?php echo base_url();?>editarEntregas">
                                     <i class="la la-suitcase"></i>
-                                    <p>Mi sección</p>
+                                    <p>Entregas</p>
                                 </a>
-                            </li>
+                            </li> 
                             <li class="nav-item">
                                 <a href="<?php echo base_url();?>secciones">
                                     <i class="la la-group"></i>
                                     <p>Secciones</p>
                                 </a>
-                            </li>                          
+                            </li>                            
                         </ul>
                     </div>
                 </div>
 
                 <div class="main-panel">
                     <div class="content">
-                        <div id="refresh" class="container-fluid">
-                            <h4 class="page-title">Grupos <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newGroupModal"><i class="la la-plus"></i> Crear</button></h4>
-                            
-                            <?php if(!count($grupos)): ?>
-                                <p class="text-danger" align="center"> La sección aún no cuenta con grupos formados para el actual semestre. </p>
+                        <div class="container-fluid">
+                            <h4 class="page-title">Entregas del Grupo <?php echo $numero_grupo; ?></h4>
+
+                            <?php if(!count($entregas)): ?>
+                                <p class="text-danger" align="center"> El grupo aún no ha realizado entregas. </p>
                             <?php else: ?>
-
                                 <div class="row">
-                                <?php foreach($grupos as $grupo): ?>
+                                <?php foreach($entregas as $entrega): ?>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <div class="card">
                                             <div class="card-header">
-                                                <div class="card-title" align="center"> Grupo <?php echo $grupo['numero']; ?>  </div>
+                                                <div class="card-title" align="center"> Entrega <?php echo $entrega['numero']; ?> </div>
+                                                <p align="center"> <b> <?php echo $entrega['descripcion']; ?> </b> </p>
                                             </div>
-                                            <div class="card-body">
-                                                <p align="center"> <b>Integrantes</b></p>
-                                                <?php foreach($grupo['integrantes'] as $integrante): ?>
-                                                    <p align="center"> <?php echo $integrante; ?> </p>
-                                                <?php endforeach; ?>
+                                            
                                                 
-                                                <div class="card-action">
-                                                    <a href="<?php echo base_url();?>entregas/verEntregas/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" style="width:100%;">Ver entregas</a>
-                                                    <p></p>
-                                                    <a href="<?php echo base_url();?>./application/uploads/entregas/modelo.pdf" class="btn btn-primary" style="width:100%;" target="_blank">Ver proyecto</a>
-                                                    <p></p>
-                                                    <button class="btn btn-danger" style="width:100%;" onclick="delete_grupo('<?php echo $grupo['id']; ?>','<?php echo $grupo['numero']; ?>')">Eliminar</button>
+                                            <?php if($entrega['codigofuente']): ?>
+                                                <?php if(count($entrega['alumno_commits'])): ?>
+                                                <div id="grafico<?php echo $entrega['numero']; ?>" class="card-body">
+                                    
+                                               
+                                                    <script>
+                                                        generarGrafico(<?php echo $entrega['numero']; ?>, <?php echo json_encode($entrega['alumno_commits']); ?>);
+                                                    </script>
+
                                                 </div>
-                                            </div>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+
+                                                <div class="card-action">
+                                                    <a href="<?php echo base_url();?>archivos/ver/<?php echo $entrega['id']; ?>/<?php echo $id_grupo; ?>/<?php echo $entrega['numero']; ?>" class="btn btn-primary" style="width:100%;"> Ver archivos </a>
+                                                </div>
+                                            
+                                            
                                         </div>
                                     </div>
 
                                 <?php endforeach; ?>
+
                                 </div>
-                            <?php endif; ?>
+                            <?php endif;?>
                         </div>
                     </div>
                 </div>
 
-        <div class="modal fade" id="newGroupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Crear grupo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <form method="post" action="">
-                  <div class="modal-body">
-                    <!--<div class="form-group">
-                        <label for="email">Nombre del archivo (sin extensión)</label>
-                        <input type="text" class="form-control" id="user" name="nombre_archivo" placeholder="Ej.: nombrearchivo1" required="true">
-                    </div> -->
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success">Crear</button>
-                  </div>
-              </form>
-            </div>
-          </div>
-        </div>
-
-                
     </body>
 
-<script type="text/javascript">
 
-alertify.defaults.transition = "slide";
-alertify.defaults.theme.ok = "btn btn-success";
-alertify.defaults.theme.cancel = "btn btn-danger";
-
-function delete_grupo(idgrupo,ngrupo){
-    var url = '<?php echo base_url() ?>grupos/delete_grupo';
-
-    alertify.set('notifier','position', 'top-right');
-
-    alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar el grupo '+ngrupo.bold()+ '?', function(){ 
-        alertify.success("Eliminando...");
-        deleteGrupo(idgrupo,url);
-        }
-        , function(){
-        }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
-}
-
-</script>
 
 
 </html>

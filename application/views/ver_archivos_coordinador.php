@@ -10,10 +10,6 @@
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/ready.css">
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/demo.css">
 
-        <script src="<?php echo base_url();?>lib/alertify/alertify.min.js"></script>
-        <link rel="stylesheet" href="<?php echo base_url();?>lib/alertify/alertify.min.css">
-        <script src="<?php echo base_url();?>lib/js/utils.js"></script>
-
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/popper.min.js"></script>
@@ -27,19 +23,6 @@
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/chart-circle/circles.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/ready.min.js"></script>
-
-        <style>
-        .alertify-notifier .ajs-message.ajs-error{
-            color: #fff;
-            background: rgba(217, 92, 92, 0,95);
-            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
-        }
-        .alertify-notifier .ajs-message.ajs-success{
-            color: #fff;
-            background: rgba(217, 92, 92, 0,95);
-            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
-        }
-        </style>
 
     </head>
     <body>
@@ -116,11 +99,11 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item">
-                                <a href="<?php echo base_url();?>miSeccion">
+                                <a href="<?php echo base_url();?>editarEntregas">
                                     <i class="la la-suitcase"></i>
-                                    <p>Mi sección</p>
+                                    <p>Entregas</p>
                                 </a>
-                            </li>
+                            </li> 
                             <li class="nav-item">
                                 <a href="<?php echo base_url();?>secciones">
                                     <i class="la la-group"></i>
@@ -133,93 +116,63 @@
 
                 <div class="main-panel">
                     <div class="content">
-                        <div id="refresh" class="container-fluid">
-                            <h4 class="page-title">Grupos <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newGroupModal"><i class="la la-plus"></i> Crear</button></h4>
-                            
-                            <?php if(!count($grupos)): ?>
-                                <p class="text-danger" align="center"> La sección aún no cuenta con grupos formados para el actual semestre. </p>
-                            <?php else: ?>
+                        <div class="container-fluid">
+                            <h4 class="page-title">Archivos de la Entrega <?php echo $numero_entrega; ?></h4>
+
 
                                 <div class="row">
-                                <?php foreach($grupos as $grupo): ?>
+                                <?php foreach($codigosfuente as $codigofuente): ?>
 
                                     <div class="col-md-3">
                                         <div class="card">
-                                            <div class="card-header">
-                                                <div class="card-title" align="center"> Grupo <?php echo $grupo['numero']; ?>  </div>
-                                            </div>
                                             <div class="card-body">
-                                                <p align="center"> <b>Integrantes</b></p>
-                                                <?php foreach($grupo['integrantes'] as $integrante): ?>
-                                                    <p align="center"> <?php echo $integrante; ?> </p>
-                                                <?php endforeach; ?>
-                                                
+                                                <p align="center"> <b> <?php echo $codigofuente['nombre']; ?> </b> </p>
+
                                                 <div class="card-action">
-                                                    <a href="<?php echo base_url();?>entregas/verEntregas/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" style="width:100%;">Ver entregas</a>
-                                                    <p></p>
-                                                    <a href="<?php echo base_url();?>./application/uploads/entregas/modelo.pdf" class="btn btn-primary" style="width:100%;" target="_blank">Ver proyecto</a>
-                                                    <p></p>
-                                                    <button class="btn btn-danger" style="width:100%;" onclick="delete_grupo('<?php echo $grupo['id']; ?>','<?php echo $grupo['numero']; ?>')">Eliminar</button>
+                                                    <form method="post" action="<?php echo base_url();?>archivos/download">
+
+                                                        <input type="hidden" name="ruta" value="<?php echo $codigofuente['ruta']; ?>">
+                                                        <button type="submit" class="btn btn-primary" style="width:100%;">Descargar</button>
+
+                                                    </form>
                                                 </div>
+                                            
                                             </div>
                                         </div>
                                     </div>
 
                                 <?php endforeach; ?>
+
+                                <?php foreach($archivos as $archivo): ?>
+
+                                    <div class="col-md-3">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <p align="center"> <b> <?php echo $archivo['nombre']; ?> </b> </p>
+
+                                                <div class="card-action">
+
+                                                    <form method="post" action="<?php echo base_url();?>archivos/download">
+
+                                                        <input type="hidden" name="ruta" value="<?php echo $archivo['ruta']; ?>">
+                                                        <button type="submit" class="btn btn-primary" style="width:100%;">Descargar</button>
+
+                                                    </form>
+                                                </div>
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <?php endforeach; ?>
+
                                 </div>
-                            <?php endif; ?>
+
                         </div>
                     </div>
                 </div>
 
-        <div class="modal fade" id="newGroupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Crear grupo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <form method="post" action="">
-                  <div class="modal-body">
-                    <!--<div class="form-group">
-                        <label for="email">Nombre del archivo (sin extensión)</label>
-                        <input type="text" class="form-control" id="user" name="nombre_archivo" placeholder="Ej.: nombrearchivo1" required="true">
-                    </div> -->
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success">Crear</button>
-                  </div>
-              </form>
-            </div>
-          </div>
-        </div>
 
                 
     </body>
-
-<script type="text/javascript">
-
-alertify.defaults.transition = "slide";
-alertify.defaults.theme.ok = "btn btn-success";
-alertify.defaults.theme.cancel = "btn btn-danger";
-
-function delete_grupo(idgrupo,ngrupo){
-    var url = '<?php echo base_url() ?>grupos/delete_grupo';
-
-    alertify.set('notifier','position', 'top-right');
-
-    alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar el grupo '+ngrupo.bold()+ '?', function(){ 
-        alertify.success("Eliminando...");
-        deleteGrupo(idgrupo,url);
-        }
-        , function(){
-        }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
-}
-
-</script>
-
-
 </html>

@@ -80,7 +80,7 @@ class UploadFiles extends CI_Controller {
 
                 $ruta_bd = $dir.$nombre_archivo;
 
-                $this->archivo_model->new_file($ruta_bd,$id_grupo,$id_entrega);
+                $this->archivo_model->new_file($ruta_bd,$id_grupo,$id_entrega,$nombre_archivo);
 
                 return true;
 

@@ -124,8 +124,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#">
-                                    <i class="la la-suitcase"></i>
+                                <a href="secciones">
+                                    <i class="la la-group"></i>
                                     <p>Secciones</p>
                                 </a>
                             </li>                          

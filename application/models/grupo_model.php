@@ -60,4 +60,11 @@ class Grupo_model extends CI_Model {
           return $query2->row();
      }
 
+     public function delete_grupo($id_grupo){
+          $this->db->where('ID_GRUPO', $id_grupo);
+          $this->db->delete('grupo');
+
+          return ($this->db->affected_rows() > 0);
+     }
+
 }
