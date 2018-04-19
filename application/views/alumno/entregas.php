@@ -146,6 +146,12 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item">
+                                <a href="<?php echo base_url();?>grupos/miGrupo">
+                                    <i class="la la-group"></i>
+                                    <p>Mi grupo</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="<?php echo base_url();?>github">
                                     <i class="la la-github"></i>
                                     <p>Github</p>

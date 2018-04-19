@@ -136,6 +136,12 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item">
+                                <a href="grupos/miGrupo">
+                                    <i class="la la-group"></i>
+                                    <p>Mi grupo</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="github">
                                     <i class="la la-github"></i>
                                     <p>Github</p>

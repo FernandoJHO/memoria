@@ -78,7 +78,6 @@ class SaveFile {
 		$dir = './application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/';
 
 		$result = array();
-		$aux = array();
 
 		$config['upload_path']          = $dir;
 		$config['allowed_types']        = 'gif|jpg|png|pdf|jpeg|mp4|3gp|flv';
@@ -97,10 +96,40 @@ class SaveFile {
 			$result['id_grupo'] = $id_grupo;
 			$result['id_entrega'] = $id_entrega;
 
-			//array_push($result,$aux);
 		}
 
 		return $result;
+
+	}
+
+	public function upload_proyecto($id_grupo,$archivo){
+
+          if(is_dir('./application/uploads/proyectos/'.$id_grupo)==FALSE){
+               mkdir('./application/uploads/proyectos/'.$id_grupo.'/');
+          }
+
+          $dir = './application/uploads/proyectos/'.$id_grupo.'/';
+
+          $result = array();
+
+          $config['upload_path']          = $dir;
+          $config['allowed_types']        = 'pdf';
+
+          $CI =& get_instance();
+
+          $CI->load->library('upload', $config);
+
+          if ($CI->upload->do_upload($archivo)){
+          	$upload_data = $CI->upload->data();
+          	$nombre_archivo = $upload_data['file_name'];
+          	$ruta = $dir.$nombre_archivo;
+
+          	$result['nombre_archivo'] = $nombre_archivo;
+          	$result['ruta'] = $ruta;
+          	$result['id_grupo'] = $id_grupo;
+          }
+
+          return $result;
 
 	}
 

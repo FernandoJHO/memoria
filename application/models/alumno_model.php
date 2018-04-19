@@ -82,4 +82,12 @@ class Alumno_model extends CI_Model {
           return $query->row();
      }
 
+     function verifica_existe($mail){
+          $this->db->where("MAIL",$mail);
+
+          $query = $this->db->count_all_results('alumno');
+
+          return $query;
+     }
+
 }

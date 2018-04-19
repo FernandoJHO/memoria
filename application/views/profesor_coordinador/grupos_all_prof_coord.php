@@ -189,18 +189,33 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form method="post" action="">
-                  <div class="modal-body">
-                    <!--<div class="form-group">
-                        <label for="email">Nombre del archivo (sin extensión)</label>
-                        <input type="text" class="form-control" id="user" name="nombre_archivo" placeholder="Ej.: nombrearchivo1" required="true">
-                    </div> -->
-                  </div>
+              <form method="post" action="<?php echo base_url() ?>grupos/new_grupo/">
+                  <div id="container_form" class="modal-body">
+ 
+                    <div class="form-group">
+                        <label for="numero_grupo">Numero grupo</label>
+                        <select class="form-control" name="numero_grupo" required="true">
+                            <option disabled selected>Selecciona una opción...</option>
+                            <?php for($i=1;$i<=20;$i++): ?>
+                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                            <?php endfor; ?>
+                        </select>
+                    </div> 
+                    <div class="form-group">
+                        <label >Integrante</label>
+                        <input type="email" class="form-control" name="integrante_1">
+                    </div>             
+                  </div> 
+                  <input type="hidden" class="form-control" name="id_seccion" value="<?php echo $seccion; ?>">
+                  <div class="form-group">
+                    <button type="button" id="addfieldbtn" class="btn btn-success btn-xs">Añadir integrante</button>
+                  </div>   
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-success">Crear</button>
                   </div>
               </form>
+              
             </div>
           </div>
         </div>
@@ -226,6 +241,18 @@ function delete_grupo(idgrupo,ngrupo){
         , function(){
         }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
 }
+
+var aux = 2;
+
+$(document).ready(function() {
+    var wrapper = $("#container_form");
+    var add_button = $("#addfieldbtn");
+
+    $(add_button).click(function(e){
+        $(wrapper).append('<div class="form-group"> <label >Integrante</label> <input type="email" class="form-control" name="integrante_'+aux+'"> </div>');
+        aux++;
+    });
+}); 
 
 </script>
 

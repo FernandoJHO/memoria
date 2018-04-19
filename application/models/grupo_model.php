@@ -67,4 +67,65 @@ class Grupo_model extends CI_Model {
           return ($this->db->affected_rows() > 0);
      }
 
+     public function new_grupo($numero_grupo,$id_seccion,$año,$semestre){
+          $data = Array(
+               'NUMERO' => $numero_grupo,
+               'ID_SECCION' => $id_seccion,
+               'SEMESTRE' => $semestre,
+               'ANNO' => $año
+               );
+
+          $this->db->insert('grupo',$data);
+
+          return ($this->db->affected_rows() > 0);
+     }
+
+     public function add_integrante($id_grupo,$mail_alumno){
+          $data = Array(
+               'MAIL_ALUMNO' => $mail_alumno,
+               'ID_GRUPO' => $id_grupo
+               );   
+          $this->db->insert('alumno_grupo',$data);
+
+          return ($this->db->affected_rows() > 0);
+     }
+
+     public function get_idgrupo_by_number($numero_grupo,$id_seccion){
+          $this->db->where('NUMERO',$numero_grupo);
+          $this->db->where('ID_SECCION',$id_seccion);
+          $this->db->select('ID_GRUPO');
+
+          $query = $this->db->get('grupo');
+
+          return $query->row();
+     }
+
+     public function get_idgrupo_by_mail($mail_alumno){
+          $this->db->where('MAIL_ALUMNO',$mail_alumno);
+          $this->db->select('ID_GRUPO');
+
+          $query = $this->db->get('alumno_grupo');
+
+          return $query->row();
+     }
+
+     public function get_grupo_by_id($id_grupo){
+          $this->db->where('ID_GRUPO',$id_grupo);
+          $this->db->select('ID_GRUPO, NUMERO, NOMBRE, PROYECTO');
+
+          $query = $this->db->get('grupo');
+
+          return $query->row();
+     }
+
+     public function set_proyecto($id_grupo,$ruta_proyecto){
+          $data = Array(
+               'PROYECTO' => $ruta_proyecto
+               ); 
+
+          $this->db->where('ID_GRUPO',$id_grupo);      
+          $this->db->update('grupo',$data);
+
+          return ($this->db->affected_rows() > 0);
+     }
 }
