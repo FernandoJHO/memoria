@@ -369,13 +369,18 @@ class Entregas extends CI_Controller
 
                    $seccion_grupo = $this->get_seccion_grupo($user_data['id_grupo']);
 
+                   $upload = new SaveFile();
 
-                   if ( ! $this->do_file_upload($user_data['año'],$user_data['semestre'],$user_data['numero_grupo'],$n_entrega,$seccion_grupo,$id_entrega,$user_data['id_grupo'],$archivo)){
+                   $upload_result = $upload->upload_file($user_data['año'],$user_data['semestre'],$user_data['numero_grupo'],$n_entrega,$seccion_grupo,$id_entrega,$user_data['id_grupo'],$archivo);
+
+                   if( count($upload_result) ){
+                      $this->archivo_model->new_file($upload_result['ruta'],$upload_result['id_grupo'],$upload_result['id_entrega'],$upload_result['nombre_archivo']);
+                      $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Archivo subido con éxito</div>');
+                   }
+                   else{
                       $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo subir archivo</div>');
-                     }
-                     else{
-                       $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Archivo subido con éxito</div>');
-                     }
+                   }
+
                 }
                 else{
                     $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo subir archivo: La entrega ya caducó</div>');
@@ -384,50 +389,6 @@ class Entregas extends CI_Controller
                 redirect('entregas/all');
         }      
 
-        public function do_file_upload($año,$semestre,$grupo,$n_entrega,$seccion,$id_entrega,$id_grupo,$archivo){
-
-                if(is_dir('./application/uploads/entregas/'.$año)==FALSE){
-                 mkdir('./application/uploads/entregas/'.$año.'/');
-                }
-
-                if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre)==FALSE){
-                        mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/');
-                }
-
-                if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion)==FALSE){
-                        mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/');
-                }
-
-                if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo)==FALSE){
-                        mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/');
-                }
-
-                if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega)==FALSE){
-                         mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/');
-                }
-
-                $dir = './application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/';
-
-                $config['upload_path']          = $dir;
-                $config['allowed_types']        = 'gif|jpg|png|pdf|jpeg|mp4|3gp|flv';
-
-                $this->load->library('upload', $config);
-
-                if ( ! $this->upload->do_upload($archivo)){
-                        return false;
-                }
-
-                $upload_data = $this->upload->data();
-
-                $nombre_archivo = $upload_data['file_name'];
-
-                $ruta_bd = $dir.$nombre_archivo;
-
-                $this->archivo_model->new_file($ruta_bd,$id_grupo,$id_entrega,$nombre_archivo);
-
-                return true;
-
-          } 
 
 
      public function get_seccion_grupo($id_grupo){
