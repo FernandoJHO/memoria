@@ -211,7 +211,7 @@
                   </div> 
                   <input type="hidden" class="form-control" name="id_seccion" value="<?php echo $seccion; ?>">
                   <div class="form-group">
-                    <button type="button" id="addfieldbtn" class="btn btn-success btn-xs">Añadir integrante</button>
+                   <p align="center"> <button type="button" id="addfieldbtn" class="btn btn-success btn-xs"><i class="la la-plus"></i> Integrante</button> </p>
                   </div>   
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
