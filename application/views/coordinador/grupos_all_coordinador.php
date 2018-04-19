@@ -135,7 +135,8 @@
                     <div class="content">
                         <div id="refresh" class="container-fluid">
                             <h4 class="page-title">Grupos <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newGroupModal"><i class="la la-plus"></i> Crear</button></h4>
-                        
+                            <?php echo $this->session->flashdata('msg_mails'); ?>
+                            <?php echo $this->session->flashdata('msg_grupo'); ?>
                             <?php if(!count($grupos)): ?>
                                 <p class="text-danger" align="center"> La sección aún no cuenta con grupos formados para el actual semestre. </p>
                             <?php else: ?>
@@ -157,7 +158,9 @@
                                                 <div class="card-action">
                                                     <a href="<?php echo base_url();?>entregas/verEntregas/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" >Ver entregas</a>
                                                     
-                                                    <a href="<?php echo base_url();?>./application/uploads/entregas/modelo.pdf" class="btn btn-primary" target="_blank">Ver proyecto</a>
+                                                    <?php if($grupo['proyecto']!=NULL): ?>
+                                                        <a href="<?php echo base_url();?><?php echo $grupo['proyecto']; ?>" class="btn btn-primary" target="_blank">Ver proyecto</a>
+                                                    <?php endif; ?>
                                                     
                                                     <button class="btn btn-danger" onclick="delete_grupo('<?php echo $grupo['id']; ?>','<?php echo $grupo['numero']; ?>')">Eliminar</button>
                                                 </div>
@@ -183,18 +186,33 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form method="post" action="">
-                  <div class="modal-body">
-                    <!--<div class="form-group">
-                        <label for="email">Nombre del archivo (sin extensión)</label>
-                        <input type="text" class="form-control" id="user" name="nombre_archivo" placeholder="Ej.: nombrearchivo1" required="true">
-                    </div> -->
-                  </div>
+              <form method="post" action="<?php echo base_url() ?>grupos/new_grupo/">
+                  <div id="container_form" class="modal-body">
+ 
+                    <div class="form-group">
+                        <label for="numero_grupo">Numero grupo</label>
+                        <select class="form-control" name="numero_grupo" required="true">
+                            <option disabled selected>Selecciona una opción...</option>
+                            <?php for($i=1;$i<=20;$i++): ?>
+                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                            <?php endfor; ?>
+                        </select>
+                    </div> 
+                    <div class="form-group">
+                        <label >Integrante</label>
+                        <input type="email" class="form-control" name="integrante_1">
+                    </div>             
+                  </div> 
+                  <input type="hidden" class="form-control" name="id_seccion" value="<?php echo $seccion; ?>">
+                  <div class="form-group">
+                   <p align="center"> <button type="button" id="addfieldbtn" class="btn btn-success btn-xs"><i class="la la-plus"></i> Integrante</button> </p>
+                  </div>   
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-success">Crear</button>
                   </div>
               </form>
+              
             </div>
           </div>
         </div>
@@ -220,6 +238,18 @@ function delete_grupo(idgrupo,ngrupo){
         , function(){
         }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
 }
+
+var aux = 2;
+
+$(document).ready(function() {
+    var wrapper = $("#container_form");
+    var add_button = $("#addfieldbtn");
+
+    $(add_button).click(function(e){
+        $(wrapper).append('<div class="form-group"> <label >Integrante</label> <input type="email" class="form-control" name="integrante_'+aux+'"> </div>');
+        aux++;
+    });
+}); 
 
 </script>
 

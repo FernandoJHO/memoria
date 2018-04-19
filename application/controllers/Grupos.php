@@ -58,7 +58,8 @@ class Grupos extends CI_Controller {
                          'apellido' =>$this->session->userdata('apellido'),
                          'mail' => $this->session->userdata('mail'),
                          'rol' => 'Coordinador',
-                         'grupos' => $grupos
+                         'grupos' => $grupos,
+                         'seccion' => $id_seccion
                          );
 
                     $this->load->view('coordinador/grupos_all_coordinador',$datos);
@@ -150,7 +151,12 @@ class Grupos extends CI_Controller {
           }
 
           $sort = new Sort();
-          $grupos_final_sort = $sort->subval_sort($grupos_final,'numero');
+          if(count($grupos_final)){
+               $grupos_final_sort = $sort->subval_sort($grupos_final,'numero');
+          }
+          else{
+               $grupos_final_sort = array();
+          }
 
           return $grupos_final_sort;
 

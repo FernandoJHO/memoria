@@ -141,7 +141,8 @@
                     <div class="content">
                         <div id="refresh" class="container-fluid">
                             <h4 class="page-title">Grupos <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newGroupModal"><i class="la la-plus"></i> Crear</button></h4>
-                        
+                            <?php echo $this->session->flashdata('msg_mails'); ?>
+                            <?php echo $this->session->flashdata('msg_grupo'); ?>
                             <?php if(!count($grupos)): ?>
                                 <p class="text-danger" align="center"> La sección aún no cuenta con grupos formados para el actual semestre. </p>
                             <?php else: ?>
@@ -163,7 +164,9 @@
                                                 <div class="card-action">
                                                     <a href="<?php echo base_url();?>entregas/verEntregas/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" >Ver entregas</a>
                                                     
-                                                    <a href="<?php echo base_url();?>./application/uploads/entregas/modelo.pdf" class="btn btn-primary" target="_blank">Ver proyecto</a>
+                                                    <?php if($grupo['proyecto']!=NULL): ?>
+                                                        <a href="<?php echo base_url();?><?php echo $grupo['proyecto']; ?>" class="btn btn-primary" target="_blank">Ver proyecto</a>
+                                                    <?php endif; ?>
                                                     
                                                     <button class="btn btn-danger" onclick="delete_grupo('<?php echo $grupo['id']; ?>','<?php echo $grupo['numero']; ?>')">Eliminar</button>
                                                 </div>
