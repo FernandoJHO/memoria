@@ -30,7 +30,7 @@ class Grupos extends CI_Controller {
 
      public function all($id_seccion){
 
-          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador')){
+          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador')){
 
                $grupos = $this->get_integrantes( $this->get_grupos(intval($id_seccion)) );
 
@@ -45,19 +45,33 @@ class Grupos extends CI_Controller {
                $this->load->view('profesor/grupos_all',$datos);
           }
           else{
-               if( $this->session->userdata('coordinador') ){
+               if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
                     $grupos = $this->get_integrantes( $this->get_grupos(intval($id_seccion)) );
 
                     $datos = Array(
                          'nombre' => $this->session->userdata('nombre'),
                          'apellido' =>$this->session->userdata('apellido'),
                          'mail' => $this->session->userdata('mail'),
-                         'rol' => $this->session->userdata('rol').' (Coordinador)',
+                         'rol' => 'Coordinador',
                          'grupos' => $grupos
                          );
 
                     $this->load->view('coordinador/grupos_all_coordinador',$datos);
 
+               }
+               else{
+                    if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('profesor_coordinador') ){
+                         $grupos = $this->get_integrantes( $this->get_grupos(intval($id_seccion)) );
+                         $datos = Array(
+                              'nombre' => $this->session->userdata('nombre'),
+                              'apellido' =>$this->session->userdata('apellido'),
+                              'mail' => $this->session->userdata('mail'),
+                              'rol' => 'Profesor-Coordinador',
+                              'grupos' => $grupos
+                              );
+
+                         $this->load->view('profesor_coordinador/grupos_all_prof_coord',$datos);
+                    }
                }
           }
 

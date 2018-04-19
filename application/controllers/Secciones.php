@@ -17,37 +17,37 @@ class Secciones extends CI_Controller {
 
      public function index()
      {
-          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador')){
-
+          
+          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
                $secciones = $this->get_secciones();
 
                $datos = Array(
                     'nombre' => $this->session->userdata('nombre'),
                     'apellido' =>$this->session->userdata('apellido'),
                     'mail' => $this->session->userdata('mail'),
-                    'rol' => $this->session->userdata('rol'),
+                    'rol' => 'Coordinador',
                     'secciones' => $secciones
                     );
 
-               $this->load->view('profesor/secciones',$datos);
+               $this->load->view('coordinador/secciones_coordinador',$datos);
 
           }
           else{
-               if( $this->session->userdata('coordinador') ){
+               if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && $this->session->userdata('profesor_coordinador') ){
                     $secciones = $this->get_secciones();
 
                     $datos = Array(
                          'nombre' => $this->session->userdata('nombre'),
                          'apellido' =>$this->session->userdata('apellido'),
                          'mail' => $this->session->userdata('mail'),
-                         'rol' => $this->session->userdata('rol').' (Coordinador)',
+                         'rol' => 'Profesor-Coordinador',
                          'secciones' => $secciones
                          );
 
-                    $this->load->view('coordinador/secciones_coordinador',$datos);
-
+                    $this->load->view('profesor_coordinador/secciones_profesor_coordinador',$datos);  
                }
           }
+          
      }
 
      public function get_secciones(){

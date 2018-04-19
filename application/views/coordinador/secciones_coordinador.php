@@ -125,7 +125,7 @@
                             </li> 
                             <li class="nav-item active">
                                 <a href="secciones">
-                                    <i class="la la-group"></i>
+                                    <i class="la la-list"></i>
                                     <p>Secciones</p>
                                 </a>
                             </li>                          

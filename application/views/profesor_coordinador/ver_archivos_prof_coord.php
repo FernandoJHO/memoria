@@ -24,82 +24,6 @@
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/ready.min.js"></script>
 
-        <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="http://code.highcharts.com/modules/exporting.js"></script>
-
-        <script type="text/javascript">
-
-        function generarGrafico(id_container, integrante_commits){
-
-            //alert("flag");
-
-            var container = '#grafico'+id_container;
-            var nombres = [];
-            var commits = [];
-            var datos_finales = [];
-
-
-
-            $.each(integrante_commits, function( ){
-                $.each(this, function(key,value){
-                    if(key=="nombre"){
-                        nombres.push(value);
-                    }
-                    if(key=="commits"){
-                        commits.push(parseInt(value));
-                    }
-                });
-            }); 
-
-
-
-            for(var i=0; i<nombres.length; i++){
-                datos_finales.push({
-                    name: nombres[i],
-                    y: commits[i]
-                });
-            }
-
-
-            $(container).highcharts({
-                chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
-                    type: 'pie'
-                },
-                title: {
-                    text: 'Aporte por alumno'
-                },
-                tooltip: {
-                    
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                            style: {
-                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                            }
-                        }
-                    }
-                },
-                series: [{
-                    name: 'Commits',
-                    colorByPoint: true,
-                    data: datos_finales
-                }]
-            });
-
-            
-
-        }
-
-        </script>
-
     </head>
     <body>
         
@@ -175,11 +99,23 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item">
+                                <a href="<?php echo base_url();?>editarEntregas">
+                                    <i class="la la-suitcase"></i>
+                                    <p>Entregas</p>
+                                </a>
+                            </li> 
+                            <li class="nav-item">
                                 <a href="<?php echo base_url();?>miSeccion">
                                     <i class="la la-group"></i>
                                     <p>Mi sección</p>
                                 </a>
-                            </li>               
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo base_url();?>secciones">
+                                    <i class="la la-list"></i>
+                                    <p>Secciones</p>
+                                </a>
+                            </li>                          
                         </ul>
                     </div>
                 </div>
@@ -187,54 +123,62 @@
                 <div class="main-panel">
                     <div class="content">
                         <div class="container-fluid">
-                            <h4 class="page-title">Entregas del Grupo <?php echo $numero_grupo; ?></h4>
+                            <h4 class="page-title">Archivos de la Entrega <?php echo $numero_entrega; ?></h4>
 
-                            <?php if(!count($entregas)): ?>
-                                <p class="text-danger" align="center"> El grupo aún no ha realizado entregas. </p>
-                            <?php else: ?>
+
                                 <div class="row">
-                                <?php foreach($entregas as $entrega): ?>
+                                <?php foreach($codigosfuente as $codigofuente): ?>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <div class="card">
-                                            <div class="card-header">
-                                                <div class="card-title" align="center"> Entrega <?php echo $entrega['numero']; ?> </div>
-                                                <p align="center"> <b> <?php echo $entrega['descripcion']; ?> </b> </p>
-                                            </div>
-                                            
-                                                
-                                            <?php if($entrega['codigofuente']): ?>
-                                                <?php if(count($entrega['alumno_commits'])): ?>
-                                                <div id="grafico<?php echo $entrega['numero']; ?>" class="card-body">
-                                                    
-                                                    <script>
-                                                        generarGrafico(<?php echo $entrega['numero']; ?>, <?php echo json_encode($entrega['alumno_commits']); ?>);
-                                                    </script>
-                                                    
-
-                                                </div>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
+                                            <div class="card-body">
+                                                <p align="center"> <b> <?php echo $codigofuente['nombre']; ?> </b> </p>
 
                                                 <div class="card-action">
-                                                    <a href="<?php echo base_url();?>archivos/ver/<?php echo $entrega['id']; ?>/<?php echo $id_grupo; ?>/<?php echo $entrega['numero']; ?>" class="btn btn-primary" style="width:100%;"> Ver archivos </a>
+                                                    <form method="post" action="<?php echo base_url();?>archivos/download">
+
+                                                        <input type="hidden" name="ruta" value="<?php echo $codigofuente['ruta']; ?>">
+                                                        <button type="submit" class="btn btn-primary" style="width:100%;">Descargar</button>
+
+                                                    </form>
                                                 </div>
                                             
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <?php endforeach; ?>
+
+                                <?php foreach($archivos as $archivo): ?>
+
+                                    <div class="col-md-3">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <p align="center"> <b> <?php echo $archivo['nombre']; ?> </b> </p>
+
+                                                <div class="card-action">
+
+                                                    <form method="post" action="<?php echo base_url();?>archivos/download">
+
+                                                        <input type="hidden" name="ruta" value="<?php echo $archivo['ruta']; ?>">
+                                                        <button type="submit" class="btn btn-primary" style="width:100%;">Descargar</button>
+
+                                                    </form>
+                                                </div>
                                             
+                                            </div>
                                         </div>
                                     </div>
 
                                 <?php endforeach; ?>
 
                                 </div>
-                            <?php endif;?>
+
                         </div>
                     </div>
                 </div>
 
+
+                
     </body>
-
-
-
-
 </html>

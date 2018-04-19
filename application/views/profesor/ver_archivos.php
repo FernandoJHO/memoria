@@ -100,16 +100,10 @@
                         <ul class="nav">
                             <li class="nav-item">
                                 <a href="<?php echo base_url();?>miSeccion">
-                                    <i class="la la-suitcase"></i>
+                                    <i class="la la-group"></i>
                                     <p>Mi sección</p>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="<?php echo base_url();?>secciones">
-                                    <i class="la la-group"></i>
-                                    <p>Secciones</p>
-                                </a>
-                            </li>                          
+                            </li>                      
                         </ul>
                     </div>
                 </div>

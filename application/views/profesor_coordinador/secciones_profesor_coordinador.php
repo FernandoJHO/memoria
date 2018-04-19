@@ -117,12 +117,24 @@
                             </div>
                         </div>
                         <ul class="nav">
-                            <li class="nav-item active">
+                            <li class="nav-item">
+                                <a href="editarEntregas">
+                                    <i class="la la-suitcase"></i>
+                                    <p>Entregas</p>
+                                </a>
+                            </li> 
+                            <li class="nav-item">
                                 <a href="miSeccion">
                                     <i class="la la-group"></i>
                                     <p>Mi sección</p>
                                 </a>
-                            </li>              
+                            </li>
+                            <li class="nav-item active">
+                                <a href="secciones">
+                                    <i class="la la-list"></i>
+                                    <p>Secciones</p>
+                                </a>
+                            </li>                          
                         </ul>
                     </div>
                 </div>
@@ -130,11 +142,11 @@
                 <div class="main-panel">
                     <div class="content">
                         <div class="container-fluid">
-                            <h4 class="page-title">Mi sección</h4>
+                            <h4 class="page-title">Secciones</h4>
                             <div class="row">
                             <?php foreach($secciones as $seccion): ?>
 
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <a href="grupos/all/<?php echo $seccion['id']; ?>" style="text-decoration:none;">
                                         <div class="card">
                                             <div class="card-body">

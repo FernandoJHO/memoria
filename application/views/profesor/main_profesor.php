@@ -100,16 +100,10 @@
                         <ul class="nav">
                             <li class="nav-item">
                                 <a href="miSeccion">
-                                    <i class="la la-suitcase"></i>
+                                    <i class="la la-group"></i>
                                     <p>Mi sección</p>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="secciones">
-                                    <i class="la la-group"></i>
-                                    <p>Secciones</p>
-                                </a>
-                            </li>                          
+                            </li>                      
                         </ul>
                     </div>
                 </div>

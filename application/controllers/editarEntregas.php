@@ -19,7 +19,7 @@ class EditarEntregas extends CI_Controller {
      public function index()
      {
 
-          if($this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador')) {
+          if($this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador')) {
 
               $entregas = $this->get_entregas();
 
@@ -27,11 +27,26 @@ class EditarEntregas extends CI_Controller {
                'nombre' => $this->session->userdata('nombre'),
                'apellido' =>$this->session->userdata('apellido'),
                'mail' => $this->session->userdata('mail'),
-               'rol' => $this->session->userdata('rol').' (Coordinador)',
+               'rol' => 'Coordinador',
                'entregas' => $entregas
                );
 
               $this->load->view('coordinador/editar_entregas',$datos);
+         }
+         else{
+               if($this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('profesor_coordinador') && !$this->session->userdata('coordinador')){
+                    $entregas = $this->get_entregas();
+
+                   $datos = Array(
+                    'nombre' => $this->session->userdata('nombre'),
+                    'apellido' =>$this->session->userdata('apellido'),
+                    'mail' => $this->session->userdata('mail'),
+                    'rol' => 'Profesor-Coordinador',
+                    'entregas' => $entregas
+                    );
+
+                   $this->load->view('profesor_coordinador/editar_entregas_prof_coord',$datos);
+               }
          }
 
      }

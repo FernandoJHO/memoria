@@ -16,7 +16,7 @@ class MainProfesor extends CI_Controller {
 
      public function index(){
 
-          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador')){
+          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador')){
 
                $datos = Array(
                     'nombre' => $this->session->userdata('nombre'),
@@ -28,16 +28,28 @@ class MainProfesor extends CI_Controller {
                $this->load->view('profesor/main_profesor',$datos);
           }
           else{
-               if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') ){
+               if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
 
                     $datos = Array(
                          'nombre' => $this->session->userdata('nombre'),
                          'apellido' =>$this->session->userdata('apellido'),
                          'mail' => $this->session->userdata('mail'),
-                         'rol' => $this->session->userdata('rol').' (Coordinador)'
+                         'rol' => 'Coordinador'
                          );
 
                     $this->load->view('coordinador/main_coordinador',$datos); 
+               }
+               else{
+                    if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('profesor_coordinador') ){
+                         $datos = Array(
+                              'nombre' => $this->session->userdata('nombre'),
+                              'apellido' =>$this->session->userdata('apellido'),
+                              'mail' => $this->session->userdata('mail'),
+                              'rol' => 'Profesor-Coordinador'
+                              );   
+
+                         $this->load->view('profesor_coordinador/main_profesor_coordinador',$datos);
+                    }
                }
           }
      }

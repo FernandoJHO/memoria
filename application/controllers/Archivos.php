@@ -25,7 +25,7 @@ class Archivos extends CI_Controller {
      }
 
      public function ver($id_entrega,$id_grupo,$n_entrega){
-          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador')){
+          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador')){
 
                $codigosfuente = $this->get_codigos_fuente($id_entrega,$id_grupo);
                $archivos = $this->get_archivos($id_entrega,$id_grupo);
@@ -42,7 +42,7 @@ class Archivos extends CI_Controller {
                $this->load->view('profesor/ver_archivos',$datos);
           }
           else{
-               if( $this->session->userdata('coordinador') ){
+               if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
                     $codigosfuente = $this->get_codigos_fuente($id_entrega,$id_grupo);
                     $archivos = $this->get_archivos($id_entrega,$id_grupo);
 
@@ -50,7 +50,7 @@ class Archivos extends CI_Controller {
                          'nombre' => $this->session->userdata('nombre'),
                          'apellido' =>$this->session->userdata('apellido'),
                          'mail' => $this->session->userdata('mail'),
-                         'rol' => $this->session->userdata('rol').' (Coordinador)',
+                         'rol' => 'Coordinador',
                          'codigosfuente' => $codigosfuente,
                          'archivos' => $archivos,
                          'numero_entrega' => $n_entrega
@@ -58,6 +58,24 @@ class Archivos extends CI_Controller {
 
                     $this->load->view('coordinador/ver_archivos_coordinador',$datos);
 
+               }
+               else{
+                    if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && $this->session->userdata('profesor_coordinador') ){
+                         $codigosfuente = $this->get_codigos_fuente($id_entrega,$id_grupo);
+                         $archivos = $this->get_archivos($id_entrega,$id_grupo);
+
+                         $datos = Array(
+                              'nombre' => $this->session->userdata('nombre'),
+                              'apellido' =>$this->session->userdata('apellido'),
+                              'mail' => $this->session->userdata('mail'),
+                              'rol' => 'Profesor-Coordinador',
+                              'codigosfuente' => $codigosfuente,
+                              'archivos' => $archivos,
+                              'numero_entrega' => $n_entrega
+                              );
+
+                         $this->load->view('profesor_coordinador/ver_archivos_prof_coord',$datos);         
+                    }
                }
           }
      }

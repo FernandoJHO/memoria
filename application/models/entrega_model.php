@@ -14,6 +14,16 @@ class Entrega_model extends CI_Model {
      	return $query->result();
      }
 
+     public function get_entrega($id){
+          $this->db->select('*');
+          $this->db->from('entrega');
+          $this->db->where('ID_ENTREGA', $id);
+
+          $query = $this->db->get();
+
+          return $query->row();   
+     }
+
      public function ver_entregas_codigo_realizadas($id_grupo){
           $this->db->select('entrega.ID_ENTREGA, entrega.NUMERO, entrega.DESCRIPCION, entrega.CODIGO_FUENTE');
           $this->db->from('entrega');

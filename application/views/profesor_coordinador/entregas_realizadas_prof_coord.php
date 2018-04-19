@@ -175,11 +175,25 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item">
+                                <a href="<?php echo base_url();?>editarEntregas">
+                                    <i class="la la-suitcase"></i>
+                                    <p>Entregas</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a href="<?php echo base_url();?>miSeccion">
                                     <i class="la la-group"></i>
                                     <p>Mi sección</p>
                                 </a>
-                            </li>               
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="<?php echo base_url();?>secciones">
+                                    <i class="la la-list"></i>
+                                    <p>Secciones</p>
+                                </a>
+                            </li>                            
                         </ul>
                     </div>
                 </div>
@@ -206,11 +220,11 @@
                                             <?php if($entrega['codigofuente']): ?>
                                                 <?php if(count($entrega['alumno_commits'])): ?>
                                                 <div id="grafico<?php echo $entrega['numero']; ?>" class="card-body">
-                                                    
+                                    
+                                               
                                                     <script>
                                                         generarGrafico(<?php echo $entrega['numero']; ?>, <?php echo json_encode($entrega['alumno_commits']); ?>);
                                                     </script>
-                                                    
 
                                                 </div>
                                                 <?php endif; ?>

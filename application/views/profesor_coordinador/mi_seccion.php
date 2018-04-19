@@ -117,12 +117,26 @@
                             </div>
                         </div>
                         <ul class="nav">
-                            <li class="nav-item active">
+                            <li class="nav-item">
+                                <a href="editarEntregas">
+                                    <i class="la la-suitcase"></i>
+                                    <p>Entregas</p>
+                                </a>
+                            </li> 
+
+                            <li class="nav-item">
                                 <a href="miSeccion">
                                     <i class="la la-group"></i>
                                     <p>Mi sección</p>
                                 </a>
-                            </li>              
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a href="secciones">
+                                    <i class="la la-list"></i>
+                                    <p>Secciones</p>
+                                </a>
+                            </li>                            
                         </ul>
                     </div>
                 </div>

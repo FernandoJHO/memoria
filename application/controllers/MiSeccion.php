@@ -17,8 +17,8 @@ class MiSeccion extends CI_Controller {
 
      public function index()
      {
-          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador')){
-
+          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador')){
+ 
                $secciones = $this->get_secciones($this->session->userdata('mail'));
 
                $datos = Array(
@@ -31,6 +31,21 @@ class MiSeccion extends CI_Controller {
 
                $this->load->view('profesor/mi_seccion',$datos);
 
+          }
+          else{
+               if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && $this->session->userdata('profesor_coordinador')){
+                    $secciones = $this->get_secciones($this->session->userdata('mail'));
+
+                    $datos = Array(
+                         'nombre' => $this->session->userdata('nombre'),
+                         'apellido' =>$this->session->userdata('apellido'),
+                         'mail' => $this->session->userdata('mail'),
+                         'rol' => 'Profesor-Coordinador',
+                         'secciones' => $secciones
+                         );
+
+                    $this->load->view('profesor_coordinador/mi_seccion',$datos); 
+               }
           }
      }
 

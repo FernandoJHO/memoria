@@ -26,6 +26,49 @@ class Entregas extends CI_Controller
      public function index()
      {
 
+         /* if($this->session->userdata('loginuser')&&($this->session->userdata('rol')=='Alumno')){
+               $user_mail = $this->session->userdata('mail');
+               $user_data = $this->get_user_data($user_mail);
+
+               if($user_data['grupo']){
+                    $entregas = $this->get_entregas();
+
+                    $datos = Array(
+                         'nombre' => $this->session->userdata('nombre'),
+                         'apellido' =>$this->session->userdata('apellido'),
+                         'mail' => $this->session->userdata('mail'),
+                         'github_acc' => $user_data['github_acc'],
+                         'github_pass' => $user_data['github_pass'],
+                         'repositorio' => $user_data['repositorio'],
+                         'owner_repo' => $user_data['owner_repo'],
+                         'logeado' => $this->session->userdata('loginuser'),
+                         'rol' => $this->session->userdata('rol'),
+                         'grupo' => $user_data['grupo'],
+                         'entregas' => $entregas,
+                         'id_grupo' => $user_data['id_grupo']
+                         );
+               }
+               else{
+                    $datos = Array(
+                         'nombre' => $this->session->userdata('nombre'),
+                         'apellido' =>$this->session->userdata('apellido'),
+                         'mail' => $this->session->userdata('mail'),
+                         'github_acc' => $user_data['github_acc'],
+                         'github_pass' => $user_data['github_pass'],
+                         'logeado' => $this->session->userdata('loginuser'),
+                         'rol' => $this->session->userdata('rol'),
+                         'grupo' => $user_data['grupo']
+                         );
+               }
+
+               $this->load->view('alumno/entregas',$datos);
+
+          } */
+     }
+
+     //////////////////////////////////////////////               ALUMNO                 //////////////////////////////////////////////////////////
+
+     public function all(){
           if($this->session->userdata('loginuser')&&($this->session->userdata('rol')=='Alumno')){
                $user_mail = $this->session->userdata('mail');
                $user_data = $this->get_user_data($user_mail);
@@ -96,6 +139,41 @@ class Entregas extends CI_Controller
           else {
                return false;
           }
+     }
+
+     public function get_entrega($id_entrega){
+          $result = $this->entrega_model->get_entrega($id_entrega);
+          $entrega = array();
+
+          list($fecha,$hora) = explode(' ',$result->FECHA_LIMITE);
+          list($año,$mes,$dia) = explode('-',$fecha);
+          list($horas,$minutos,$segundos) = explode(':',$hora);
+
+          $date = Array(
+               'año' => $año,
+               'mes' => $mes,
+               'dia' => $dia
+               );
+
+          $time = Array(
+               'horas' => $horas,
+               'minutos' => $minutos,
+               'segundos' => $segundos
+               );
+
+          $fecha_entrega = intval($año.$mes.$dia);
+          $hora_entrega = intval($horas.$minutos);
+
+          $entrega['id'] = $result->ID_ENTREGA;
+          $entrega['numero'] = $result->NUMERO;
+          $entrega['descripcion'] = $result->DESCRIPCION;
+          $entrega['fecha'] = $date;
+          $entrega['hora'] = $time;
+          $entrega['codigofuente'] = $result->CODIGO_FUENTE;
+          $entrega['fecha_int'] = $fecha_entrega;
+          $entrega['hora_int'] = $hora_entrega;
+
+          return $entrega;
      }
 
      public function get_entregas(){
@@ -233,106 +311,124 @@ class Entregas extends CI_Controller
           $n_entrega = $this->input->post('numero_entrega');
           $id_entrega = intval($this->input->post('id_entrega'));
 
-          $mail = $this->session->userdata('mail');
-          $user_data = $this->get_user_data($mail);
+          $entrega = $this->get_entrega($id_entrega);
 
-          $archivos = $this->get_repo_files($user_data);
+          if( $this->verifica_activa($entrega['fecha_int'],$entrega['hora_int']) ){
 
-          $archivo_contenido = $this->get_file_content($archivos,$user_data);
+               $mail = $this->session->userdata('mail');
+               $user_data = $this->get_user_data($mail);
 
-          $seccion_grupo = $this->get_seccion_grupo($user_data['id_grupo']);
+               $archivos = $this->get_repo_files($user_data);
 
-          $upload = new SaveFile();
-          $upload_result = $upload->upload_source_code($archivo_contenido,$user_data['año'],$user_data['semestre'],$user_data['numero_grupo'],$n_entrega,$seccion_grupo,$id_entrega,$user_data['id_grupo']);
+               $archivo_contenido = $this->get_file_content($archivos,$user_data);
 
-          $integrantes = $this->grupo_model->get_integrantes($user_data['id_grupo']);
+               $seccion_grupo = $this->get_seccion_grupo($user_data['id_grupo']);
+
+               $upload = new SaveFile();
+               $upload_result = $upload->upload_source_code($archivo_contenido,$user_data['año'],$user_data['semestre'],$user_data['numero_grupo'],$n_entrega,$seccion_grupo,$id_entrega,$user_data['id_grupo']);
+
+               $integrantes = $this->grupo_model->get_integrantes($user_data['id_grupo']);
 
 
-          if( count($upload_result) == count($archivo_contenido) ){
-               foreach($upload_result as $upload){
-                    $this->codigofuente_model->new_file($upload['nombre_archivo'],$upload['ruta'],$upload['id_grupo'],$upload['id_entrega']);
+               if( count($upload_result) == count($archivo_contenido) ){
+                    foreach($upload_result as $upload){
+                         $this->codigofuente_model->new_file($upload['nombre_archivo'],$upload['ruta'],$upload['id_grupo'],$upload['id_entrega']);
+                    }
+
+                    foreach($integrantes as $integrante){
+                         $mail_alumno = $integrante->MAIL_ALUMNO;
+                         $commits = ($this->alumno_model->get_commits($mail_alumno))->COMMITS;
+
+                         $this->entrega_model->set_entrega_commits($mail_alumno,$id_entrega,$commits);
+                    }
+                    echo json_encode("Ok");
+               }    
+               else{
+
                }
-
-               foreach($integrantes as $integrante){
-                    $mail_alumno = $integrante->MAIL_ALUMNO;
-                    $commits = ($this->alumno_model->get_commits($mail_alumno))->COMMITS;
-
-                    $this->entrega_model->set_entrega_commits($mail_alumno,$id_entrega,$commits);
-               }
-               echo json_encode("Ok");
-          }    
+          }
           else{
 
           }
 
+
      }
 
-     /* public function upload_file(){
-          $n_entrega = $this->input->post('numero_entrega');
-          $id_entrega = intval($this->input->post('id_entrega'));
+        public function upload_file(){
+              $n_entrega = $this->input->post('numero_entrega');
+              $id_entrega = intval($this->input->post('id_entrega'));
 
-          $mail = $this->session->userdata('mail');
-          $user_data = $this->get_user_data($mail);
+              $entrega = $this->get_entrega($id_entrega);
 
-          $archivo = 'userfile'.$n_entrega;
+              if( $this->verifica_activa($entrega['fecha_int'],$entrega['hora_int']) ){
 
-          $seccion_grupo = $this->get_seccion_grupo($user_data['id_grupo']);
+                   $mail = $this->session->userdata('mail');
+                   $user_data = $this->get_user_data($mail);
+
+                   $archivo = 'userfile'.$n_entrega;
+
+                   $seccion_grupo = $this->get_seccion_grupo($user_data['id_grupo']);
 
 
-          if ( ! $this->do_upload($user_data['año'],$user_data['semestre'],$user_data['numero_grupo'],$n_entrega,$seccion_grupo,$id_entrega,$user_data['id_grupo'],$archivo)){
-               $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo subir archivo</div>');
-          }
-          else{
-               $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Archivo subido con éxito</div>');
-          }
+                   if ( ! $this->do_file_upload($user_data['año'],$user_data['semestre'],$user_data['numero_grupo'],$n_entrega,$seccion_grupo,$id_entrega,$user_data['id_grupo'],$archivo)){
+                      $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo subir archivo</div>');
+                     }
+                     else{
+                       $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Archivo subido con éxito</div>');
+                     }
+                }
+                else{
+                    $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo subir archivo: La entrega ya caducó</div>');
+                }
 
-          redirect(entregas);
-     }
+                redirect('entregas/all');
+        }      
 
-     public function do_upload($año,$semestre,$grupo,$n_entrega,$seccion,$id_entrega,$id_grupo,$archivo){
+        public function do_file_upload($año,$semestre,$grupo,$n_entrega,$seccion,$id_entrega,$id_grupo,$archivo){
 
-          if(is_dir('./application/uploads/entregas/'.$año)==FALSE){
-               mkdir('./application/uploads/entregas/'.$año.'/');
-          }
+                if(is_dir('./application/uploads/entregas/'.$año)==FALSE){
+                 mkdir('./application/uploads/entregas/'.$año.'/');
+                }
 
-          if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre)==FALSE){
-               mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/');
-          }
+                if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre)==FALSE){
+                        mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/');
+                }
 
-          if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion)==FALSE){
-               mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/');
-          }
+                if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion)==FALSE){
+                        mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/');
+                }
 
-          if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo)==FALSE){
-               mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/');
-          }
+                if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo)==FALSE){
+                        mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/');
+                }
 
-          if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega)==FALSE){
-               mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/');
-          }
+                if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega)==FALSE){
+                         mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/');
+                }
 
-          $dir = './application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/';
+                $dir = './application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/';
 
-          $config['upload_path']          = $dir;
-          $config['allowed_types']        = 'gif|jpg|png|pdf|jpeg|mp4|3gp|flv';
+                $config['upload_path']          = $dir;
+                $config['allowed_types']        = 'gif|jpg|png|pdf|jpeg|mp4|3gp|flv';
 
-          $this->load->library('upload', $config);
+                $this->load->library('upload', $config);
 
-          if ( ! $this->upload->do_upload($archivo)){
-               return false;
-          }
+                if ( ! $this->upload->do_upload($archivo)){
+                        return false;
+                }
 
-          $upload_data = $this->upload->data();
+                $upload_data = $this->upload->data();
 
-          $nombre_archivo = $upload_data['file_name'];
+                $nombre_archivo = $upload_data['file_name'];
 
-          $ruta_bd = $dir.$nombre_archivo;
+                $ruta_bd = $dir.$nombre_archivo;
 
-          $this->archivo_model->new_file($ruta_bd,$id_grupo,$id_entrega);
+                $this->archivo_model->new_file($ruta_bd,$id_grupo,$id_entrega,$nombre_archivo);
 
-          return true;
+                return true;
 
-     } */
+          } 
+
 
      public function get_seccion_grupo($id_grupo){
           $resultado = $this->grupo_model->get_seccion($id_grupo);
@@ -413,6 +509,9 @@ class Entregas extends CI_Controller
           return $data;
      }
 
+     //////////////////////////////////////////////               ALUMNO                 //////////////////////////////////////////////////////////
+
+     //------------------------------------------------------------------------------------------------------------------------------------------//
 
      //////////////////////////////////////////////               PROFESOR                 //////////////////////////////////////////////////////////
 
@@ -423,7 +522,7 @@ class Entregas extends CI_Controller
 
           $entregas_final = $this->join_entregas_integrantes_commits($entregas,$integrantes_entregas_commits);
 
-          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador')){
+          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador')){
 
                //$entregas = $this->entregas_realizadas(intval($id_grupo));
 
@@ -448,7 +547,7 @@ class Entregas extends CI_Controller
           }
 
           else{
-               if( $this->session->userdata('coordinador') ){
+               if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador')){
                     //$entregas = $this->entregas_realizadas(intval($id_grupo));
                     //$integrantes_entregas_commits = $this->get_entrega_integrante_commits(intval($id_grupo));
 
@@ -456,7 +555,7 @@ class Entregas extends CI_Controller
                          'nombre' => $this->session->userdata('nombre'),
                          'apellido' =>$this->session->userdata('apellido'),
                          'mail' => $this->session->userdata('mail'),
-                         'rol' => $this->session->userdata('rol').' (Coordinador)',
+                         'rol' => 'Coordinador',
                          'entregas' => $entregas_final,
                          //'integrantes_entregas_commits' => $integrantes_entregas_commits,
                          'id_grupo' => $id_grupo,
@@ -465,6 +564,22 @@ class Entregas extends CI_Controller
 
                     $this->load->view('coordinador/entregas_realizadas_coordinador',$datos);
 
+               }
+               else{
+                    if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && $this->session->userdata('profesor_coordinador')){
+                         $datos = Array(
+                              'nombre' => $this->session->userdata('nombre'),
+                              'apellido' =>$this->session->userdata('apellido'),
+                              'mail' => $this->session->userdata('mail'),
+                              'rol' => 'Profesor-Coordinador',
+                              'entregas' => $entregas_final,
+                              //'integrantes_entregas_commits' => $integrantes_entregas_commits,
+                              'id_grupo' => $id_grupo,
+                              'numero_grupo' => $n_grupo
+                              );
+
+                         $this->load->view('profesor_coordinador/entregas_realizadas_prof_coord',$datos);                 
+                    }
                }
           }
 

@@ -123,7 +123,7 @@
                             </li> 
                             <li class="nav-item">
                                 <a href="<?php echo base_url();?>secciones">
-                                    <i class="la la-group"></i>
+                                    <i class="la la-list"></i>
                                     <p>Secciones</p>
                                 </a>
                             </li>                          
@@ -143,7 +143,7 @@
                                 <div class="row">
                                 <?php foreach($grupos as $grupo): ?>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <div class="card">
                                             <div class="card-header">
                                                 <div class="card-title" align="center"> Grupo <?php echo $grupo['numero']; ?>  </div>
@@ -155,11 +155,11 @@
                                                 <?php endforeach; ?>
                                                 
                                                 <div class="card-action">
-                                                    <a href="<?php echo base_url();?>entregas/verEntregas/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" style="width:100%;">Ver entregas</a>
-                                                    <p></p>
-                                                    <a href="<?php echo base_url();?>./application/uploads/entregas/modelo.pdf" class="btn btn-primary" style="width:100%;" target="_blank">Ver proyecto</a>
-                                                    <p></p>
-                                                    <button class="btn btn-danger" style="width:100%;" onclick="delete_grupo('<?php echo $grupo['id']; ?>','<?php echo $grupo['numero']; ?>')">Eliminar</button>
+                                                    <a href="<?php echo base_url();?>entregas/verEntregas/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" >Ver entregas</a>
+                                                    
+                                                    <a href="<?php echo base_url();?>./application/uploads/entregas/modelo.pdf" class="btn btn-primary" target="_blank">Ver proyecto</a>
+                                                    
+                                                    <button class="btn btn-danger" onclick="delete_grupo('<?php echo $grupo['id']; ?>','<?php echo $grupo['numero']; ?>')">Eliminar</button>
                                                 </div>
                                             </div>
                                         </div>

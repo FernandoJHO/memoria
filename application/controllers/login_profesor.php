@@ -47,6 +47,7 @@ class Login_profesor extends CI_Controller {
                               'mail' => $usr_result->MAIL,
                               'loginuser' => TRUE,
                               'coordinador' => $usr_result->COORDINADOR,
+                              'profesor_coordinador' => $usr_result->PROFESOR_COORDINADOR,
                               'rol' => 'Profesor'
                               );
                          $this->session->set_userdata($sessiondata);

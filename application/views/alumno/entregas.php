@@ -5,28 +5,28 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title></title>
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-        <link rel="stylesheet" href="lib/ready-theme/assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-        <link rel="stylesheet" href="lib/ready-theme/assets/css/ready.css">
-        <link rel="stylesheet" href="lib/ready-theme/assets/css/demo.css">
+        <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/ready.css">
+        <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/demo.css">
 
-        <script src="lib/alertify/alertify.min.js"></script>
-        <link rel="stylesheet" href="lib/alertify/alertify.min.css">
-        <script src="lib/js/utils.js"></script>
+        <script src="<?php echo base_url();?>lib/alertify/alertify.min.js"></script>
+        <link rel="stylesheet" href="<?php echo base_url();?>lib/alertify/alertify.min.css">
+        <script src="<?php echo base_url();?>lib/js/utils.js"></script>
 
-        <script src="lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
-        <script src="lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-        <script src="lib/ready-theme/assets/js/core/popper.min.js"></script>
-        <script src="lib/ready-theme/assets/js/core/bootstrap.min.js"></script>
-        <script src="lib/ready-theme/assets/js/plugin/chartist/chartist.min.js"></script>
-        <script src="lib/ready-theme/assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
-        <script src="lib/ready-theme/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-        <script src="lib/ready-theme/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
-        <script src="lib/ready-theme/assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
-        <script src="lib/ready-theme/assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
-        <script src="lib/ready-theme/assets/js/plugin/chart-circle/circles.min.js"></script>
-        <script src="lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-        <script src="lib/ready-theme/assets/js/ready.min.js"></script>
+        <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
+        <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+        <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/popper.min.js"></script>
+        <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/bootstrap.min.js"></script>
+        <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/chartist/chartist.min.js"></script>
+        <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
+        <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+        <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+        <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
+        <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
+        <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/chart-circle/circles.min.js"></script>
+        <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+        <script src="<?php echo base_url();?>lib/ready-theme/assets/js/ready.min.js"></script>
 
     <!--<style>
 
@@ -66,7 +66,7 @@
         <div class="wrapper">
             <div class="main-header">
                 <div class="logo-header">
-                    <a href="mainAlumno" class="logo">
+                    <a href="<?php echo base_url();?>mainAlumno" class="logo">
                         MEMORIA
                     </a>
                     <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,11 +91,11 @@
                             </li> -->
 
                             <li class="nav-item dropdown">
-                                <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="lib/ready-theme/assets/img/user_logo.png" alt="user-img" width="36" class="img-circle"><span ><?php echo $nombre; ?></span></span> </a>
+                                <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="<?php echo base_url();?>lib/ready-theme/assets/img/user_logo.png" alt="user-img" width="36" class="img-circle"><span ><?php echo $nombre; ?></span></span> </a>
                                 <ul class="dropdown-menu dropdown-user">
                                     <li>
                                         <div class="user-box">
-                                            <div class="u-img"><img src="lib/ready-theme/assets/img/user_logo.png" alt="user"></div>
+                                            <div class="u-img"><img src="<?php echo base_url();?>lib/ready-theme/assets/img/user_logo.png" alt="user"></div>
                                             <div class="u-text">
                                                 <h4><?php echo $nombre; ?> <?php echo $apellido; ?></h4>
                                                 <p class="text-muted"><?php echo $mail; ?></p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
@@ -116,7 +116,7 @@
                     <div class="scrollbar-inner sidebar-wrapper">
                         <div class="user">
                             <div class="photo">
-                                <img src="lib/ready-theme/assets/img/user_logo.png">
+                                <img src="<?php echo base_url();?>lib/ready-theme/assets/img/user_logo.png">
                             </div>
                             <div class="info">
                                 <a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -146,19 +146,19 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item">
-                                <a href="github">
+                                <a href="<?php echo base_url();?>github">
                                     <i class="la la-github"></i>
                                     <p>Github</p>
                                 </a>
                             </li>
                             <li class="nav-item active">
-                                <a href="entregas">
+                                <a href="<?php echo base_url();?>entregas/all">
                                     <i class="la la-suitcase"></i>
                                     <p>Entregas</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="codigos">
+                                <a href="<?php echo base_url();?>codigos">
                                     <i class="la la-file-code-o"></i>
                                     <p>Códigos fuente</p>
                                 </a>
@@ -186,7 +186,7 @@
                                                     <p align="center"> Fecha límite de entrega: <?php echo $entrega['fecha']['dia']; ?>/<?php echo $entrega['fecha']['mes']; ?>/<?php echo $entrega['fecha']['año']; ?> </p>
                                                     <p align="center"> Hora límite de entrega: <?php echo $entrega['hora']['horas']; ?>:<?php echo $entrega['hora']['minutos']; ?> </p>
 
-                                                    <?php echo form_open_multipart('uploadFiles/upload_file');?>
+                                                    <?php echo form_open_multipart(base_url().'entregas/upload_file');?>
                                                         <div class="form-group">
                                                             <label> Selecciona tu presentación o informe a entregar (Tamaño máximo: 50MB) </label>
                                                             
