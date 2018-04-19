@@ -124,7 +124,7 @@
                                 </a>
                             </li> 
 
-                            <li class="nav-item">
+                            <li class="nav-item active">
                                 <a href="miSeccion">
                                     <i class="la la-group"></i>
                                     <p>Mi sección</p>
