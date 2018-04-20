@@ -190,7 +190,9 @@ class Grupos extends CI_Controller {
 
           for($i = 1; $i<=$counter; $i++){
                $mail_integrante = $this->input->post('integrante_'.$i);
-               array_push($integrantes,$mail_integrante);
+               if($mail_integrante!=NULL || $mail_integrante!=""){
+                    array_push($integrantes,$mail_integrante);
+               }
           }
 
           $mails_incorrectos = array();
