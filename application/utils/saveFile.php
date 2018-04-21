@@ -9,27 +9,27 @@ class SaveFile {
 
 	public function upload_source_code($archivos,$año,$semestre,$grupo,$n_entrega,$seccion,$id_entrega,$id_grupo){
 
-		if(is_dir('./application/uploads/entregas/'.$año)==FALSE){
-			mkdir('./application/uploads/entregas/'.$año.'/');
+		if(is_dir('./uploads/entregas/'.$año)==FALSE){
+			mkdir('./uploads/entregas/'.$año.'/');
 		}
 
-		if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre)==FALSE){
-			mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/');
+		if(is_dir('./uploads/entregas/'.$año.'/'.$semestre)==FALSE){
+			mkdir('./uploads/entregas/'.$año.'/'.$semestre.'/');
 		}
 
-		if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion)==FALSE){
-			mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/');
+		if(is_dir('./uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion)==FALSE){
+			mkdir('./uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/');
 		}
 
-		if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo)==FALSE){
-			mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/');
+		if(is_dir('./uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo)==FALSE){
+			mkdir('./uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/');
 		}
 
-		if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega)==FALSE){
-			mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/');
+		if(is_dir('./uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega)==FALSE){
+			mkdir('./uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/');
 		}
 
-		$dir = './application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/';
+		$dir = './uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/';
 
 		$result = array();
 		$aux = array();
@@ -55,27 +55,27 @@ class SaveFile {
 
 	public function upload_file($año,$semestre,$grupo,$n_entrega,$seccion,$id_entrega,$id_grupo,$archivo){
 
-		if(is_dir('./application/uploads/entregas/'.$año)==FALSE){
-			mkdir('./application/uploads/entregas/'.$año.'/');
+		if(is_dir('./uploads/entregas/'.$año)==FALSE){
+			mkdir('./uploads/entregas/'.$año.'/');
 		}
 
-		if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre)==FALSE){
-			mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/');
+		if(is_dir('./uploads/entregas/'.$año.'/'.$semestre)==FALSE){
+			mkdir('./uploads/entregas/'.$año.'/'.$semestre.'/');
 		}
 
-		if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion)==FALSE){
-			mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/');
+		if(is_dir('./uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion)==FALSE){
+			mkdir('./uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/');
 		}
 
-		if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo)==FALSE){
-			mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/');
+		if(is_dir('./uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo)==FALSE){
+			mkdir('./uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/');
 		}
 
-		if(is_dir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega)==FALSE){
-			mkdir('./application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/');
+		if(is_dir('./uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega)==FALSE){
+			mkdir('./uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/');
 		}
 
-		$dir = './application/uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/';
+		$dir = './uploads/entregas/'.$año.'/'.$semestre.'/seccion_'.$seccion.'/grupo_'.$grupo.'/entrega_'.$n_entrega.'/';
 
 		$result = array();
 
@@ -104,11 +104,11 @@ class SaveFile {
 
 	public function upload_proyecto($id_grupo,$archivo){
 
-          if(is_dir('./application/uploads/proyectos/'.$id_grupo)==FALSE){
-               mkdir('./application/uploads/proyectos/'.$id_grupo.'/');
+          if(is_dir('./uploads/proyectos/'.$id_grupo)==FALSE){
+               mkdir('./uploads/proyectos/'.$id_grupo.'/');
           }
 
-          $dir = './application/uploads/proyectos/'.$id_grupo.'/';
+          $dir = './uploads/proyectos/'.$id_grupo.'/';
 
           $result = array();
 
