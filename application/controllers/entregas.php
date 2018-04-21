@@ -320,31 +320,37 @@ class Entregas extends CI_Controller
 
                $archivos = $this->get_repo_files($user_data);
 
-               $archivo_contenido = $this->get_file_content($archivos,$user_data);
+               if( count($archivos) ) {
 
-               $seccion_grupo = $this->get_seccion_grupo($user_data['id_grupo']);
+                    $archivo_contenido = $this->get_file_content($archivos,$user_data);
 
-               $upload = new SaveFile();
-               $upload_result = $upload->upload_source_code($archivo_contenido,$user_data['año'],$user_data['semestre'],$user_data['numero_grupo'],$n_entrega,$seccion_grupo,$id_entrega,$user_data['id_grupo']);
+                    $seccion_grupo = $this->get_seccion_grupo($user_data['id_grupo']);
 
-               $integrantes = $this->grupo_model->get_integrantes($user_data['id_grupo']);
+                    $upload = new SaveFile();
+                    $upload_result = $upload->upload_source_code($archivo_contenido,$user_data['año'],$user_data['semestre'],$user_data['numero_grupo'],$n_entrega,$seccion_grupo,$id_entrega,$user_data['id_grupo']);
+
+                    $integrantes = $this->grupo_model->get_integrantes($user_data['id_grupo']);
 
 
-               if( count($upload_result) == count($archivo_contenido) ){
-                    foreach($upload_result as $upload){
-                         $this->codigofuente_model->new_file($upload['nombre_archivo'],$upload['ruta'],$upload['id_grupo'],$upload['id_entrega']);
+                    if( count($upload_result) == count($archivo_contenido) ){
+                         foreach($upload_result as $upload){
+                              $this->codigofuente_model->new_file($upload['nombre_archivo'],$upload['ruta'],$upload['id_grupo'],$upload['id_entrega']);
+                         }
+
+                         foreach($integrantes as $integrante){
+                              $mail_alumno = $integrante->MAIL_ALUMNO;
+                              $commits = ($this->alumno_model->get_commits($mail_alumno))->COMMITS;
+
+                              $this->entrega_model->set_entrega_commits($mail_alumno,$id_entrega,$commits);
+                         }
+                         echo json_encode("Ok");
+                    }    
+                    else{
+
                     }
-
-                    foreach($integrantes as $integrante){
-                         $mail_alumno = $integrante->MAIL_ALUMNO;
-                         $commits = ($this->alumno_model->get_commits($mail_alumno))->COMMITS;
-
-                         $this->entrega_model->set_entrega_commits($mail_alumno,$id_entrega,$commits);
-                    }
-                    echo json_encode("Ok");
-               }    
-               else{
-
+               }
+               else {
+                    
                }
           }
           else{
