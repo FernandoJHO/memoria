@@ -28,18 +28,7 @@
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/ready.min.js"></script>
 
-        <style>
-        .alertify-notifier .ajs-message.ajs-error{
-            color: #fff;
-            background: rgba(217, 92, 92, 0,95);
-            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
-        }
-        .alertify-notifier .ajs-message.ajs-success{
-            color: #fff;
-            background: rgba(217, 92, 92, 0,95);
-            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
-        }
-        </style>
+
 
     </head>
     <body>
@@ -116,11 +105,17 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item">
-                                <a href="<?php echo base_url();?>miSeccion">
-                                    <i class="la la-group"></i>
-                                    <p>Mi sección</p>
+                                <a href="<?php echo base_url();?>editarEntregas">
+                                    <i class="la la-suitcase"></i>
+                                    <p>Entregas</p>
                                 </a>
-                            </li>                    
+                            </li> 
+                            <li class="nav-item">
+                                <a href="<?php echo base_url();?>secciones">
+                                    <i class="la la-list"></i>
+                                    <p>Secciones</p>
+                                </a>
+                            </li>                
                         </ul>
                     </div>
                 </div>
@@ -128,122 +123,53 @@
                 <div class="main-panel">
                     <div class="content">
                         <div id="refresh" class="container-fluid">
-                            <h4 class="page-title">Grupos <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newGroupModal"><i class="la la-plus"></i> Crear</button></h4>
-                            <?php echo $this->session->flashdata('msg_mails'); ?>
-                            <?php echo $this->session->flashdata('msg_grupo'); ?>
-                            <?php if(!count($grupos)): ?>
-                                <p class="text-danger" align="center"> La sección aún no cuenta con grupos formados para el actual semestre. </p>
-                            <?php else: ?>
+                            <h4 class="page-title">Archivos del Grupo <?php echo $numero_grupo; ?></h4>
+                            
+                            <?php if(!$repo_info): ?>
+                                <p class="text-danger" align="center"> El grupo aún no ha indicado la información del repositorio. </p>
+                            <?php else: ?>  
 
-                                <div class="row">
-                                <?php foreach($grupos as $grupo): ?>
+                                <?php if(!count($archivos)): ?>
+                                    <p class="text-danger" align="center"> El grupo aún no cuenta con archivos. </p>
+                                <?php else: ?> 
 
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <div class="card-title" align="center"> Grupo <?php echo $grupo['numero']; ?>  </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <p align="center"> <b>Integrantes</b></p>
-                                                <?php foreach($grupo['integrantes'] as $integrante): ?>
-                                                    <p align="center"> <?php echo $integrante; ?> </p>
-                                                <?php endforeach; ?>
-                                                
-                                                <div class="card-action">
-                                                    <a href="<?php echo base_url();?>entregas/verEntregas/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" >Ver entregas</a>
-                                                    
-                                                    <?php if($grupo['proyecto']!=NULL): ?>
-                                                        <a href="<?php echo base_url();?><?php echo $grupo['proyecto']; ?>" class="btn btn-primary" target="_blank">Ver proyecto</a>
-                                                    <?php endif; ?>
+                                    <div class="row">
+                                        <?php foreach($archivos as $archivo): ?>
 
-                                                    <a href="<?php echo base_url();?>codigos/ver/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" >Ver códigos</a>
-                                                    
-                                                    <button class="btn btn-danger" onclick="delete_grupo('<?php echo $grupo['id']; ?>','<?php echo $grupo['numero']; ?>')">Eliminar</button>
+                                            <div class="col-md-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h2 align="center"><i class="la la-file-code-o"></i></h2>
+                                                        <h6 align="center"> <?php echo $archivo ?> </h6>
+
+                                                        <div class="card-action">
+                                                            <form id="verContenidoForm" method="post" action="<?php echo base_url() ?>editor/ver">
+                                                                <input type="hidden" name="id_grupo" value="<?php echo $id_grupo; ?>">
+                                                                <input type="hidden" name="nombre_archivo" value="<?php echo $archivo; ?>">
+                                                                <button class="btn btn-primary" type="submit" style="width:100%;">Ver</button>
+                                                            </form> 
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+
+                                        <?php endforeach; ?>
                                     </div>
 
-                                <?php endforeach; ?>
-                                </div>
+                                <?php endif; ?> 
+
                             <?php endif; ?>
+                            
                         </div>
                     </div>
                 </div>
 
-        <div class="modal fade" id="newGroupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Crear grupo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <form method="post" action="<?php echo base_url() ?>grupos/new_grupo/">
-                  <div id="container_form" class="modal-body">
- 
-                    <div class="form-group">
-                        <label for="numero_grupo">Numero grupo</label>
-                        <select class="form-control" name="numero_grupo" required="true">
-                            <option disabled selected>Selecciona una opción...</option>
-                            <?php for($i=1;$i<=20;$i++): ?>
-                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                            <?php endfor; ?>
-                        </select>
-                    </div> 
-                    <div class="form-group">
-                        <label >Integrante</label>
-                        <input type="email" class="form-control" name="integrante_1">
-                    </div>             
-                  </div> 
-                  <input type="hidden" class="form-control" name="id_seccion" value="<?php echo $seccion; ?>">
-                  <div class="form-group">
-                   <p align="center"> <button type="button" id="addfieldbtn" class="btn btn-success btn-xs"><i class="la la-plus"></i> Integrante</button> </p>
-                  </div>   
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success">Crear</button>
-                  </div>
-              </form>
-              
-            </div>
-          </div>
-        </div>
 
                 
     </body>
 
 <script type="text/javascript">
 
-alertify.defaults.transition = "slide";
-alertify.defaults.theme.ok = "btn btn-success";
-alertify.defaults.theme.cancel = "btn btn-danger";
-
-function delete_grupo(idgrupo,ngrupo){
-    var url = '<?php echo base_url() ?>grupos/delete_grupo';
-
-    alertify.set('notifier','position', 'top-right');
-
-    alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar el grupo '+ngrupo.bold()+ '?', function(){ 
-        alertify.success("Eliminando...");
-        deleteGrupo(idgrupo,url);
-        }
-        , function(){
-        }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
-}
-
-var aux = 2;
-
-$(document).ready(function() {
-    var wrapper = $("#container_form");
-    var add_button = $("#addfieldbtn");
-
-    $(add_button).click(function(e){
-        $(wrapper).append('<div class="form-group"> <label >Integrante</label> <input type="email" class="form-control" name="integrante_'+aux+'"> </div>');
-        aux++;
-    });
-}); 
 
 
 </script>

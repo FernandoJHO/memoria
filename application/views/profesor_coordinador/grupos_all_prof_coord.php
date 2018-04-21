@@ -168,6 +168,8 @@
                                                         <a href="<?php echo base_url();?><?php echo $grupo['proyecto']; ?>" class="btn btn-primary" target="_blank">Ver proyecto</a>
                                                     <?php endif; ?>
                                                     
+                                                    <a href="<?php echo base_url();?>codigos/ver/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" >Ver códigos</a>
+                                                    
                                                     <button class="btn btn-danger" onclick="delete_grupo('<?php echo $grupo['id']; ?>','<?php echo $grupo['numero']; ?>')">Eliminar</button>
                                                 </div>
                                             </div>

@@ -16,7 +16,10 @@ class Codigos extends CI_Controller {
           $this->load->database();
           $this->load->model('alumno_model');
           $this->load->model('grupo_model');
+          $this->load->model('profesor_model');
      }
+
+     ////////////////////////////////////////////////////////               ALUMNO                //////////////////////////////////////////////////////////////
 
 	public function index(){
 
@@ -28,7 +31,8 @@ class Codigos extends CI_Controller {
                if($datos_git['github_acc'] && $datos_git['github_pass']){
 
                     if($datos_git['grupo']){
-                         $github = new Github($datos_git['github_acc'],$datos_git['github_pass']);
+
+                         /*$github = new Github($datos_git['github_acc'],$datos_git['github_pass']);
                          $repo_content = $github->request('https://api.github.com/repos/'.$datos_git['owner_repo'].'/'.$datos_git['repositorio'].'/contents');
                          $archivos = Array();
                          foreach ($repo_content as $resultado){
@@ -37,7 +41,9 @@ class Codigos extends CI_Controller {
                                          array_push($archivos,$resultado['name']);
                                     }
                                }
-                         }
+                         } */
+
+                         $archivos = $this->get_repo_files($datos_git['github_acc'],$datos_git['github_pass'],$datos_git['repositorio'],$datos_git['owner_repo']);
                     
                          $datos = Array(
                               'nombre' => $this->session->userdata('nombre'),
@@ -156,4 +162,152 @@ class Codigos extends CI_Controller {
           echo json_encode("Ok");
      }
 
+     ////////////////////////////////////////////////////////               ALUMNO                //////////////////////////////////////////////////////////////
+
+
+     public function get_repo_files($usuario,$password,$repositorio,$dueño_repo){
+
+          $github = new Github($usuario,$password);
+
+          $repo_content = $github->request('https://api.github.com/repos/'.$dueño_repo.'/'.$repositorio.'/contents');
+
+          $archivos = array();
+
+          foreach ($repo_content as $resultado){
+
+               if(is_string($resultado)==FALSE){
+                    if($resultado['type']=='file'){
+                         array_push($archivos,$resultado['name']);
+                    }
+               }
+
+          }
+
+          return $archivos;
+
+     }
+
+
+     ////////////////////////////////////////////////////////               PROFESOR                //////////////////////////////////////////////////////////////
+
+
+     public function ver($id_grupo,$n_grupo){
+
+          $mail = $this->session->userdata('mail');
+
+          $github_credentials = $this->get_github_data($mail);
+
+          $repositorio = $this->get_repositorio_grupo( intval($id_grupo) );
+
+          $repositorio_info;
+
+          if( count($repositorio) ){
+               $repositorio_info = 1;
+          }
+          else{
+               $repositorio_info = 0;
+          }
+
+          if( $repositorio_info ){
+
+               $archivos = $this->get_repo_files($github_credentials['usuario'],$github_credentials['contraseña'],$repositorio['repositorio'],$repositorio['dueño']);
+
+          }
+          else{
+               $archivos = array();
+          }
+
+          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador')){
+
+               $datos = Array(
+                    'nombre' => $this->session->userdata('nombre'),
+                    'apellido' =>$this->session->userdata('apellido'),
+                    'mail' => $this->session->userdata('mail'),
+                    'rol' => $this->session->userdata('rol'),
+                    'archivos' => $archivos,
+                    'repo_info' => $repositorio_info,
+                    'id_grupo' => $id_grupo,
+                    'numero_grupo' => $n_grupo
+                    );
+
+               $this->load->view('profesor/codigos_grupo',$datos);
+          }
+          else{
+               if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && $this->session->userdata('profesor_coordinador') ){
+
+                    $datos = Array(
+                         'nombre' => $this->session->userdata('nombre'),
+                         'apellido' =>$this->session->userdata('apellido'),
+                         'mail' => $this->session->userdata('mail'),
+                         'rol' => 'Profesor-Coordinador',
+                         'archivos' => $archivos,
+                         'repo_info' => $repositorio_info,
+                         'id_grupo' => $id_grupo,
+                         'numero_grupo' => $n_grupo
+                         );  
+
+                    $this->load->view('profesor_coordinador/codigos_grupo',$datos);         
+
+               }
+               else{
+                    if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
+
+                         $datos = Array(
+                              'nombre' => $this->session->userdata('nombre'),
+                              'apellido' =>$this->session->userdata('apellido'),
+                              'mail' => $this->session->userdata('mail'),
+                              'rol' => 'Coordinador',
+                              'archivos' => $archivos,
+                              'repo_info' => $repositorio_info,
+                              'id_grupo' => $id_grupo,
+                              'numero_grupo' => $n_grupo
+                              );  
+
+                         $this->load->view('coordinador/codigos_grupo',$datos);  
+
+
+                    }
+               }
+          }
+
+     }
+     
+
+     public function get_github_data($mail){
+
+          $github = $this->profesor_model->get_github($mail);
+
+          $credenciales = array();
+
+          if(!empty($github)){
+
+               $credenciales['usuario'] = $github->GITHUB_ACC;
+               $credenciales['contraseña'] = $github->GITHUB_PASS;
+
+          }
+
+          return $credenciales;
+
+     }
+
+     public function get_repositorio_grupo($id_grupo){
+
+          $repositorio = $this->grupo_model->get_repo_info($id_grupo);
+
+          $datos_repo = array();
+
+          if(!empty($repositorio)){
+
+               if(($repositorio->REPOSITORIO != NULL || $repositorio->REPOSITORIO != "") && ($repositorio->REPO_OWNER != NULL || $repositorio->REPO_OWNER != "")){
+                    $datos_repo['repositorio'] = $repositorio->REPOSITORIO;
+                    $datos_repo['dueño'] = $repositorio->REPO_OWNER;
+               }
+
+          }
+
+          return $datos_repo;
+
+     }
+
+     ////////////////////////////////////////////////////////               PROFESOR                //////////////////////////////////////////////////////////////
 }

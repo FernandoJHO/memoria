@@ -17,7 +17,10 @@ class Editor extends CI_Controller {
           $this->load->library('form_validation');
           $this->load->model('alumno_model');
           $this->load->model('grupo_model');
+          $this->load->model('profesor_model');
      }
+
+    ///////////////////////////////////////////////////////////             ALUMNO                 ////////////////////////////////////////////////////////////// 
 
 	public function index(){
 
@@ -25,23 +28,12 @@ class Editor extends CI_Controller {
 		if($this->session->userdata('loginuser')&&($this->session->userdata('rol')=='Alumno')){
 			$mail = $this->session->userdata('mail');
 			$datos_github = $this->get_github_data($mail);
-			$github = new Github($datos_github['github_acc'],$datos_github['github_pass']);
 
-			//$commits_usuario = $this->get_user_commits($datos_github['owner_repo'],$datos_github['repositorio'],$github,$datos_github['github_acc']);
-			//$this->alumno_model->set_commits($mail,$commits_usuario); 
+			$contenido = $this->get_file_content($datos_github['github_acc'],$datos_github['github_pass'],$datos_github['repositorio'],$datos_github['owner_repo'],$archivo);
 
-			$file_content = $github->request('https://api.github.com/repos/'.$datos_github['owner_repo'].'/'.$datos_github['repositorio'].'/contents/'.$archivo);
-			//$file_content = $github->request('https://api.github.com/repos/FernandoJHO/memoria_development/contents/archivo3.py');
-			// $dumb = is_dir('./application/archivos_subidos');	
-			// if(!$dumb){
-			// 	$prueba = "no existe";
-			// }
-			// if($dumb){
-			// 	$prueba = "existe";
-			// }
 
 			$data = Array(
-				'contenido' => trim(base64_decode($file_content['content'])),
+				'contenido' => $contenido,
 				'nombre' => $this->session->userdata('nombre'),
 				'apellido' =>$this->session->userdata('apellido'),
 				'mail' => $this->session->userdata('mail'),
@@ -136,4 +128,128 @@ class Editor extends CI_Controller {
 
 		return $commits;
 	}
+
+	///////////////////////////////////////////////////////////             ALUMNO                 //////////////////////////////////////////////////////////////
+
+
+	public function get_file_content($usuario,$password,$repositorio,$dueño,$nombre_archivo){
+
+		$github = new Github($usuario,$password);
+
+		$file_content = $github->request('https://api.github.com/repos/'.$dueño.'/'.$repositorio.'/contents/'.$nombre_archivo);
+
+		$contenido_archivo = trim(base64_decode($file_content['content']));
+
+		return $contenido_archivo;
+
+	}
+
+
+	///////////////////////////////////////////////////////////             PROFESOR                 //////////////////////////////////////////////////////////////
+
+     
+
+	public function ver(){
+
+		$id_grupo = intval($this->input->post('id_grupo'));
+
+		$nombre_archivo = $this->input->post('nombre_archivo');
+
+		$mail = $this->session->userdata('mail');
+
+		$github_credentials = $this->get_github_credentials($mail);
+
+		$repositorio = $this->get_repositorio_grupo($id_grupo);
+
+		$contenido_archivo = $this->get_file_content($github_credentials['usuario'],$github_credentials['contraseña'],$repositorio['repositorio'],$repositorio['dueño'],$nombre_archivo);
+
+          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador')){
+
+               $datos = Array(
+                    'nombre' => $this->session->userdata('nombre'),
+                    'apellido' =>$this->session->userdata('apellido'),
+                    'mail' => $this->session->userdata('mail'),
+                    'rol' => $this->session->userdata('rol'),
+                    'archivo' => $nombre_archivo,
+                    'contenido' => $contenido_archivo
+                    );
+
+               $this->load->view('profesor/contenido_codigo',$datos);
+          }
+          else{
+               if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && $this->session->userdata('profesor_coordinador') ){
+
+                    $datos = Array(
+                         'nombre' => $this->session->userdata('nombre'),
+                         'apellido' =>$this->session->userdata('apellido'),
+                         'mail' => $this->session->userdata('mail'),
+                         'rol' => 'Profesor-Coordinador',
+	                     'archivo' => $nombre_archivo,
+	                     'contenido' => $contenido_archivo
+                         );  
+
+                    $this->load->view('profesor_coordinador/contenido_codigo',$datos);         
+
+               }
+               else{
+                    if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
+
+                         $datos = Array(
+                              'nombre' => $this->session->userdata('nombre'),
+                              'apellido' =>$this->session->userdata('apellido'),
+                              'mail' => $this->session->userdata('mail'),
+                              'rol' => 'Coordinador',
+                    		  'archivo' => $nombre_archivo,
+                    		  'contenido' => $contenido_archivo
+                              );  
+
+                         $this->load->view('coordinador/contenido_codigo',$datos);  
+
+
+                    }
+               }
+          }
+
+	}
+
+
+	public function get_github_credentials($mail){
+
+		$github = $this->profesor_model->get_github($mail);
+
+		$credenciales = array();
+
+		if(!empty($github)){
+
+			$credenciales['usuario'] = $github->GITHUB_ACC;
+			$credenciales['contraseña'] = $github->GITHUB_PASS;
+
+		}
+
+		return $credenciales;
+
+	}
+
+
+	public function get_repositorio_grupo($id_grupo){
+
+		$repositorio = $this->grupo_model->get_repo_info($id_grupo);
+
+		$datos_repo = array();
+
+		if(!empty($repositorio)){
+
+			if(($repositorio->REPOSITORIO != NULL || $repositorio->REPOSITORIO != "") && ($repositorio->REPO_OWNER != NULL || $repositorio->REPO_OWNER != "")){
+				$datos_repo['repositorio'] = $repositorio->REPOSITORIO;
+				$datos_repo['dueño'] = $repositorio->REPO_OWNER;
+			}
+
+		}
+
+		return $datos_repo;
+
+	}
+
+
+	///////////////////////////////////////////////////////////             PROFESOR                 //////////////////////////////////////////////////////////////
 }

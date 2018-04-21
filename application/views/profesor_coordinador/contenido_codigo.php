@@ -14,6 +14,12 @@
         <link rel="stylesheet" href="<?php echo base_url();?>lib/alertify/alertify.min.css">
         <script src="<?php echo base_url();?>lib/js/utils.js"></script>
 
+        <script src="<?php echo base_url();?>lib/codemirror/codemirror.js"></script>
+        <link rel="stylesheet" href="<?php echo base_url();?>lib/codemirror/codemirror.css">
+        <link rel="stylesheet" href="<?php echo base_url();?>lib/codemirror/theme/monokai.css">
+        <script src="<?php echo base_url();?>lib/codemirror/mode/javascript/javascript.js"></script>
+        <script src="<?php echo base_url();?>lib/codemirror/mode/python/python.js"></script>
+
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/popper.min.js"></script>
@@ -28,18 +34,7 @@
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/ready.min.js"></script>
 
-        <style>
-        .alertify-notifier .ajs-message.ajs-error{
-            color: #fff;
-            background: rgba(217, 92, 92, 0,95);
-            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
-        }
-        .alertify-notifier .ajs-message.ajs-success{
-            color: #fff;
-            background: rgba(217, 92, 92, 0,95);
-            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
-        }
-        </style>
+
 
     </head>
     <body>
@@ -116,11 +111,23 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item">
+                                <a href="<?php echo base_url();?>editarEntregas">
+                                    <i class="la la-suitcase"></i>
+                                    <p>Entregas</p>
+                                </a>
+                            </li> 
+                            <li class="nav-item">
                                 <a href="<?php echo base_url();?>miSeccion">
                                     <i class="la la-group"></i>
                                     <p>Mi sección</p>
                                 </a>
-                            </li>                    
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo base_url();?>secciones">
+                                    <i class="la la-list"></i>
+                                    <p>Secciones</p>
+                                </a>
+                            </li>                          
                         </ul>
                     </div>
                 </div>
@@ -128,45 +135,27 @@
                 <div class="main-panel">
                     <div class="content">
                         <div id="refresh" class="container-fluid">
-                            <h4 class="page-title">Grupos <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newGroupModal"><i class="la la-plus"></i> Crear</button></h4>
-                            <?php echo $this->session->flashdata('msg_mails'); ?>
-                            <?php echo $this->session->flashdata('msg_grupo'); ?>
-                            <?php if(!count($grupos)): ?>
-                                <p class="text-danger" align="center"> La sección aún no cuenta con grupos formados para el actual semestre. </p>
-                            <?php else: ?>
+                            <h4 class="page-title">Contenido del archivo</h4>
+                            
 
-                                <div class="row">
-                                <?php foreach($grupos as $grupo): ?>
+                            <div class="row">
 
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <div class="card-title" align="center"> Grupo <?php echo $grupo['numero']; ?>  </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <p align="center"> <b>Integrantes</b></p>
-                                                <?php foreach($grupo['integrantes'] as $integrante): ?>
-                                                    <p align="center"> <?php echo $integrante; ?> </p>
-                                                <?php endforeach; ?>
-                                                
-                                                <div class="card-action">
-                                                    <a href="<?php echo base_url();?>entregas/verEntregas/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" >Ver entregas</a>
-                                                    
-                                                    <?php if($grupo['proyecto']!=NULL): ?>
-                                                        <a href="<?php echo base_url();?><?php echo $grupo['proyecto']; ?>" class="btn btn-primary" target="_blank">Ver proyecto</a>
-                                                    <?php endif; ?>
-
-                                                    <a href="<?php echo base_url();?>codigos/ver/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" >Ver códigos</a>
-                                                    
-                                                    <button class="btn btn-danger" onclick="delete_grupo('<?php echo $grupo['id']; ?>','<?php echo $grupo['numero']; ?>')">Eliminar</button>
-                                                </div>
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title"><i class="la la-file-code-o"></i> <?php echo $archivo; ?></h4>
+                                            <!--<p class="card-category"></p> -->
+                                        </div>
+                                        <div class="card-body">
+                                            <div id="editor">
                                             </div>
                                         </div>
                                     </div>
-
-                                <?php endforeach; ?>
                                 </div>
-                            <?php endif; ?>
+                                
+                            </div>
+                                
+
                         </div>
                     </div>
                 </div>
@@ -216,37 +205,17 @@
 
 <script type="text/javascript">
 
-alertify.defaults.transition = "slide";
-alertify.defaults.theme.ok = "btn btn-success";
-alertify.defaults.theme.cancel = "btn btn-danger";
 
-function delete_grupo(idgrupo,ngrupo){
-    var url = '<?php echo base_url() ?>grupos/delete_grupo';
-
-    alertify.set('notifier','position', 'top-right');
-
-    alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar el grupo '+ngrupo.bold()+ '?', function(){ 
-        alertify.success("Eliminando...");
-        deleteGrupo(idgrupo,url);
-        }
-        , function(){
-        }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
-}
-
-var aux = 2;
-
-$(document).ready(function() {
-    var wrapper = $("#container_form");
-    var add_button = $("#addfieldbtn");
-
-    $(add_button).click(function(e){
-        $(wrapper).append('<div class="form-group"> <label >Integrante</label> <input type="email" class="form-control" name="integrante_'+aux+'"> </div>');
-        aux++;
-    });
-}); 
+var myCodeMirror = CodeMirror(document.getElementById("editor"), {
+  mode:  "python",
+  theme: "monokai",
+  scrollbarStyle: "null",
+  lineNumbers: true
+});
+var codigo = <?php echo json_encode($contenido); ?>;
+myCodeMirror.setValue(codigo);
 
 
 </script>
-
 
 </html>
