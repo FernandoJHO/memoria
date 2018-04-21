@@ -132,7 +132,15 @@ class Codigos extends CI_Controller {
                'content' => base64_encode("#".$file)
                );
 
-          $create = $github->request_put('https://api.github.com/repos/'.$datos_git['owner_repo'].'/'.$datos_git['repositorio'].'/contents/'.$file,$parameters);
+
+          if( ($datos_git['owner_repo']!= NULL || $datos_git['owner_repo']!="") && ($datos_git['repositorio'])!=NULL || $datos_git['repositorio']!="" ){
+
+               $create = $github->request_put('https://api.github.com/repos/'.$datos_git['owner_repo'].'/'.$datos_git['repositorio'].'/contents/'.$file,$parameters);
+               $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Archivo creado</div>');
+          }
+          else{
+               $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo crear archivo. El grupo no ha indicado los datos del repositorio</div>');
+          }
 
           redirect(codigos);
      }

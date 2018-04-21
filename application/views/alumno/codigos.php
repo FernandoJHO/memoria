@@ -159,6 +159,7 @@
                     <div class="content">
                         <div class="container-fluid">
                             <h4 class="page-title">Archivos del grupo <?php if ($credenciales && $grupo): ?><button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newFileModal"><i class="la la-plus"></i> Nuevo</button><?php endif; ?>  </h4>
+                            <?php echo $this->session->flashdata('msg'); ?>
                             <div id="refresh" class="row">
                                 <?php if ($credenciales): ?>
                                     <?php if ($grupo): ?>
