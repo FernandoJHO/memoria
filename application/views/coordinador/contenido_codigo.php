@@ -63,7 +63,7 @@
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#"><i class="ti-settings"></i>Configuración</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="logout"><i class="fa fa-power-off"></i>Cerrar sesión</a>
+                                        <a class="dropdown-item" href="<?php echo base_url();?>logout"><i class="fa fa-power-off"></i>Cerrar sesión</a>
                                     </ul>
                                     <!-- /.dropdown-user -->
                                 </li>

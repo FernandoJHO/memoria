@@ -129,7 +129,7 @@ class Codigos extends CI_Controller {
 
           $parameters = Array(
                'message' => $message,
-               'content' => base64_encode("")
+               'content' => base64_encode("#".$file)
                );
 
           $create = $github->request_put('https://api.github.com/repos/'.$datos_git['owner_repo'].'/'.$datos_git['repositorio'].'/contents/'.$file,$parameters);
