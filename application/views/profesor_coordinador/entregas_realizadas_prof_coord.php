@@ -193,6 +193,12 @@
                                     <i class="la la-list"></i>
                                     <p>Secciones</p>
                                 </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo base_url();?>gestionCopia">
+                                    <i class="la la-search"></i>
+                                    <p>Gestión de copia</p>
+                                </a>
                             </li>                            
                         </ul>
                     </div>

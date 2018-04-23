@@ -10,6 +10,10 @@
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/ready.css">
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/demo.css">
 
+        <script src="<?php echo base_url();?>lib/alertify/alertify.min.js"></script>
+        <link rel="stylesheet" href="<?php echo base_url();?>lib/alertify/alertify.min.css">
+        <script src="<?php echo base_url();?>lib/js/utils.js"></script>
+
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/popper.min.js"></script>
@@ -23,6 +27,19 @@
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/chart-circle/circles.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/ready.min.js"></script>
+
+        <style>
+        .alertify-notifier .ajs-message.ajs-error{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        .alertify-notifier .ajs-message.ajs-success{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        </style>
 
     </head>
     <body>
@@ -103,76 +120,161 @@
                                     <i class="la la-group"></i>
                                     <p>Mi sección</p>
                                 </a>
-                            </li>
-                            <li class="nav-item">
+                            </li> 
+                            <li class="nav-item active">
                                 <a href="<?php echo base_url();?>gestionCopia">
                                     <i class="la la-search"></i>
                                     <p>Gestión de copia</p>
                                 </a>
-                            </li>                       
+                            </li>                    
                         </ul>
                     </div>
                 </div>
 
                 <div class="main-panel">
                     <div class="content">
-                        <div class="container-fluid">
-                            <h4 class="page-title">Archivos de la Entrega <?php echo $numero_entrega; ?></h4>
-
+                        <div id="refresh" class="container-fluid">
+                            <h4 class="page-title">Comparar códigos</h4>
 
                                 <div class="row">
-                                <?php foreach($codigosfuente as $codigofuente): ?>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <div class="card">
+                                            <div class="card-header">
+                                                <div class="card-title">Entre grupos de mi sección</div>
+                                            </div>
                                             <div class="card-body">
-                                                <p align="center"> <b> <?php echo $codigofuente['nombre']; ?> </b> </p>
+                                                
+                                                <div class="form-group">
+                                                    <label for="seccion">Elige tu sección</label>
+                                                    <select class="form-control" id="seccion" name="seccion" required="true">
+                                                        <?php foreach($secciones_profesor as $seccion): ?>
+                                                            <option value="<?php echo $seccion['id']; ?>" ><?php echo $seccion['codigo']; ?></option>
+                                                        <?php endforeach; ?>
 
-                                                <div class="card-action">
-                                                    <form method="post" action="<?php echo base_url();?>archivos/download">
-
-                                                        <input type="hidden" name="ruta" value="<?php echo $codigofuente['ruta']; ?>">
-                                                        <button type="submit" class="btn btn-primary" style="width:100%;">Descargar</button>
-
-                                                    </form>
+                                                    </select>
                                                 </div>
-                                            
+                                                <div class="form-group">
+                                                    <label for="entrega">Elige una entrega</label>
+                                                    <select class="form-control" id="entrega" name="entrega" required="true">
+                                                        <option value="" disabled selected>Selecciona una opción...</option>
+                                                        <?php foreach($entregas as $entrega): ?>
+                                                            <option value="<?php echo $entrega['id']; ?>" ><?php echo $entrega['numero']; ?>: <?php echo $entrega['nombre']; ?></option>
+                                                        <?php endforeach; ?>
+
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="card-action">
+                                                    <button class="btn btn-default" type="button" onClick="compararMiSeccion();" style="width:100%;"><i class="la la-gears"></i> Comparar códigos</button>
+                                                    <div id="resultado_miseccion">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+
                                     </div>
 
-                                <?php endforeach; ?>
+                                    <div class="col-md-6">
 
-                                <?php foreach($archivos as $archivo): ?>
-
-                                    <div class="col-md-3">
                                         <div class="card">
+                                            <div class="card-header">
+                                                <div class="card-title">Entre grupos de mi sección y los de otra sección</div>
+                                            </div>
                                             <div class="card-body">
-                                                <p align="center"> <b> <?php echo $archivo['nombre']; ?> </b> </p>
+                                                
+                                                <div class="form-group">
+                                                    <label for="seccion">Elige tu sección</label>
+                                                    <select class="form-control" id="seccion_b" name="seccion_b" required="true">
+                                                        <?php foreach($secciones_profesor as $seccion): ?>
+                                                            <option value="<?php echo $seccion['id']; ?>" ><?php echo $seccion['codigo']; ?></option>
+                                                        <?php endforeach; ?>
 
-                                                <div class="card-action">
-
-                                                    <form method="post" action="<?php echo base_url();?>archivos/download">
-
-                                                        <input type="hidden" name="ruta" value="<?php echo $archivo['ruta']; ?>">
-                                                        <button type="submit" class="btn btn-primary" style="width:100%;">Descargar</button>
-
-                                                    </form>
+                                                    </select>
                                                 </div>
-                                            
+
+                                                <div class="form-group">
+                                                    <label for="seccion">Elige la otra sección</label>
+                                                    <select class="form-control" id="seccion_all" name="seccion_all" required="true">
+                                                        <option value="" disabled selected>Selecciona una opción...</option>
+                                                        <?php foreach($secciones_all as $seccion): ?>
+                                                            <option value="<?php echo $seccion['id']; ?>" ><?php echo $seccion['codigo']; ?></option>
+                                                        <?php endforeach; ?>
+
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="entrega">Elige una entrega</label>
+                                                    <select class="form-control" id="entrega_b" name="entrega_b" required="true">
+                                                        <option value="" disabled selected>Selecciona una opción...</option>
+                                                        <?php foreach($entregas as $entrega): ?>
+                                                            <option value="<?php echo $entrega['id']; ?>" ><?php echo $entrega['numero']; ?>: <?php echo $entrega['nombre']; ?></option>
+                                                        <?php endforeach; ?>
+
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="card-action">
+                                                    <button class="btn btn-default" type="button" onClick="compararSecciones();" style="width:100%;"><i class="la la-gears"></i> Comparar códigos</button>
+                                                    <div id="resultado_secciones">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                <?php endforeach; ?>
+                                    </div>
 
                                 </div>
-
+                            
                         </div>
                     </div>
                 </div>
 
-
                 
     </body>
+
+<script type="text/javascript">
+
+alertify.defaults.transition = "slide";
+alertify.defaults.theme.ok = "btn btn-success";
+alertify.defaults.theme.cancel = "btn btn-danger";
+
+function compararMiSeccion(){   
+
+
+    var seccion = document.getElementById("seccion").value;
+    var entrega = document.getElementById("entrega").value;
+
+    alertify.set('notifier','position', 'top-center');
+    
+    if(seccion=="" || entrega==""){
+        alertify.error("Debes indicar sección y entrega");
+    }
+    else{
+        var url = '<?php echo base_url() ?>gestioncopia/comparar_codigos_seccion/'+seccion+'/'+entrega;
+        compareCodeMiSeccion(url);
+    }
+
+}
+
+function compararSecciones(){
+    var seccion1 = document.getElementById("seccion_b").value;
+    var seccion2 = document.getElementById("seccion_all").value;
+    var entrega = document.getElementById("entrega_b").value;
+
+    alertify.set('notifier','position', 'top-center');
+
+    if(seccion1=="" || seccion2=="" || entrega==""){
+        alertify.error("Debes indicar secciones y entrega");
+    }
+    else{
+        var url = '<?php echo base_url() ?>gestioncopia/comparar_codigos_secciones/'+seccion1+'/'+seccion2+'/'+entrega;
+        compareCodeSecciones(url);
+    }
+}
+
+</script>
+
+
 </html>

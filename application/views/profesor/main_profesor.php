@@ -103,7 +103,13 @@
                                     <i class="la la-group"></i>
                                     <p>Mi sección</p>
                                 </a>
-                            </li>                      
+                            </li> 
+                            <li class="nav-item">
+                                <a href="gestionCopia">
+                                    <i class="la la-search"></i>
+                                    <p>Gestión de copia</p>
+                                </a>
+                            </li>                       
                         </ul>
                     </div>
                 </div>
