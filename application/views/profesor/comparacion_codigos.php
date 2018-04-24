@@ -252,7 +252,7 @@ function compararMiSeccion(){
         alertify.error("Debes indicar sección y entrega");
     }
     else{
-        var url = '<?php echo base_url() ?>gestioncopia/comparar_codigos_seccion/'+seccion+'/'+entrega;
+        var url = '<?php echo base_url() ?>gestionCopia/comparar_codigos_seccion/'+seccion+'/'+entrega;
         compareCodeMiSeccion(url);
     }
 
@@ -269,7 +269,7 @@ function compararSecciones(){
         alertify.error("Debes indicar secciones y entrega");
     }
     else{
-        var url = '<?php echo base_url() ?>gestioncopia/comparar_codigos_secciones/'+seccion1+'/'+seccion2+'/'+entrega;
+        var url = '<?php echo base_url() ?>gestionCopia/comparar_codigos_secciones/'+seccion1+'/'+seccion2+'/'+entrega;
         compareCodeSecciones(url);
     }
 }
