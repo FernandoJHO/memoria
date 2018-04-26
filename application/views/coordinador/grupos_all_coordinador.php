@@ -192,9 +192,9 @@
                   <div id="container_form" class="modal-body">
  
                     <div class="form-group">
-                        <label for="numero_grupo">Numero grupo</label>
+                        <label for="numero_grupo">Número grupo</label>
                         <select class="form-control" name="numero_grupo" required="true">
-                            <option disabled selected>Selecciona una opción...</option>
+                            <option disabled selected>Selecciona un número...</option>
                             <?php for($i=1;$i<=20;$i++): ?>
                                 <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                             <?php endfor; ?>
@@ -202,12 +202,21 @@
                     </div> 
                     <div class="form-group">
                         <label >Integrante</label>
-                        <input type="email" class="form-control" name="integrante_1">
-                    </div>             
+                        <select class="form-control" name="integrante_1" required="true">
+                            <option disabled selected>Selecciona un integrante...</option>
+                            <?php foreach($alumnos as $alumno): ?>
+                                <option value="<?php echo $alumno['mail']; ?>"><?php echo $alumno['nombre']; ?> (<?php echo $alumno['mail']; ?>)</option>
+                            <?php endforeach; ?>
+                        </select> 
+                    </div>  
+               
                   </div> 
                   <input type="hidden" class="form-control" name="id_seccion" value="<?php echo $seccion; ?>">
-                  <div class="form-group">
+                  <!--<div class="form-group">
                    <p align="center"> <button type="button" id="addfieldbtn" class="btn btn-success btn-xs"><i class="la la-plus"></i> Integrante</button> </p>
+                  </div>   -->
+                  <div class="form-group">
+                   <p align="center"> <button type="button" onClick="add_dropdown('<?php echo $seccion;?>');" class="btn btn-success btn-xs"><i class="la la-plus"></i> Integrante</button> </p>
                   </div>   
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -243,15 +252,29 @@ function delete_grupo(idgrupo,ngrupo){
 
 var aux = 2;
 
-$(document).ready(function() {
+function add_dropdown(id_seccion){
+
+    var contador = aux;
+    var url = '<?php echo base_url() ?>grupos/dropdown_html_builder/'+contador+'/'+id_seccion;
+
+    addDropdown(url);
+
+    aux++;
+
+}
+
+/*$(document).ready(function() {
     var wrapper = $("#container_form");
     var add_button = $("#addfieldbtn");
+
+    var nombre = 'nombre';
+    var mail = 'mail';
 
     $(add_button).click(function(e){
         $(wrapper).append('<div class="form-group"> <label >Integrante</label> <input type="email" class="form-control" name="integrante_'+aux+'"> </div>');
         aux++;
     });
-}); 
+}); */
 
 </script>
 

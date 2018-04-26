@@ -16,6 +16,22 @@ class Alumno_model extends CI_Model {
           return $query->row();
      }
 
+     function get_alumnos_seccion_singrupo($id_seccion){
+
+
+          $this->db->select('*');
+          $this->db->from('alumno');
+          $this->db->join('alumno_grupo','alumno.MAIL = alumno_grupo.MAIL_ALUMNO', 'left');
+          $this->db->where('alumno_grupo.MAIL_ALUMNO',NULL);
+          $this->db->where('alumno.ID_SECCION',$id_seccion);
+
+
+          $query = $this->db->get();
+
+          return $query->result();
+
+     }
+
      function get_nombre($mail){
           $this->db->where('MAIL',$mail);
           $this->db->select('NOMBRE, APELLIDO');

@@ -38,6 +38,7 @@ class Grupos extends CI_Controller {
 
                $grupos = $this->get_integrantes( $this->get_grupos(intval($id_seccion)) );
 
+               $alumnos = $this->get_alumnos_seccion( intval($id_seccion) );
 
                $datos = Array(
                     'nombre' => $this->session->userdata('nombre'),
@@ -45,7 +46,8 @@ class Grupos extends CI_Controller {
                     'mail' => $this->session->userdata('mail'),
                     'rol' => $this->session->userdata('rol'),
                     'grupos' => $grupos,
-                    'seccion' => $id_seccion
+                    'seccion' => $id_seccion,
+                    'alumnos' => $alumnos
                     );
                $this->load->view('profesor/grupos_all',$datos);
           }
@@ -53,13 +55,16 @@ class Grupos extends CI_Controller {
                if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
                     $grupos = $this->get_integrantes( $this->get_grupos(intval($id_seccion)) );
 
+                    $alumnos = $this->get_alumnos_seccion( intval($id_seccion) );
+
                     $datos = Array(
                          'nombre' => $this->session->userdata('nombre'),
                          'apellido' =>$this->session->userdata('apellido'),
                          'mail' => $this->session->userdata('mail'),
                          'rol' => 'Coordinador',
                          'grupos' => $grupos,
-                         'seccion' => $id_seccion
+                         'seccion' => $id_seccion,
+                         'alumnos' => $alumnos
                          );
 
                     $this->load->view('coordinador/grupos_all_coordinador',$datos);
@@ -68,13 +73,17 @@ class Grupos extends CI_Controller {
                else{
                     if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('profesor_coordinador') ){
                          $grupos = $this->get_integrantes( $this->get_grupos(intval($id_seccion)) );
+
+                         $alumnos = $this->get_alumnos_seccion( intval($id_seccion) );
+
                          $datos = Array(
                               'nombre' => $this->session->userdata('nombre'),
                               'apellido' =>$this->session->userdata('apellido'),
                               'mail' => $this->session->userdata('mail'),
                               'rol' => 'Profesor-Coordinador',
                               'grupos' => $grupos,
-                              'seccion' => $id_seccion
+                              'seccion' => $id_seccion,
+                              'alumnos' => $alumnos
                               );
 
                          $this->load->view('profesor_coordinador/grupos_all_prof_coord',$datos);
@@ -162,6 +171,27 @@ class Grupos extends CI_Controller {
 
      }
 
+     public function get_alumnos_seccion($id_seccion){
+
+          $alumnos = array();
+          $aux = array();
+
+          $result_query = $this->alumno_model->get_alumnos_seccion_singrupo($id_seccion);
+
+          foreach($result_query as $alumno){
+               $aux['nombre'] = $alumno->NOMBRE.' '.$alumno->APELLIDO;
+               $aux['mail'] = $alumno->MAIL;
+
+               array_push($alumnos,$aux);
+
+               $aux = array();
+          }
+
+          return $alumnos;
+
+     }
+
+
      public function delete_grupo(){
           $id_grupo = intval( $this->input->post('id_grupo') );
 
@@ -241,6 +271,27 @@ class Grupos extends CI_Controller {
 
 
           redirect('grupos/all/'.strval($id_seccion));
+     }
+
+
+     public function dropdown_html_builder($contador,$id_seccion){
+
+          $html = '<div class="form-group"> <label >Integrante</label> <select class="form-control" name="integrante_'.$contador.'"> <option disabled selected>Selecciona un integrante...</option> ';
+
+          $alumnos = $this->get_alumnos_seccion( intval($id_seccion) );
+
+          foreach($alumnos as $alumno){
+               $html = $html.'<option value="'.$alumno['mail'].'">'.$alumno['nombre'].' ('.$alumno['mail'].')</option>';
+          }
+
+          $html = $html.'</select> </div>';
+
+          $response = array(
+               'html' => $html
+               );
+
+          echo json_encode($response);
+
      }
 
 
