@@ -8,6 +8,20 @@ class Alumno_model extends CI_Model {
           parent::__construct();
      }
 
+     function new_alumno($nombre,$apellido,$mail,$password,$id_seccion){
+          $data = Array(
+               'NOMBRE' => $nombre,
+               'APELLIDO' => $apellido,
+               'MAIL' => $mail,
+               'PASSWORD' => md5($password),
+               'ID_SECCION' => $id_seccion
+               );
+
+          $this->db->insert('alumno',$data);
+
+          return ($this->db->affected_rows() > 0);
+     }
+
      function get_alumno($usr, $pwd)
      {
           $sql = "select * from alumno where MAIL = '" . $usr . "' and PASSWORD = '" . md5($pwd) . "'";

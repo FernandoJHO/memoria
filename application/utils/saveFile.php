@@ -133,6 +133,48 @@ class SaveFile {
 
 	}
 
+	public function upload_nomina($id_seccion,$archivo){
+
+		if(is_dir('./uploads/nominas/'.$id_seccion)==FALSE){
+			mkdir('./uploads/nominas/'.$id_seccion.'/');
+		}
+		else{
+			$files = glob('./uploads/nominas/'.$id_seccion.'/*');
+
+			foreach($files as $file){
+				if(is_file($file)){
+					unlink($file);
+				}
+			}
+		}
+
+		$dir = './uploads/nominas/'.$id_seccion.'/';
+
+		$result = array();
+
+		$config['upload_path']          = $dir;
+		$config['allowed_types']        = '*';
+		$config['detect_mime']          = false;
+
+		$CI =& get_instance();
+
+		$CI->load->library('upload', $config);
+
+		if ($CI->upload->do_upload($archivo)){
+
+			$upload_data = $CI->upload->data();
+			$nombre_archivo = $upload_data['file_name'];
+			$ruta = $dir.$nombre_archivo;
+
+			$result['nombre_archivo'] = $nombre_archivo;
+			$result['ruta'] = $ruta;
+
+		}
+
+		return $result;
+
+	}
+
 }
 
 ?>

@@ -24,24 +24,6 @@
         <script src="lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="lib/ready-theme/assets/js/ready.min.js"></script>
 
-    <style>
-
-    a:link{
-      color:inherit;
-    }
-    a:visited{
-      color:inherit;
-    }
-    a:hover{
-      color:inherit;
-    }
-    a:focus{
-      color:inherit;
-    }
-    a:active{
-      color:inherit;
-    }
-    </style>
 
 	</head>
 	<body>
@@ -137,17 +119,33 @@
                     <div class="content">
                         <div class="container-fluid">
                             <h4 class="page-title">Mi sección</h4>
+                            <?php echo $this->session->flashdata('msg'); ?>
                             <div class="row">
                             <?php foreach($secciones as $seccion): ?>
 
-                                <div class="col-md-12">
-                                    <a href="grupos/all/<?php echo $seccion['id']; ?>" style="text-decoration:none;">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h6 align="center"> Sección <?php echo $seccion['codigo']; ?> </h6>
-                                            </div>
+                                <div class="col-md-6">
+                                    
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 align="center"> Sección <?php echo $seccion['codigo']; ?> </h6>
+
+                                            <?php echo form_open_multipart(base_url().'miSeccion/add_nomina');?>
+                                                <div class="form-group">
+                                                    <label> Inscribir alumnos mediante nómina (archivo excel)</label>
+
+                                                    <input type="file" id="userfile" name="userfile" size="20" required="true" />
+
+                                                    <input type="hidden" class="form-control" name="id_seccion" value="<?php echo $seccion['id']; ?>">
+                                                </div> 
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-success" style="width:100%;"><i class="la la-check"></i> Inscribir alumnos </button>
+                                                    <p></p>
+                                                    <a href="grupos/all/<?php echo $seccion['id']; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver grupos <a/>
+                                                </div>
+                                            </form>
                                         </div>
-                                    </a>
+                                    </div>
+                                   
                                 </div>
 
                             <?php endforeach; ?>

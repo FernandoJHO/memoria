@@ -1,5 +1,8 @@
 <?php
 
+require "./application/utils/saveFile.php";
+require "./application/utils/excelphp/Classes/PHPExcel/IOFactory.php";
+
 class MiSeccion extends CI_Controller {
 
      public function __construct()
@@ -13,6 +16,7 @@ class MiSeccion extends CI_Controller {
           $this->load->library('form_validation');
           //load the login model
           $this->load->model('profesor_model');
+          $this->load->model('alumno_model');
      }
 
      public function index()
@@ -63,6 +67,55 @@ class MiSeccion extends CI_Controller {
           }
 
           return $secciones;
+     }
+
+     public function add_nomina(){
+
+          $id_seccion = intval($this->input->post('id_seccion'));
+          $archivo = 'userfile';
+
+          $upload = new SaveFile();
+
+          $upload_result = $upload->upload_nomina($id_seccion,$archivo);
+
+          if( count($upload_result) ){
+
+               $ruta_archivo = $upload_result['ruta'];
+               $objPHPExcel = PHPExcel_IOFactory::load($ruta_archivo);
+
+               $objPHPExcel->setActiveSheetIndex(0);
+
+               $numRows = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+
+               for ($i = 9; $i <= $numRows; $i++){
+
+                    $nombre_alumno = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+                    $apellidos_alumno = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue().' '.$objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+                    $mail_alumno = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+                    $rut = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+
+                    list($primero,$segundo,$tercero) = explode('.',$rut);
+
+                    list($antesguion,$despuesguion) = explode('-',$tercero);
+
+                    $password = $primero.$segundo.$antesguion.$despuesguion;
+
+                    if( !$this->alumno_model->new_alumno($nombre_alumno,$apellidos_alumno,$mail_alumno,$password,$id_seccion) ){
+                         $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudieron crear uno o más alumnos</div>');
+                         redirect('miSeccion');
+
+                    }
+
+               }
+
+               $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Alumnos inscritos correctamente</div>');
+
+          }else{
+               $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo procesar archivo</div>');
+          }
+
+          redirect('miSeccion');
+
      }
 
 }
