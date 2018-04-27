@@ -8,6 +8,7 @@ class Archivos extends CI_Controller {
      {
           parent::__construct();
           $this->load->library('session');
+          $this->load->library('zip');
           $this->load->helper('form');
           $this->load->helper('url');
           $this->load->helper('html');
@@ -24,7 +25,7 @@ class Archivos extends CI_Controller {
 
      }
 
-     public function ver($id_entrega,$id_grupo,$n_entrega){
+     public function ver($id_entrega,$id_grupo,$n_entrega,$n_grupo){
           if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador')){
 
                $codigosfuente = $this->get_codigos_fuente($id_entrega,$id_grupo);
@@ -36,7 +37,10 @@ class Archivos extends CI_Controller {
                     'rol' => $this->session->userdata('rol'),
                     'codigosfuente' => $codigosfuente,
                     'archivos' => $archivos,
-                    'numero_entrega' => $n_entrega
+                    'numero_entrega' => $n_entrega,
+                    'numero_grupo' => $n_grupo,
+                    'id_entrega' => $id_entrega,
+                    'id_grupo' => $id_grupo
                     );
 
                $this->load->view('profesor/ver_archivos',$datos);
@@ -53,7 +57,10 @@ class Archivos extends CI_Controller {
                          'rol' => 'Coordinador',
                          'codigosfuente' => $codigosfuente,
                          'archivos' => $archivos,
-                         'numero_entrega' => $n_entrega
+                         'numero_entrega' => $n_entrega,
+                         'numero_grupo' => $n_grupo,
+                         'id_entrega' => $id_entrega,
+                         'id_grupo' => $id_grupo
                          );
 
                     $this->load->view('coordinador/ver_archivos_coordinador',$datos);
@@ -71,7 +78,10 @@ class Archivos extends CI_Controller {
                               'rol' => 'Profesor-Coordinador',
                               'codigosfuente' => $codigosfuente,
                               'archivos' => $archivos,
-                              'numero_entrega' => $n_entrega
+                              'numero_entrega' => $n_entrega,
+                              'numero_grupo' => $n_grupo,
+                              'id_entrega' => $id_entrega,
+                              'id_grupo' => $id_grupo
                               );
 
                          $this->load->view('profesor_coordinador/ver_archivos_prof_coord',$datos);         
@@ -116,6 +126,38 @@ class Archivos extends CI_Controller {
           $ruta = $this->input->post('ruta');
 
           force_download($ruta, NULL);
+     }
+
+     public function download_all(){
+
+          $n_entrega = $this->input->post('entrega');
+          $n_grupo = $this->input->post('grupo');
+          $identrega = intval($this->input->post('identrega'));
+          $idgrupo = intval($this->input->post('idgrupo'));
+          $codigosfuente = $this->get_codigos_fuente($identrega,$idgrupo);
+          $archivos = $this->get_archivos($identrega,$idgrupo);
+
+
+          if(count($codigosfuente)){
+               foreach($codigosfuente as $codigo){
+
+                    $this->zip->read_file($codigo['ruta']);
+
+               }
+          }
+
+          if(count($archivos)){
+               foreach($archivos as $archivo){
+                    $this->zip->read_file($archivo['ruta']);
+               }
+          }
+
+          if(count($codigosfuente) || count($archivos)){
+               $this->zip->download('entrega'.$n_entrega.'_grupo'.$n_grupo.'.zip'); 
+          }else{
+               redirect('archivos/ver/'.$identrega.'/'.$idgrupo.'/'.$n_entrega.'/'.$n_grupo);
+          }
+
      }
 
 }
