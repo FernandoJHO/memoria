@@ -138,7 +138,13 @@
                                     <i class="la la-search"></i>
                                     <p>Gestión de copia</p>
                                 </a>
-                            </li>                            
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo base_url();?>rubricas">
+                                    <i class="la la-files-o"></i>
+                                    <p>Rúbricas</p>
+                                </a>
+                            </li>                               
                         </ul>
                     </div>
                 </div>

@@ -10,6 +10,10 @@
         <link rel="stylesheet" href="lib/ready-theme/assets/css/ready.css">
         <link rel="stylesheet" href="lib/ready-theme/assets/css/demo.css">
 
+        <script src="<?php echo base_url();?>lib/alertify/alertify.min.js"></script>
+        <link rel="stylesheet" href="<?php echo base_url();?>lib/alertify/alertify.min.css">
+        <script src="<?php echo base_url();?>lib/js/utils.js"></script>
+
         <script src="lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
         <script src="lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
         <script src="lib/ready-theme/assets/js/core/popper.min.js"></script>
@@ -23,6 +27,19 @@
         <script src="lib/ready-theme/assets/js/plugin/chart-circle/circles.min.js"></script>
         <script src="lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="lib/ready-theme/assets/js/ready.min.js"></script>
+
+        <style>
+        .alertify-notifier .ajs-message.ajs-error{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        .alertify-notifier .ajs-message.ajs-success{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        </style>
 
 	</head>
 	<body>
@@ -104,46 +121,118 @@
                                     <p>Entregas</p>
                                 </a>
                             </li> 
-
-                            <li class="nav-item">
-                                <a href="miSeccion">
-                                    <i class="la la-group"></i>
-                                    <p>Mi sección</p>
-                                </a>
-                            </li>
-                            
                             <li class="nav-item">
                                 <a href="secciones">
                                     <i class="la la-list"></i>
                                     <p>Secciones</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="<?php echo base_url();?>gestionCopia">
-                                    <i class="la la-search"></i>
-                                    <p>Gestión de copia</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
+                            <li class="nav-item active">
                                 <a href="<?php echo base_url();?>rubricas">
                                     <i class="la la-files-o"></i>
                                     <p>Rúbricas</p>
                                 </a>
-                            </li>                                
+                            </li>                           
                         </ul>
                     </div>
                 </div>
 
                 <div class="main-panel">
                     <div class="content">
-                        <div class="container-fluid">
-                            <div class="row">
-                            </div>
+                        <div id="refresh" class="container-fluid">
+                            <h4 class="page-title">Rúbricas creadas <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newRubricaModal"><i class="la la-plus"></i> Nueva</button></h4>
+                            <?php echo $this->session->flashdata('msg'); ?>
+
+                            <?php if(!count($rubricas)): ?>
+                                <p class="text-danger" align="center"> No existen rúbricas creadas. </p>
+                            <?php else: ?>
+                                <div class="row">
+
+                                    <?php foreach($rubricas as $rubrica): ?>
+
+                                        <div class="col-md-3">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="card-title" align="center"> Rúbrica: <?php echo $rubrica['nombre']; ?>  </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p align="center"> <b>Entrega</b>: <?php echo $rubrica['numero_entrega']; ?> (<?php echo $rubrica['nombre_entrega']; ?>) </p>
+                                                    <div class="card-action">
+                                                        
+                                                        <a href="rubricas/verCategorias/<?php echo $rubrica['id']; ?>/<?php echo $rubrica['numero_entrega']; ?>" class="btn btn-primary" style="width:100%;"><i class="la la-eye"></i> Ver categorías</a>
+
+                                                        <p></p>
+
+                                                        <button class="btn btn-danger" onclick="delete_rubrica('<?php echo $rubrica['id']; ?>','<?php echo $rubrica['nombre']; ?>');" style="width:100%;">Eliminar</button>
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    <?php endforeach; ?>
+
+                                </div>
+                            <?php endif; ?>  
                         </div>
                     </div>
                 </div>
 
-
+        <div class="modal fade" id="newRubricaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Crear rúbrica</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form method="post" action="<?php echo base_url() ?>rubricas/new_rubrica/">
+                  <div class="modal-body">
+                    <div class="form-group">
+                        <label for="email">Nombre de la rúbrica</label>
+                        <input type="text" class="form-control" id="user" name="nombre_rubrica" required="true">
+                    </div> 
+                    <div class="form-group">
+                        <label for="entrega">Elige entrega a la que pertenece</label>
+                        <select class="form-control" id="entrega" name="id_entrega" required="true">
+                            <option value="" disabled selected>Selecciona una opción...</option>
+                            <?php foreach($entregas as $entrega): ?>
+                                <option value="<?php echo $entrega['id']; ?>" ><?php echo $entrega['numero']; ?>: <?php echo $entrega['nombre']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div> 
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Crear</button>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
                 
 	</body>
+
+<script type="text/javascript">
+
+alertify.defaults.transition = "slide";
+alertify.defaults.theme.ok = "btn btn-success";
+alertify.defaults.theme.cancel = "btn btn-danger";
+
+function delete_rubrica(idrubrica,nombrerubrica){
+    var url = '<?php echo base_url() ?>rubricas/delete_rubrica/'+idrubrica;
+
+    alertify.set('notifier','position', 'top-right');
+
+    alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar la rúbrica '+nombrerubrica.bold()+ '?', function(){ 
+        alertify.success("Eliminando...");
+        deleteRubrica(url);
+        }
+        , function(){
+        }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
+}
+
+</script>
+
 </html>

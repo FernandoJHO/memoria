@@ -232,20 +232,22 @@
                                     </div>
                                 </div> -->
                                 <div class="col-md-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4 class="card-title"><i class="la la-github"></i> Commit</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="commitmsj"> Ingresa mensaje para el commit del código </label>
-                                                <input type="text" class="form-control form-control" id="commitmsj">
+                                    <span title="Al realizar commit tu código quedará almacenado en el repositorio Github de tu grupo.">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title"><i class="la la-github"></i> Commit</h4>
                                             </div>
-                                            <div class="card-action">
-                                                <button class="btn btn-default" onclick="commit()" style="width:100%;"><i class="la la-github"></i> Commit</button>
-                                            </div>    
-                                        </div>                                    
-                                    </div>
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="commitmsj"> Ingresa mensaje para el commit del código </label>
+                                                    <input type="text" class="form-control form-control" id="commitmsj">
+                                                </div>
+                                                <div class="card-action">
+                                                    <button class="btn btn-default" onclick="commit()" style="width:100%;"><i class="la la-github"></i> Commit</button>
+                                                </div>    
+                                            </div>                                    
+                                        </div>
+                                    </span>
                                 </div>                               
                             </div>
                         </div>

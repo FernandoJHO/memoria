@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+    <head>
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title></title>
@@ -10,11 +10,9 @@
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/ready.css">
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/demo.css">
 
-        <script src="<?php echo base_url();?>lib/codemirror/codemirror.js"></script>
-        <link rel="stylesheet" href="<?php echo base_url();?>lib/codemirror/codemirror.css">
-        <link rel="stylesheet" href="<?php echo base_url();?>lib/codemirror/theme/monokai.css">
-        <script src="<?php echo base_url();?>lib/codemirror/mode/javascript/javascript.js"></script>
-        <script src="<?php echo base_url();?>lib/codemirror/mode/python/python.js"></script>
+        <script src="<?php echo base_url();?>lib/alertify/alertify.min.js"></script>
+        <link rel="stylesheet" href="<?php echo base_url();?>lib/alertify/alertify.min.css">
+        <script src="<?php echo base_url();?>lib/js/utils.js"></script>
 
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
@@ -30,8 +28,21 @@
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/ready.min.js"></script>
 
-	</head>
-	<body>
+        <style>
+        .alertify-notifier .ajs-message.ajs-error{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        .alertify-notifier .ajs-message.ajs-success{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        </style>
+
+    </head>
+    <body>
         
         <div class="wrapper">
             <div class="main-header">
@@ -115,60 +126,104 @@
                                     <i class="la la-list"></i>
                                     <p>Secciones</p>
                                 </a>
-                            </li>
+                            </li>                    
                             <li class="nav-item">
                                 <a href="<?php echo base_url();?>rubricas">
                                     <i class="la la-files-o"></i>
                                     <p>Rúbricas</p>
                                 </a>
-                            </li>                           
+                            </li>       
                         </ul>
                     </div>
                 </div>
 
                 <div class="main-panel">
                     <div class="content">
-                        <div class="container-fluid">
-                            <h4 class="page-title">Contenido del archivo</h4>
-                            
+                        <div id="refresh" class="container-fluid">
+                            <h4 class="page-title">Categorías para rúbrica de Entrega N° <?php echo $numero_entrega; ?> <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newCategoriaModal"><i class="la la-plus"></i> Nueva</button></h4>
+                            <?php echo $this->session->flashdata('msg'); ?>
 
-                            <div class="row">
+                            <?php if(!count($categorias)): ?>
+                                <p class="text-danger" align="center"> No existen categorías creadas. </p>
+                            <?php else: ?>
 
-                                <div class="col-md-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4 class="card-title"><i class="la la-file-code-o"></i> <?php echo $archivo; ?></h4>
-                                            <!--<p class="card-category"></p> -->
-                                        </div>
-                                        <div class="card-body">
-                                            <div id="editor">
+                                <div class="row">
+                                    <?php foreach($categorias as $categoria): ?>
+
+                                        <div class="col-md-3">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="card-title" align="center"> <?php echo $categoria['nombre']; ?>  </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="card-action">
+                                                        
+                                                        <a href="<?php echo base_url();?>rubricas/verCriterios/<?php echo $categoria['id']; ?>/<?php echo $numero_entrega; ?>/<?php echo urlencode($categoria['nombre']); ?>" class="btn btn-primary" style="width:100%;"><i class="la la-eye"></i> Ver criterios</a>
+                                                        <p></p>
+                                                        <button class="btn btn-danger" onclick="delete_categoria('<?php echo $categoria['id']; ?>','<?php echo $categoria['nombre']; ?>');" style="width:100%;">Eliminar</button>
+                                                       
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+
+                                    <?php endforeach; ?>
                                 </div>
-                                
-                            </div>
-                            
+                            <?php endif; ?>  
+
                         </div>
                     </div>
                 </div>
 
+        <div class="modal fade" id="newCategoriaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Crear categoría</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form method="post" action="<?php echo base_url() ?>rubricas/new_categoria/">
+                  <div class="modal-body">
+                    <div class="form-group">
+                        <label for="email">Nombre de la categoría</label>
+                        <input type="text" class="form-control" id="user" name="nombre_categoria" required="true">
+                    </div> 
+                    <input type="hidden" name="id_rubrica" value="<?php echo $id_rubrica; ?>">
+                    <input type="hidden" name="numero_entrega" value="<?php echo $numero_entrega; ?>">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Crear</button>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
 
                 
-	</body>
+    </body>
 
 <script type="text/javascript">
 
-var myCodeMirror = CodeMirror(document.getElementById("editor"), {
-  mode:  "python",
-  theme: "monokai",
-  scrollbarStyle: "null",
-  lineNumbers: true
-});
-var codigo = <?php echo json_encode($contenido); ?>;
-myCodeMirror.setValue(codigo);
+alertify.defaults.transition = "slide";
+alertify.defaults.theme.ok = "btn btn-success";
+alertify.defaults.theme.cancel = "btn btn-danger";
+
+function delete_categoria(idcategoria,nombrecategoria){
+    var url = '<?php echo base_url() ?>rubricas/delete_categoria/'+idcategoria;
+
+    alertify.set('notifier','position', 'top-right');
+
+    alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar la categoría '+nombrecategoria.bold()+ '?', function(){ 
+        alertify.success("Eliminando...");
+        deleteCategoria(url);
+        }
+        , function(){
+        }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
+}
 
 </script>
-
 
 </html>

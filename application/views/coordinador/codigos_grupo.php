@@ -115,7 +115,13 @@
                                     <i class="la la-list"></i>
                                     <p>Secciones</p>
                                 </a>
-                            </li>                
+                            </li>  
+                            <li class="nav-item">
+                                <a href="<?php echo base_url();?>rubricas">
+                                    <i class="la la-files-o"></i>
+                                    <p>Rúbricas</p>
+                                </a>
+                            </li>               
                         </ul>
                     </div>
                 </div>
