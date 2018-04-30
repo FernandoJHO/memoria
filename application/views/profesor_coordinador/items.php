@@ -152,57 +152,78 @@
                 <div class="main-panel">
                     <div class="content">
                         <div id="refresh" class="container-fluid">
-                            <h4 class="page-title">Criterios de la categoría <?php echo $nombre_categoria; ?> (rúbrica Entrega N° <?php echo $numero_entrega; ?>) <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newCriterioModal"><i class="la la-plus"></i> Nuevo</button></h4>
-                            <?php echo $this->session->flashdata('msg'); ?>
+                            <h4 class="page-title">Items (Criterio: <?php echo $nombre_criterio; ?> | Categoría: <?php echo $nombre_categoria; ?> | Rúbrica: Entrega <?php echo $numero_entrega; ?>)</h4>
+                            <?php echo $this->session->flashdata('msg_create'); ?>
+                            <?php echo $this->session->flashdata('msg_update'); ?>
 
-                            <?php if(!count($criterios)): ?>
-                                <p class="text-danger" align="center"> No existen criterios creados. </p>
-                            <?php else: ?>
 
-                                <div class="row">
-                                    <?php foreach($criterios as $criterio): ?>
+                            <div class="row">
+                                
 
-                                        <div class="col-md-3">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <div class="card-title" align="center"> <?php echo $criterio['nombre']; ?>  </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="card-action">
-                                                        
-                                                        <a href="<?php echo base_url();?>rubricas/verItems/<?php echo $criterio['id']; ?>/<?php echo str_replace(' ', '_', $criterio['nombre']); ?>/<?php echo str_replace(' ', '_', $nombre_categoria); ?>/<?php echo $numero_entrega; ?>" class="btn btn-default" style="width:100%;"><i class="la la-pencil"></i> Editar items</a>
-                                                        <p></p>
-                                                        <button class="btn btn-danger" onclick="delete_criterio('<?php echo $criterio['id']; ?>','<?php echo $criterio['nombre']; ?>');" style="width:100%;">Eliminar</button>
-                                                       
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="card-title"> Crea y edita los items <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newItemModal"><i class="la la-plus"></i> Nuevo</button></div>
                                         </div>
+                                        <div class="card-body">
+                                            <?php if(!count($items)): ?>
+                                                <p class="text-danger" align="center"> Aún no se han creado items. </p>
+                                            <?php else: ?>
+                                                
+                                                <?php $contador = 1; ?>
+                                                <form method="post" action="<?php echo base_url() ?>rubricas/edit_item/">
+                                                    <?php foreach($items as $item): ?>
+                                                        
+                                                        <div class="form-group">
+                                                            <label >Item <?php echo $contador; ?></label>
+                                                            <input type="text" class="form-control" name="item_<?php echo $contador; ?>" value="<?php echo $item['item']; ?>"> 
+                                                            <P></P>
+                                                            <p align="center"><button type="button" class="btn btn-danger btn-sm" onclick="delete_item('<?php echo $item['id']; ?>','<?php echo $contador; ?>');">Eliminar</button></p>
+                                                        </div>  
+                                                        <input type="hidden" name="id_item_<?php echo $contador; ?>" value="<?php echo $item['id']; ?>">
 
-                                    <?php endforeach; ?>
+                                                        <?php $contador++; ?>
+                                                    <?php endforeach; ?>
+                                                    <input type="hidden" name="id_criterio" value="<?php echo $id_criterio; ?>">
+                                                    <input type="hidden" name="nombre_criterio" value="<?php echo $nombre_criterio; ?>">
+                                                    <input type="hidden" name="nombre_categoria" value="<?php echo $nombre_categoria; ?>">
+                                                    <input type="hidden" name="numero_entrega" value="<?php echo $numero_entrega; ?>">
+                                                    <div class="card-action">
+                                                        <button class="btn btn-success" type="submit">Guardar cambios</button>
+                                                        <button class="btn btn-danger" type="reset">Cancelar</button>
+                                                    </div>
+                                                </form>
+                                                
+                                            <?php endif; ?>  
+                                        </div>
+                                    </div>
                                 </div>
-                            <?php endif; ?>  
+
+                                
+                            </div>
+                           
 
                         </div>
                     </div>
                 </div>
 
-        <div class="modal fade" id="newCriterioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="newItemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Crear criterio</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Crear item</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form method="post" action="<?php echo base_url() ?>rubricas/new_criterio/">
+              <form method="post" action="<?php echo base_url() ?>rubricas/new_item/">
                   <div class="modal-body">
                     <div class="form-group">
-                        <label for="email">Nombre del criterio</label>
-                        <input type="text" class="form-control" id="user" name="nombre_criterio" required="true">
+                        <label for="email">Item</label>
+                        <input type="text" class="form-control" name="item" required="true">
                     </div> 
-                    <input type="hidden" name="id_categoria" value="<?php echo $id_categoria; ?>">
+                    <input type="hidden" name="id_criterio" value="<?php echo $id_criterio; ?>">
+                    <input type="hidden" name="nombre_criterio" value="<?php echo $nombre_criterio; ?>">
                     <input type="hidden" name="numero_entrega" value="<?php echo $numero_entrega; ?>">
                     <input type="hidden" name="nombre_categoria" value="<?php echo $nombre_categoria; ?>">
                   </div>
@@ -224,18 +245,19 @@ alertify.defaults.transition = "slide";
 alertify.defaults.theme.ok = "btn btn-success";
 alertify.defaults.theme.cancel = "btn btn-danger";
 
-function delete_criterio(idcriterio,nombrecriterio){
-    var url = '<?php echo base_url() ?>rubricas/delete_criterio/'+idcriterio;
+function delete_item(iditem,nroitem){
 
+    var url = '<?php echo base_url() ?>rubricas/delete_item/'+iditem;
     alertify.set('notifier','position', 'top-right');
 
-    alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar el criterio '+nombrecriterio.bold()+ '?', function(){ 
+    alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar el item '+nroitem.bold()+ '?', function(){ 
         alertify.success("Eliminando...");
-        deleteCriterio(url);
+        deleteItem(url);
         }
         , function(){
         }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
 }
+
 
 </script>
 

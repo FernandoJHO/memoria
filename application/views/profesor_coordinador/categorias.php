@@ -170,7 +170,7 @@
                                                 <div class="card-body">
                                                     <div class="card-action">
                                                         
-                                                        <a href="<?php echo base_url();?>rubricas/verCriterios/<?php echo $categoria['id']; ?>/<?php echo $numero_entrega; ?>/<?php echo urlencode($categoria['nombre']); ?>" class="btn btn-primary" style="width:100%;"><i class="la la-eye"></i> Ver criterios</a>
+                                                        <a href="<?php echo base_url();?>rubricas/verCriterios/<?php echo $categoria['id']; ?>/<?php echo $numero_entrega; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>" class="btn btn-primary" style="width:100%;"><i class="la la-eye"></i> Ver criterios</a>
                                                         <p></p>
                                                         <button class="btn btn-danger" onclick="delete_categoria('<?php echo $categoria['id']; ?>','<?php echo $categoria['nombre']; ?>');" style="width:100%;">Eliminar</button>
                                                        

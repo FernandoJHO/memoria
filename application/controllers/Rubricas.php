@@ -18,6 +18,7 @@ class Rubricas extends CI_Controller {
           $this->load->model('entrega_model');
           $this->load->model('categoria_model');
           $this->load->model('criterio_model');
+          $this->load->model('item_model');
      }
 
      public function index()
@@ -275,7 +276,7 @@ class Rubricas extends CI_Controller {
 
           if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
 
-               $categoria = urldecode($nombre_categoria);
+               $categoria = str_replace('_', ' ', urldecode($nombre_categoria));
 
                $criterios = $this->get_criterios($id_categoria);
 
@@ -296,7 +297,7 @@ class Rubricas extends CI_Controller {
           else{
                if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && $this->session->userdata('profesor_coordinador') ){
 
-                    $categoria = urldecode($nombre_categoria);
+                    $categoria = str_replace('_', ' ', urldecode($nombre_categoria));
 
                     $criterios = $this->get_criterios($id_categoria);
 
@@ -353,13 +354,154 @@ class Rubricas extends CI_Controller {
                $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo crear criterio</div>');
           }
 
-          redirect('rubricas/verCriterios/'.$id_categoria.'/'.$numero_entrega.'/'.$nombre_categoria);
+          redirect('rubricas/verCriterios/'.$id_categoria.'/'.$numero_entrega.'/'.str_replace('_', ' ', $nombre_categoria));
 
      }
 
      public function delete_criterio($id_criterio){
 
           $result = $this->criterio_model->delete_criterio(intval($id_criterio));
+
+          if($result){
+               echo json_encode("Ok");
+          }
+          else{
+
+          }
+
+     }
+
+     public function verItems($id_criterio,$nombre_criterio,$nombre_categoria,$numero_entrega){
+
+          if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
+
+               $categoria = str_replace('_', ' ', urldecode($nombre_categoria));
+               $criterio = str_replace('_', ' ', urldecode($nombre_criterio));
+
+               $items = $this->get_items($id_criterio);
+
+               $datos = Array(
+                    'nombre' => $this->session->userdata('nombre'),
+                    'apellido' =>$this->session->userdata('apellido'),
+                    'mail' => $this->session->userdata('mail'),
+                    'rol' => 'Coordinador',
+                    'id_criterio' => $id_criterio,
+                    'numero_entrega' => $numero_entrega,
+                    'nombre_categoria' => $categoria,
+                    'nombre_criterio' => $criterio,
+                    'items' => $items
+                    );
+
+               $this->load->view("coordinador/items",$datos);
+
+          }
+          else{
+               if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && $this->session->userdata('profesor_coordinador') ){
+
+                    $categoria = str_replace('_', ' ', urldecode($nombre_categoria));
+                    $criterio = str_replace('_', ' ', urldecode($nombre_criterio));
+
+                    $items = $this->get_items($id_criterio);
+
+                    $datos = Array(
+                         'nombre' => $this->session->userdata('nombre'),
+                         'apellido' =>$this->session->userdata('apellido'),
+                         'mail' => $this->session->userdata('mail'),
+                         'rol' => 'Profesor-Coordinador',
+                         'id_criterio' => $id_criterio,
+                         'numero_entrega' => $numero_entrega,
+                         'nombre_categoria' => $categoria,
+                         'nombre_criterio' => $criterio,
+                         'items' => $items
+                         );
+
+                    $this->load->view("profesor_coordinador/items",$datos);
+               }
+          }
+
+     }
+
+     public function get_items($id_criterio){
+
+          $items = array();
+          $aux = array();
+
+          $result_query = $this->item_model->get_items_by_criterio( intval($id_criterio) );
+
+          foreach($result_query as $item){
+               $aux['id'] = $item->ID_ITEM;
+               $aux['item'] = $item->ITEM;
+               $aux['id_criterio'] = $item->ID_CRITERIO;
+
+               array_push($items,$aux);
+               $aux = array();
+          }
+
+          return $items;
+
+     }
+
+     public function new_item(){
+
+          $id_criterio = intval( $this->input->post('id_criterio') );
+          $nombre_criterio = $this->input->post('nombre_criterio');
+          $numero_entrega = $this->input->post('numero_entrega');
+          $nombre_categoria = $this->input->post('nombre_categoria');
+          $item = $this->input->post('item');
+
+          $result = $this->item_model->new_item($id_criterio,$item);
+
+          if($result){
+               $this->session->set_flashdata('msg_create', '<div class="alert alert-success text-center">Item creado</div>');
+          }
+          else{
+               $this->session->set_flashdata('msg_create', '<div class="alert alert-danger text-center">No se pudo crear item</div>');
+          }
+
+          redirect('rubricas/verItems/'.$id_criterio.'/'.str_replace(' ', '_', $nombre_criterio).'/'.str_replace(' ', '_', $nombre_categoria).'/'.$numero_entrega);
+
+     }
+
+     public function edit_item(){
+
+          $counter = 0;
+
+          foreach($this->input->post() as $key => $val){
+               $counter++;
+          }
+
+          $counter = $counter - 4;
+
+          $counter = $counter / 2;
+
+          $id_criterio = intval( $this->input->post('id_criterio') );
+          $nombre_criterio = $this->input->post('nombre_criterio');
+          $numero_entrega = $this->input->post('numero_entrega');
+          $nombre_categoria = $this->input->post('nombre_categoria');
+
+          $items = array();
+          $aux = array();
+
+          for($i = 1; $i<=$counter; $i++){
+               $aux['id_item'] = intval($this->input->post('id_item_'.$i));
+               $aux['item'] = $this->input->post('item_'.$i);
+
+               array_push($items,$aux);
+               $aux = array();
+          }
+
+
+          foreach($items as $item){
+               $this->item_model->update_item($item['id_item'],$item['item']);
+          }
+
+          redirect('rubricas/verItems/'.$id_criterio.'/'.str_replace(' ', '_', $nombre_criterio).'/'.str_replace(' ', '_', $nombre_categoria).'/'.$numero_entrega);
+
+     }
+
+     public function delete_item($id_item){
+
+          $result = $this->item_model->delete_item( intval($id_item) );
 
           if($result){
                echo json_encode("Ok");

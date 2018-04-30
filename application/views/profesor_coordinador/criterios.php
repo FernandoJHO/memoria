@@ -170,7 +170,7 @@
                                                 <div class="card-body">
                                                     <div class="card-action">
                                                         
-                                                        <a href="#" class="btn btn-default" style="width:100%;"><i class="la la-pen"></i>Editar preguntas</a>
+                                                        <a href="<?php echo base_url();?>rubricas/verItems/<?php echo $criterio['id']; ?>/<?php echo str_replace(' ', '_', $criterio['nombre']); ?>/<?php echo str_replace(' ', '_', $nombre_categoria); ?>/<?php echo $numero_entrega; ?>" class="btn btn-default" style="width:100%;"><i class="la la-pencil"></i> Editar items</a>
                                                         <p></p>
                                                         <button class="btn btn-danger" onclick="delete_criterio('<?php echo $criterio['id']; ?>','<?php echo $criterio['nombre']; ?>');" style="width:100%;">Eliminar</button>
                                                        
