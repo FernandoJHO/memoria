@@ -162,7 +162,7 @@
                                 <div class="row">
                                     <?php foreach($criterios as $criterio): ?>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-6">
                                             <div class="card">
                                                 <div class="card-header">
                                                     <div class="card-title" align="center"> <?php echo $criterio['nombre']; ?>  </div>
@@ -172,7 +172,7 @@
                                                         
                                                         <a href="<?php echo base_url();?>rubricas/verItems/<?php echo $criterio['id']; ?>/<?php echo str_replace(' ', '_', $criterio['nombre']); ?>/<?php echo str_replace(' ', '_', $nombre_categoria); ?>/<?php echo $numero_entrega; ?>" class="btn btn-default" style="width:100%;"><i class="la la-pencil"></i> Editar items</a>
                                                         <p></p>
-                                                        <button class="btn btn-danger" onclick="delete_criterio('<?php echo $criterio['id']; ?>','<?php echo $criterio['nombre']; ?>');" style="width:100%;">Eliminar</button>
+                                                        <button class="btn btn-danger" onclick="delete_criterio('<?php echo $criterio['id']; ?>','<?php echo $criterio['nombre']; ?>');" style="width:100%;"><i class="la la-close"></i> Eliminar</button>
                                                        
                                                     </div>
                                                 </div>

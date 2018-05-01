@@ -166,7 +166,7 @@
                                                 </div>
                                                 
                                                 <div class="card-action">
-                                                    <button class="btn btn-default" type="button" onClick="compararMiSeccion();" style="width:100%;"><i class="la la-gears"></i> Comparar códigos</button>
+                                                    <button class="btn btn-default" type="button" onClick="compararMiSeccion();" style="width:100%;"><i class="la la-search"></i> Comparar códigos</button>
                                                     <div id="resultado_miseccion">
                                                     </div>
                                                 </div>
@@ -216,7 +216,7 @@
                                                 </div>
                                                 
                                                 <div class="card-action">
-                                                    <button class="btn btn-default" type="button" onClick="compararSecciones();" style="width:100%;"><i class="la la-gears"></i> Comparar códigos</button>
+                                                    <button class="btn btn-default" type="button" onClick="compararSecciones();" style="width:100%;"><i class="la la-search"></i> Comparar códigos</button>
                                                     <div id="resultado_secciones">
                                                     </div>
                                                 </div>

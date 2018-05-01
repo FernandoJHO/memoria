@@ -129,7 +129,7 @@
                                      <input type="hidden" name="idgrupo" value="<?php echo $id_grupo; ?>">
                                      <input type="hidden" name="entrega" value="<?php echo $numero_entrega; ?>">
                                      <input type="hidden" name="grupo" value="<?php echo $numero_grupo; ?>">
-                                     <button type="submit" class="btn btn-primary btn-sm" ><i class="la la-download"></i>Descargar todos</button>
+                                     <button type="submit" class="btn btn-primary btn-sm" ><i class="la la-download"></i> Descargar todos</button>
                                 </form>
                             </h4>
 
@@ -140,13 +140,13 @@
                                     <div class="col-md-3">
                                         <div class="card">
                                             <div class="card-body">
-                                                <p align="center"> <b> <?php echo $codigofuente['nombre']; ?> </b> </p>
+                                                <h2 align="center"><i class="la la-file-code-o"></i></h2> <h6 align="center">  <?php echo $codigofuente['nombre']; ?>  </h6>
 
                                                 <div class="card-action">
                                                     <form method="post" action="<?php echo base_url();?>archivos/download">
 
                                                         <input type="hidden" name="ruta" value="<?php echo $codigofuente['ruta']; ?>">
-                                                        <button type="submit" class="btn btn-primary" style="width:100%;"><i class="la la-download"></i>Descargar</button>
+                                                        <button type="submit" class="btn btn-default" style="width:100%;"><i class="la la-download"></i> Descargar</button>
 
                                                     </form>
                                                 </div>
@@ -162,14 +162,14 @@
                                     <div class="col-md-3">
                                         <div class="card">
                                             <div class="card-body">
-                                                <p align="center"> <b> <?php echo $archivo['nombre']; ?> </b> </p>
+                                                <h2 align="center"><i class="la la-file"></i></h2> <h6 align="center">  <?php echo $archivo['nombre']; ?>  </h6>
 
                                                 <div class="card-action">
 
                                                     <form method="post" action="<?php echo base_url();?>archivos/download">
 
                                                         <input type="hidden" name="ruta" value="<?php echo $archivo['ruta']; ?>">
-                                                        <button type="submit" class="btn btn-primary" style="width:100%;">Descargar</button>
+                                                        <button type="submit" class="btn btn-default" style="width:100%;"><i class="la la-download"></i> Descargar</button>
 
                                                     </form>
                                                 </div>

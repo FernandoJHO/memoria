@@ -177,9 +177,9 @@
                                                             <h2 align="center"><i class="la la-file-code-o"></i></h2>
                                                             <h6 align="center"> <?php echo $archivo ?> </h6>
                                                             <div class="card-action">
-                                                                <button class="btn btn-default " name="filename" form="editForm" value="<?php echo $archivo; ?>" type="submit" style="width:100%;">Editar</button>
+                                                                <button class="btn btn-default " name="filename" form="editForm" value="<?php echo $archivo; ?>" type="submit" style="width:100%;"><i class="la la-pencil"></i> Editar</button>
                                                                 <p></p>
-                                                                <button class="btn btn-danger " onclick="delete_file('<?php echo $archivo; ?>')" style="width:100%;">Eliminar</button> 
+                                                                <button class="btn btn-danger " onclick="delete_file('<?php echo $archivo; ?>')" style="width:100%;"><i class="la la-close"></i> Eliminar</button> 
                                                                 <!--<button class="btn btn-danger" name="nombre_archivo" form="deleteForm" value="<?php echo $archivo; ?>" onclick="return confirm('¿Estás seguro que deseas eliminar <?php echo $archivo; ?>?')" type="submit">Eliminar</button>-->
                                                             </div>
                                                         </div>                                                        

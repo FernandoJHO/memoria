@@ -162,7 +162,7 @@
                                 <div class="row">
                                     <?php foreach($categorias as $categoria): ?>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-6">
                                             <div class="card">
                                                 <div class="card-header">
                                                     <div class="card-title" align="center"> <?php echo $categoria['nombre']; ?>  </div>
@@ -170,9 +170,9 @@
                                                 <div class="card-body">
                                                     <div class="card-action">
                                                         
-                                                        <a href="<?php echo base_url();?>rubricas/verCriterios/<?php echo $categoria['id']; ?>/<?php echo $numero_entrega; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>" class="btn btn-primary" style="width:100%;"><i class="la la-eye"></i> Ver criterios</a>
+                                                        <a href="<?php echo base_url();?>rubricas/verCriterios/<?php echo $categoria['id']; ?>/<?php echo $numero_entrega; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver criterios</a>
                                                         <p></p>
-                                                        <button class="btn btn-danger" onclick="delete_categoria('<?php echo $categoria['id']; ?>','<?php echo $categoria['nombre']; ?>');" style="width:100%;">Eliminar</button>
+                                                        <button class="btn btn-danger" onclick="delete_categoria('<?php echo $categoria['id']; ?>','<?php echo $categoria['nombre']; ?>');" style="width:100%;"><i class="la la-close"></i> Eliminar</button>
                                                        
                                                     </div>
                                                 </div>

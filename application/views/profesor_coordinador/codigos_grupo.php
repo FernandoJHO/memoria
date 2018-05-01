@@ -164,7 +164,7 @@
                                                             <form id="verContenidoForm" method="post" action="<?php echo base_url() ?>editor/ver">
                                                                 <input type="hidden" name="id_grupo" value="<?php echo $id_grupo; ?>">
                                                                 <input type="hidden" name="nombre_archivo" value="<?php echo $archivo; ?>">
-                                                                <button class="btn btn-primary" type="submit" style="width:100%;">Ver</button>
+                                                                <button class="btn btn-default" type="submit" style="width:100%;"><i class="la la-eye"></i> Ver</button>
                                                             </form> 
                                                         </div>
                                                     </div>

@@ -164,7 +164,7 @@
                                                                 <label >Item <?php echo $contador; ?></label>
                                                                 <input type="text" class="form-control" name="item_<?php echo $contador; ?>" value="<?php echo $item['item']; ?>"> 
                                                                 <P></P>
-                                                                <p align="center"><button type="button" class="btn btn-danger btn-sm" onclick="delete_item('<?php echo $item['id']; ?>','<?php echo $contador; ?>');">Eliminar</button></p>
+                                                                <p align="center"><button type="button" class="btn btn-danger btn-sm" onclick="delete_item('<?php echo $item['id']; ?>','<?php echo $contador; ?>');"><i class="la la-close"></i> Eliminar</button></p>
                                                             </div>  
                                                             <input type="hidden" name="id_item_<?php echo $contador; ?>" value="<?php echo $item['id']; ?>">
 
