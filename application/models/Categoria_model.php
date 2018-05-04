@@ -16,10 +16,11 @@ class Categoria_model extends CI_Model {
           return $query->result();
      }
 
-     public function new_categoria($nombre,$rubrica){
+     public function new_categoria($nombre,$rubrica,$porcentaje){
           $data = array(
                'NOMBRE' => $nombre,
-               'ID_RUBRICA' => $rubrica
+               'ID_RUBRICA' => $rubrica,
+               'PORCENTAJE' => $porcentaje
                );
 
           $this->db->insert('categoria',$data);
@@ -32,6 +33,45 @@ class Categoria_model extends CI_Model {
           $this->db->delete('categoria');
 
           return ($this->db->affected_rows() > 0);
+     }
+
+     public function get_evaluacion_categoria($id_grupo,$id_categoria){
+          $this->db->select('PUNTAJE, NOTA');
+          $this->db->where('ID_CATEGORIA', $id_categoria);
+          $this->db->where('ID_GRUPO', $id_grupo);
+
+          $query = $this->db->get('evaluacion_categoria');
+
+          return $query->row();
+     }
+
+     public function evaluar_categoria($id_categoria,$id_grupo,$puntaje,$nota){
+
+          $this->db->where('ID_CATEGORIA',$id_categoria);
+          $this->db->where('ID_GRUPO',$id_grupo);
+
+          $query = $this->db->get('evaluacion_categoria'); 
+
+          if(!empty($query->row())){
+               $data = Array(
+                    'PUNTAJE' => $puntaje,
+                    'NOTA' => $nota
+                    );
+               $this->db->where('ID_CATEGORIA',$id_categoria);
+               $this->db->where('ID_GRUPO',$id_grupo);
+
+               $this->db->update('evaluacion_categoria',$data);
+
+          }else{
+               $data = Array(
+                    'ID_CATEGORIA' => $id_categoria,
+                    'ID_GRUPO' => $id_grupo,
+                    'PUNTAJE' => $puntaje,
+                    'NOTA' => $nota
+                    );
+               $this->db->insert('evaluacion_categoria',$data);
+          }
+
      }
 
 }

@@ -156,9 +156,10 @@
                                                     <div class="card-title" align="center"> <?php echo $categoria['nombre']; ?>  </div>
                                                 </div>
                                                 <div class="card-body">
+                                                    <p align="center">Porcentaje: <b><?php echo $categoria['porcentaje']; ?>%</b> </p>
                                                     <div class="card-action">
                                                         
-                                                        <a href="<?php echo base_url();?>rubricas/verCriterios/<?php echo $categoria['id']; ?>/<?php echo $numero_entrega; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver criterios</a>
+                                                        <a href="<?php echo base_url();?>rubricas/verItems/<?php echo $categoria['id']; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>/<?php echo $numero_entrega; ?>" class="btn btn-default" style="width:100%;"><i class="la la-pencil"></i> Editar items</a>
                                                         <p></p>
                                                         <button class="btn btn-danger" onclick="delete_categoria('<?php echo $categoria['id']; ?>','<?php echo $categoria['nombre']; ?>');" style="width:100%;"><i class="la la-close"></i> Eliminar</button>
                                                        
@@ -189,6 +190,10 @@
                     <div class="form-group">
                         <label for="email">Nombre de la categoría</label>
                         <input type="text" class="form-control" id="user" name="nombre_categoria" required="true">
+                    </div> 
+                    <div class="form-group">
+                        <label for="email">Porcentaje de la categoría</label>
+                        <input type="number" class="form-control" id="user" name="porcentaje_categoria" min="0" max="100" required="true">
                     </div> 
                     <input type="hidden" name="id_rubrica" value="<?php echo $id_rubrica; ?>">
                     <input type="hidden" name="numero_entrega" value="<?php echo $numero_entrega; ?>">

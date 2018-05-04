@@ -10,6 +10,10 @@
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/ready.css">
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/demo.css">
 
+        <script src="<?php echo base_url();?>lib/alertify/alertify.min.js"></script>
+        <link rel="stylesheet" href="<?php echo base_url();?>lib/alertify/alertify.min.css">
+        <script src="<?php echo base_url();?>lib/js/utils.js"></script>
+
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/popper.min.js"></script>
@@ -24,81 +28,6 @@
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/ready.min.js"></script>
 
-        <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="http://code.highcharts.com/modules/exporting.js"></script>
-
-        <script type="text/javascript">
-
-        function generarGrafico(id_container, integrante_commits){
-
-            //alert("flag");
-
-            var container = '#grafico'+id_container;
-            var nombres = [];
-            var commits = [];
-            var datos_finales = [];
-
-
-
-            $.each(integrante_commits, function( ){
-                $.each(this, function(key,value){
-                    if(key=="nombre"){
-                        nombres.push(value);
-                    }
-                    if(key=="commits"){
-                        commits.push(parseInt(value));
-                    }
-                });
-            }); 
-
-
-
-            for(var i=0; i<nombres.length; i++){
-                datos_finales.push({
-                    name: nombres[i],
-                    y: commits[i]
-                });
-            }
-
-
-            $(container).highcharts({
-                chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
-                    type: 'pie'
-                },
-                title: {
-                    text: 'Aporte por alumno'
-                },
-                tooltip: {
-                    
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                            style: {
-                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                            }
-                        }
-                    }
-                },
-                series: [{
-                    name: 'Commits',
-                    colorByPoint: true,
-                    data: datos_finales
-                }]
-            });
-
-            
-
-        }
-
-        </script>
 
     </head>
     <body>
@@ -185,63 +114,49 @@
                                     <i class="la la-search"></i>
                                     <p>Gestión de copia</p>
                                 </a>
-                            </li>                
+                            </li>                     
                         </ul>
                     </div>
                 </div>
 
                 <div class="main-panel">
                     <div class="content">
-                        <div class="container-fluid">
-                            <h4 class="page-title">Entregas del Grupo <?php echo $numero_grupo; ?></h4>
-
-                            <?php if(!count($entregas)): ?>
-                                <p class="text-danger" align="center"> El grupo aún no ha realizado entregas. </p>
+                        <div id="refresh" class="container-fluid">
+                            <h4 class="page-title">Categorías rúbrica Entrega <?php echo $numero_entrega; ?> (Grupo <?php echo $numero_grupo; ?>)</h4>
+                            <?php if(!count($categorias)): ?>
+                                <p class="text-danger" align="center"> La rúbrica aún no cuenta con categorías. </p>
                             <?php else: ?>
+
                                 <div class="row">
-                                <?php foreach($entregas as $entrega): ?>
+                                    <?php foreach($categorias as $categoria): ?>
 
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <div class="card-title" align="center"> Entrega <?php echo $entrega['numero']; ?> </div>
-                                                <p align="center"> <b> <?php echo $entrega['descripcion']; ?> </b> </p>
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="card-title" align="center"> <?php echo $categoria['nombre']; ?>  </div>
+                                                </div>
+                                                <div class="card-body">
+
+                                                    <p align="center">Porcentaje: <b><?php echo $categoria['porcentaje']; ?>%</b> </p>
+                                                    <p align="center">Puntaje: <b><?php echo $categoria['puntaje']; ?></b> </p>
+                                                    <p align="center">Nota: <b><?php echo $categoria['nota']; ?></b> </p>
+                                                    <div class="card-action">
+                                                        
+                                                        <a href="<?php echo base_url();?>evaluacion/items/<?php echo $categoria['id']; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>/<?php echo $id_rubrica; ?>" class="btn btn-default" style="width:100%;"><i class="la la-pencil"></i> Evaluar items</a>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            
-                                                
-                                            <?php if($entrega['codigofuente']): ?>
-                                                <?php if(count($entrega['alumno_commits'])): ?>
-                                                <div id="grafico<?php echo $entrega['numero']; ?>" class="card-body">
-                                                    
-                                                    <script>
-                                                        generarGrafico(<?php echo $entrega['numero']; ?>, <?php echo json_encode($entrega['alumno_commits']); ?>);
-                                                    </script>
-                                                    
-
-                                                </div>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-
-                                                <div class="card-action">
-                                                    <a href="<?php echo base_url();?>archivos/ver/<?php echo $entrega['id']; ?>/<?php echo $id_grupo; ?>/<?php echo $entrega['numero']; ?>/<?php echo $numero_grupo; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver archivos </a>
-                                                    <p></p>
-                                                    <a href="<?php echo base_url();?>evaluacion/rubricas/<?php echo $entrega['id']; ?>/<?php echo $entrega['numero']; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>" class="btn btn-primary" style="width:100%;"><i class="la la-check-circle"></i> Evaluar</a>
-                                                </div>
-                                            
-                                            
                                         </div>
-                                    </div>
 
-                                <?php endforeach; ?>
-
+                                    <?php endforeach; ?>
                                 </div>
-                            <?php endif;?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
 
+                
     </body>
-
 
 
 

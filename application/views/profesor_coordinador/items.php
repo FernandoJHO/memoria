@@ -152,7 +152,7 @@
                 <div class="main-panel">
                     <div class="content">
                         <div id="refresh" class="container-fluid">
-                            <h4 class="page-title">Items (Criterio: <?php echo $nombre_criterio; ?> | Categoría: <?php echo $nombre_categoria; ?> | Rúbrica: Entrega <?php echo $numero_entrega; ?>)</h4>
+                            <h4 class="page-title">Items (Categoría: <?php echo $nombre_categoria; ?> | Rúbrica: Entrega <?php echo $numero_entrega; ?>)</h4>
                             <?php echo $this->session->flashdata('msg_create'); ?>
                             <?php echo $this->session->flashdata('msg_update'); ?>
 
@@ -184,8 +184,7 @@
 
                                                         <?php $contador++; ?>
                                                     <?php endforeach; ?>
-                                                    <input type="hidden" name="id_criterio" value="<?php echo $id_criterio; ?>">
-                                                    <input type="hidden" name="nombre_criterio" value="<?php echo $nombre_criterio; ?>">
+                                                    <input type="hidden" name="id_categoria" value="<?php echo $id_categoria; ?>">
                                                     <input type="hidden" name="nombre_categoria" value="<?php echo $nombre_categoria; ?>">
                                                     <input type="hidden" name="numero_entrega" value="<?php echo $numero_entrega; ?>">
                                                     <div class="card-action">
@@ -222,8 +221,7 @@
                         <label for="email">Item</label>
                         <input type="text" class="form-control" name="item" required="true">
                     </div> 
-                    <input type="hidden" name="id_criterio" value="<?php echo $id_criterio; ?>">
-                    <input type="hidden" name="nombre_criterio" value="<?php echo $nombre_criterio; ?>">
+                    <input type="hidden" name="id_categoria" value="<?php echo $id_categoria; ?>">
                     <input type="hidden" name="numero_entrega" value="<?php echo $numero_entrega; ?>">
                     <input type="hidden" name="nombre_categoria" value="<?php echo $nombre_categoria; ?>">
                   </div>
