@@ -66,4 +66,30 @@ class Secciones extends CI_Controller {
           return $secciones;
      }
 
+     public function new_seccion(){
+
+          $codigo = $this->input->post('codigo_seccion');
+
+          if( $this->seccion_model->add_seccion($codigo) ){
+               $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Seccion creada</div>');
+          }
+          else{
+               $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo crear seccion</div>');
+          }
+
+          redirect('secciones');
+
+     }
+
+     public function delete_seccion($id_seccion){
+
+          if($this->seccion_model->delete_seccion(intval($id_seccion))){
+               echo json_encode("Ok");
+          }
+          else{
+               
+          }
+
+     }
+
 }

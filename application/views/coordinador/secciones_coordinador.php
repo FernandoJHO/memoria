@@ -10,6 +10,10 @@
         <link rel="stylesheet" href="lib/ready-theme/assets/css/ready.css">
         <link rel="stylesheet" href="lib/ready-theme/assets/css/demo.css">
 
+        <script src="<?php echo base_url();?>lib/alertify/alertify.min.js"></script>
+        <link rel="stylesheet" href="<?php echo base_url();?>lib/alertify/alertify.min.css">
+        <script src="<?php echo base_url();?>lib/js/utils.js"></script>
+
         <script src="lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
         <script src="lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
         <script src="lib/ready-theme/assets/js/core/popper.min.js"></script>
@@ -24,24 +28,19 @@
         <script src="lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="lib/ready-theme/assets/js/ready.min.js"></script>
 
-    <style>
+        <style>
+        .alertify-notifier .ajs-message.ajs-error{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        .alertify-notifier .ajs-message.ajs-success{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        </style>
 
-    a:link{
-      color:inherit;
-    }
-    a:visited{
-      color:inherit;
-    }
-    a:hover{
-      color:inherit;
-    }
-    a:focus{
-      color:inherit;
-    }
-    a:active{
-      color:inherit;
-    }
-    </style>
 
 	</head>
 	<body>
@@ -117,6 +116,12 @@
                             </div>
                         </div>
                         <ul class="nav">
+                            <li class="nav-item ">
+                                <a href="<?php echo base_url();?>profesores">
+                                    <i class="la la-users"></i>
+                                    <p>Gestión de profesores</p>
+                                </a>
+                            </li> 
                             <li class="nav-item">
                                 <a href="editarEntregas">
                                     <i class="la la-suitcase"></i>
@@ -141,19 +146,24 @@
 
                 <div class="main-panel">
                     <div class="content">
-                        <div class="container-fluid">
-                            <h4 class="page-title">Secciones</h4>
+                        <div id="refresh" class="container-fluid">
+                            <h4 class="page-title">Secciones <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newSeccionModal"><i class="la la-plus"></i> Nueva</button></h4>
+                            <?php echo $this->session->flashdata('msg'); ?>
                             <div class="row">
                             <?php foreach($secciones as $seccion): ?>
 
                                 <div class="col-md-6">
-                                    <a href="grupos/all/<?php echo $seccion['id']; ?>" style="text-decoration:none;">
                                         <div class="card">
                                             <div class="card-body">
                                                 <h6 align="center"> Sección <?php echo $seccion['codigo']; ?> </h6>
+
+                                                <div class="card-action">
+                                                    <a href="grupos/all/<?php echo $seccion['id']; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver grupos</a>
+                                                    <p></p>
+                                                    <button class="btn btn-danger" style="width:100%;" type="button" onclick="delete_seccion('<?php echo $seccion['id']; ?>','<?php echo $seccion['codigo']; ?>');"><i class="la la-remove"></i> Eliminar</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </a>
                                 </div>
 
                             <?php endforeach; ?>
@@ -162,7 +172,55 @@
                     </div>
                 </div>
 
-
+        <div class="modal fade" id="newSeccionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Crear seccion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form method="post" action="<?php echo base_url() ?>secciones/new_seccion/">
+                  <div id="container_form" class="modal-body">
+ 
+                    <div class="form-group">
+                        <label for="numero_grupo">Código sección</label>
+                        <input type="text" class="form-control" name="codigo_seccion" placeholder="Escribe el código de la sección" required="true">
+                    </div> 
+                  </div> 
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Crear</button>
+                  </div>
+              </form>
+              
+            </div>
+          </div>
+        </div>
                 
 	</body>
+
+<script type="text/javascript">
+
+alertify.defaults.transition = "slide";
+alertify.defaults.theme.ok = "btn btn-success";
+alertify.defaults.theme.cancel = "btn btn-danger";
+
+function delete_seccion(idseccion,codigo){
+    var url = '<?php echo base_url() ?>secciones/delete_seccion/'+idseccion;
+
+    alertify.set('notifier','position', 'top-right');
+
+    alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar la sección '+codigo.bold()+ '?. Se eliminarán todos los grupos y alumnos del sistema.', function(){ 
+        alertify.success("Eliminando...");
+        deleteSeccion(url);
+        }
+        , function(){
+        }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
+}
+
+
+</script>
+
 </html>

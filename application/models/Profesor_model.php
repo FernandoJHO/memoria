@@ -16,6 +16,17 @@ class Profesor_model extends CI_Model {
           return $query->row();
      }
 
+     function get_profesores(){
+
+          $this->db->select('NOMBRE, APELLIDO, MAIL, COORDINADOR, PROFESOR_COORDINADOR');
+          $this->db->from('profesor');
+
+          $query = $this->db->get();
+
+          return $query->result();
+
+     }
+
      public function get_seccion($mail) {
           $this->db->select('seccion.ID_SECCION, seccion.CODIGO');
           $this->db->from('seccion');
@@ -44,6 +55,45 @@ class Profesor_model extends CI_Model {
 
           return $query->row();
           //$query->result() para más de una fila de resultados
+
+     }
+
+     function new_profesor($nombres,$apellidos,$mail,$password,$coordinador,$prof_coordinador){
+
+          $data = array(
+               'NOMBRE' => $nombres,
+               'APELLIDO' => $apellidos,
+               'MAIL' => $mail,
+               'PASSWORD' => md5($password),
+               'COORDINADOR' => $coordinador,
+               'PROFESOR_COORDINADOR' => $prof_coordinador
+               );
+
+          $this->db->insert('profesor',$data);
+
+          return ($this->db->affected_rows() > 0);         
+
+     }
+
+     function set_seccion_profesor($mail,$id_seccion){
+
+          $data = array(
+               'MAIL_PROFESOR' => $mail,
+               'ID_SECCION' => $id_seccion
+               );
+
+          $this->db->insert('profesor_seccion',$data);
+
+          return ($this->db->affected_rows() > 0);    
+
+     }
+
+     function delete_profesor($mail){
+
+          $this->db->where('MAIL', $mail);
+          $this->db->delete('profesor');
+
+          return ($this->db->affected_rows() > 0);
 
      }
 

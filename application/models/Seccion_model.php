@@ -17,4 +17,25 @@ class Seccion_model extends CI_Model {
           return $query->result();
      }
 
+     public function add_seccion($codigo){
+
+          $data = array(
+               'CODIGO' => $codigo
+               );
+
+          $this->db->insert('seccion',$data);
+
+          return ($this->db->affected_rows() > 0);
+
+     }
+
+     public function delete_seccion($id_seccion){
+
+          $this->db->where('ID_SECCION', $id_seccion);
+          $this->db->delete('seccion');
+
+          return ($this->db->affected_rows() > 0);
+     }
+
+
 }

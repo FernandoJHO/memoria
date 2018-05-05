@@ -40,10 +40,12 @@ class Login_profesor extends CI_Controller {
                     if (sizeof($usr_result) > 0) //active user record is present
                     {
                          //set the session variables
+                         $nombres = explode(' ',$usr_result->NOMBRE);
+                         $apellidos = explode(' ',$usr_result->APELLIDO);
                          $sessiondata = array(
                                    //'username' => $username,
-                              'nombre' => $usr_result->NOMBRE,
-                              'apellido' => $usr_result->APELLIDO,
+                              'nombre' => $nombres[0],
+                              'apellido' => $apellidos[0],
                               'mail' => $usr_result->MAIL,
                               'loginuser' => TRUE,
                               'coordinador' => $usr_result->COORDINADOR,

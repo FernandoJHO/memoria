@@ -104,6 +104,12 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item">
+                                <a href="<?php echo base_url();?>profesores">
+                                    <i class="la la-users"></i>
+                                    <p>Gestión de profesores</p>
+                                </a>
+                            </li> 
+                            <li class="nav-item">
                                 <a href="<?php echo base_url();?>editarEntregas">
                                     <i class="la la-suitcase"></i>
                                     <p>Entregas</p>
@@ -159,7 +165,12 @@
 
                                                     <p align="center">Porcentaje: <b><?php echo $categoria['porcentaje']; ?>%</b> </p>
                                                     <p align="center">Puntaje: <b><?php echo $categoria['puntaje']; ?></b> </p>
-                                                    <p align="center">Nota: <b><?php echo $categoria['nota']; ?></b> </p>
+                                                    <p align="center">Nota:</p>
+                                                    <?php if($categoria['nota']<4): ?>
+                                                        <p align="center" class="text-danger"><b><?php echo $categoria['nota']; ?></b></p>
+                                                    <?php else: ?> 
+                                                        <p align="center" class="text-success"><b><?php echo $categoria['nota']; ?></b></p>
+                                                    <?php endif; ?>
                                                     <div class="card-action">
                                                         
                                                         <a href="<?php echo base_url();?>evaluacion/items/<?php echo $categoria['id']; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>/<?php echo $id_rubrica; ?>" class="btn btn-default" style="width:100%;"><i class="la la-pencil"></i> Evaluar items</a>

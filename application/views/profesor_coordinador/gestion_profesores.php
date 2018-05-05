@@ -115,8 +115,9 @@
                             </div>
                         </div>
                         <ul class="nav">
-                            <li class="nav-item">
-                                <a href="<?php echo base_url();?>profesores">
+
+                            <li class="nav-item active">
+                                <a href="profesores">
                                     <i class="la la-users"></i>
                                     <p>Gestión de profesores</p>
                                 </a>
@@ -146,83 +147,153 @@
                                     <i class="la la-search"></i>
                                     <p>Gestión de copia</p>
                                 </a>
-                            </li>   
-                            <li class="nav-item active">
+                            </li>
+                            <li class="nav-item">
                                 <a href="<?php echo base_url();?>rubricas">
                                     <i class="la la-files-o"></i>
                                     <p>Rúbricas</p>
                                 </a>
-                            </li>                             
+                            </li>                                
                         </ul>
                     </div>
                 </div>
 
                 <div class="main-panel">
                     <div class="content">
-                        <div id="refresh" class="container-fluid">
-                            <h4 class="page-title">Rúbricas creadas <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newRubricaModal"><i class="la la-plus"></i> Nueva</button></h4>
+                        <div class="container-fluid">
+                            <h4 class="page-title">Profesores <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newProfesorModal"><i class="la la-plus"></i> Nuevo</button></h4>
                             <?php echo $this->session->flashdata('msg'); ?>
+                            <div class="row">
 
-                            <?php if(!count($rubricas)): ?>
-                                <p class="text-danger" align="center"> No existen rúbricas creadas. </p>
-                            <?php else: ?>
-                                <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card card-tasks">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Lista de profesores</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div id="refresh" class="table-full-width">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nombre </th>
+                                                            <th>Apellido </th>
+                                                            <th>Correo electrónico </th>
+                                                            <th>Secciones </th>
+                                                            <th>Coordinador </th>
+                                                            <th>Profesor-Coordinador </th>
+                                                            <th>Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php foreach($profesores as $profesor): ?>
+                                                            <tr>
+                                                                <td><?php echo $profesor['nombres']?></td>
+                                                                <td><?php echo $profesor['apellidos']?></td>
+                                                                <td><?php echo $profesor['mail']?></td>
+                                                                <td>
 
-                                    <?php foreach($rubricas as $rubrica): ?>
+                                                                    <?php foreach($profesor['secciones'] as $seccion): ?>
+                                                                        <?php echo $seccion['codigo']; ?> |
+                                                                    <?php endforeach; ?>
 
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <div class="card-title" align="center"> Rúbrica: <?php echo $rubrica['nombre']; ?>  </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <p align="center"> <b>Entrega</b>: <?php echo $rubrica['numero_entrega']; ?> (<?php echo $rubrica['nombre_entrega']; ?>) </p>
-                                                    <div class="card-action">
-                                                        
-                                                        <a href="rubricas/verCategorias/<?php echo $rubrica['id']; ?>/<?php echo $rubrica['numero_entrega']; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver categorías</a>
-
-                                                        <p></p>
-
-                                                        <button class="btn btn-danger" onclick="delete_rubrica('<?php echo $rubrica['id']; ?>','<?php echo $rubrica['nombre']; ?>');" style="width:100%;"><i class="la la-close"></i> Eliminar</button>
-                                                       
-                                                    </div>
-                                                </div>
+                                                                </td>
+                                                                <td>
+                                                                    <?php if($profesor['coordinador']): ?>
+                                                                        Sí <i class="la la-check"></i>
+                                                                    <?php else: ?>
+                                                                        No <i class="la la-times"></i>
+                                                                    <?php endif; ?>
+                                                                </td>
+                                                                <td>
+                                                                    <?php if($profesor['profesor_coordinador']): ?>
+                                                                        Sí <i class="la la-check"></i>
+                                                                    <?php else: ?>
+                                                                        No <i class="la la-times"></i>
+                                                                    <?php endif; ?>                   
+                                                                </td>
+                                                                <td class="td-actions text-right"> 
+                                                                    <div class="form-button-action">
+                                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-simple-danger" data-original-title="Eliminar" onclick="delete_profesor('<?php echo $profesor['mail']?>','<?php echo $profesor['nombres']?>','<?php echo $profesor['apellidos']?>');">
+                                                                            <i class="la la-remove"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        <?php endforeach; ?>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
-
-                                    <?php endforeach; ?>
-
+                                    </div>
                                 </div>
-                            <?php endif; ?>  
+
+                            </div>
                         </div>
                     </div>
                 </div>
 
-        <div class="modal fade" id="newRubricaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="newProfesorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Crear rúbrica</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Crear profesor</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form method="post" action="<?php echo base_url() ?>rubricas/new_rubrica/">
-                  <div class="modal-body">
+              <form method="post" action="<?php echo base_url() ?>profesores/new_profesor/">
+                  <div id="container_form" class="modal-body">
                     <div class="form-group">
-                        <label for="email">Nombre de la rúbrica</label>
-                        <input type="text" class="form-control" id="user" name="nombre_rubrica" required="true">
-                    </div> 
+                        <label>Nombres</label>
+                        <input type="text" class="form-control" name="nombres" required="true">
+                    </div>
                     <div class="form-group">
-                        <label for="entrega">Elige entrega a la que pertenece</label>
-                        <select class="form-control" id="entrega" name="id_entrega" required="true">
-                            <option value="" disabled selected>Selecciona una opción...</option>
-                            <?php foreach($entregas as $entrega): ?>
-                                <option value="<?php echo $entrega['id']; ?>" ><?php echo $entrega['numero']; ?>: <?php echo $entrega['nombre']; ?></option>
-                            <?php endforeach; ?>
+                        <label>Apellidos</label>
+                        <input type="text" class="form-control" name="apellidos" required="true">
+                    </div>
+                    <div class="form-group">
+                        <label>Correo electrónico</label>
+                        <input type="email" class="form-control" name="mail" required="true">
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" class="form-control" name="password" required="true">
+                    </div>
+                    <div class="form-check">
+                        <label>Seleccione rol</label><br/>
+                        <label class="form-radio-label">
+                            
+                            
+                            <input class="form-radio-input" type="radio" name="rol" value="1" >
+                            
+                            <span class="form-radio-sign">Profesor</span>
+                        </label>
+                        <label class="form-radio-label ml-3">
+                            
+                            <input class="form-radio-input" type="radio" name="rol" value="2" >
+                            
+                            <span class="form-radio-sign">Coordinador</span>
+                        </label>
+                        <label class="form-radio-label ml-3">
+                            
+                            <input class="form-radio-input" type="radio" name="rol" value="3" >
+                            
+                            <span class="form-radio-sign">Profesor-Coordinador</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="seccion">Seccion</label>
+                        <select class="form-control" name="seccion_1">
+                            <option value="" disabled selected>Selecciona una sección...</option>
+                            <?php foreach($secciones_all as $seccion): ?>
+                                <option value="<?php echo $seccion['id']; ?>" ><?php echo $seccion['codigo']; ?></option>
+                            <?php endforeach; ?> 
                         </select>
-                    </div> 
+                    </div>
                   </div>
+                  <div class="form-group">
+                   <p align="center"> <button type="button" onClick="add_dropdown();" class="btn btn-success btn-xs"><i class="la la-plus"></i> Seccion</button> </p>
+                  </div> 
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-success">Crear</button>
@@ -231,7 +302,6 @@
             </div>
           </div>
         </div>
-
                 
 	</body>
 
@@ -241,17 +311,30 @@ alertify.defaults.transition = "slide";
 alertify.defaults.theme.ok = "btn btn-success";
 alertify.defaults.theme.cancel = "btn btn-danger";
 
-function delete_rubrica(idrubrica,nombrerubrica){
-    var url = '<?php echo base_url() ?>rubricas/delete_rubrica/'+idrubrica;
+function delete_profesor(mail,nombre,apellido){
+    var url = '<?php echo base_url() ?>profesores/delete_profesor/';
 
     alertify.set('notifier','position', 'top-right');
 
-    alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar la rúbrica '+nombrerubrica.bold()+ '?', function(){ 
+    alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar al profesor '+nombre.bold()+ ' '+ apellido.bold()+ '?', function(){ 
         alertify.success("Eliminando...");
-        deleteRubrica(url);
+        deleteProfesor(mail,url);
         }
         , function(){
         }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
+}
+
+var aux = 2;
+
+function add_dropdown(){
+
+    var contador = aux;
+    var url = '<?php echo base_url() ?>profesores/dropdown_html_builder/'+contador;
+
+    addDropdownSecciones(url);
+
+    aux++;
+
 }
 
 </script>

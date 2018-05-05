@@ -205,49 +205,54 @@
                 <div class="main-panel">
                     <div class="content">
                         <div class="container-fluid">
-                            <h4 class="page-title">Entregas del Grupo <?php echo $numero_grupo; ?></h4>
+                            <h4 class="page-title"> Items (Categoría: <?php echo $nombre_categoria; ?> | Rúbrica: Entrega <?php echo $numero_entrega; ?> | Grupo <?php echo $numero_grupo; ?>)</h4>
 
-                            <?php if(!count($entregas)): ?>
-                                <p class="text-danger" align="center"> El grupo aún no ha realizado entregas. </p>
-                            <?php else: ?>
-                                <div class="row">
-                                <?php foreach($entregas as $entrega): ?>
 
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <div class="card-title" align="center"> Entrega <?php echo $entrega['numero']; ?> </div>
-                                                <p align="center"> <b> <?php echo $entrega['descripcion']; ?> </b> </p>
-                                            </div>
-                                            
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="card-title"> Evalúa cada item </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <?php if(!count($items)): ?>
+                                                <p class="text-danger" align="center"> Aún no se han creado items. </p>
+                                            <?php else: ?>
                                                 
-                                            <?php if($entrega['codigofuente']): ?>
-                                                <?php if(count($entrega['alumno_commits'])): ?>
-                                                <div id="grafico<?php echo $entrega['numero']; ?>" class="card-body">
-                                    
-                                               
-                                                    <script>
-                                                        generarGrafico(<?php echo $entrega['numero']; ?>, <?php echo json_encode($entrega['alumno_commits']); ?>);
-                                                    </script>
+                                                <?php $contador = 1; ?>
+                                                <form method="post" action="<?php echo base_url() ?>evaluacion/evaluar_item/">
+                                                    <?php foreach($items as $item): ?>
+                                                        
+                                                        <div class="form-group">
+                                                            <label > <b>Item <?php echo $contador; ?></b>: <?php echo $item['item']; ?> </label>
+                                                            
+                                                            <P>  </P>
+                                                            <label>Valor</label>
+                                                            <input type="number" class="form-control" name="valor_item_<?php echo $contador; ?>" min="0" max="3" value="<?php echo $item['valor_item']; ?>" required="true">
+                                                        </div>  
+                                                        <input type="hidden" name="id_item_<?php echo $contador; ?>" value="<?php echo $item['id']; ?>">
 
-                                                </div>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-
-                                                <div class="card-action">
-                                                    <a href="<?php echo base_url();?>archivos/ver/<?php echo $entrega['id']; ?>/<?php echo $id_grupo; ?>/<?php echo $entrega['numero']; ?>/<?php echo $numero_grupo; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver archivos </a>
-                                                    <p></p>
-                                                    <a href="<?php echo base_url();?>evaluacion/rubricas/<?php echo $entrega['id']; ?>/<?php echo $entrega['numero']; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>" class="btn btn-primary" style="width:100%;"><i class="la la-check-circle"></i> Evaluar</a>
-                                                </div>
-                                            
-                                            
+                                                        <?php $contador++; ?>
+                                                    <?php endforeach; ?>
+                                                    <input type="hidden" name="id_categoria" value="<?php echo $id_categoria; ?>">
+                                                    <input type="hidden" name="nombre_categoria" value="<?php echo $nombre_categoria; ?>">
+                                                    <input type="hidden" name="numero_entrega" value="<?php echo $numero_entrega; ?>">
+                                                    <input type="hidden" name="id_grupo" value="<?php echo $id_grupo; ?>">
+                                                    <input type="hidden" name="numero_grupo" value="<?php echo $numero_grupo; ?>">
+                                                    <input type="hidden" name="id_rubrica" value="<?php echo $id_rubrica; ?>">
+                                                    <div class="card-action">
+                                                        <button class="btn btn-success" type="submit">Guardar cambios</button>
+                                                        <button class="btn btn-danger" type="reset">Cancelar</button>
+                                                    </div>
+                                                </form>
+                                                
+                                            <?php endif; ?>  
                                         </div>
                                     </div>
-
-                                <?php endforeach; ?>
-
                                 </div>
-                            <?php endif;?>
+
+                            </div>
                         </div>
                     </div>
                 </div>

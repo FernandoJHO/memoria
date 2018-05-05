@@ -156,15 +156,16 @@
                                                 <?php endforeach; ?>
                                                 
                                                 <div class="card-action">
-                                                    <a href="<?php echo base_url();?>entregas/verEntregas/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" ><i class="la la-eye"></i> Ver entregas</a>
-                                                    
+                                                    <a href="<?php echo base_url();?>entregas/verEntregas/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver entregas</a>
+                                                    <p></p>
                                                     <?php if($grupo['proyecto']!=NULL): ?>
-                                                        <a href="<?php echo base_url();?><?php echo $grupo['proyecto']; ?>" class="btn btn-primary" target="_blank"><i class="la la-eye"></i> Ver proyecto</a>
+                                                        <a href="<?php echo base_url();?><?php echo $grupo['proyecto']; ?>" class="btn btn-primary" target="_blank" style="width:100%;"><i class="la la-eye"></i> Ver proyecto</a>
+                                                        <p></p>
                                                     <?php endif; ?>
 
-                                                    <a href="<?php echo base_url();?>codigos/ver/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" ><i class="la la-eye"></i> Ver códigos</a>
-                                                    
-                                                    <button class="btn btn-danger" onclick="delete_grupo('<?php echo $grupo['id']; ?>','<?php echo $grupo['numero']; ?>')"><i class="la la-close"></i> Eliminar</button>
+                                                    <a href="<?php echo base_url();?>codigos/ver/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver códigos</a>
+                                                    <p></p>
+                                                    <button class="btn btn-danger" onclick="delete_grupo('<?php echo $grupo['id']; ?>','<?php echo $grupo['numero']; ?>')" style="width:100%;"><i class="la la-close"></i> Eliminar</button>
                                                 </div>
                                             </div>
                                         </div>

@@ -205,49 +205,39 @@
                 <div class="main-panel">
                     <div class="content">
                         <div class="container-fluid">
-                            <h4 class="page-title">Entregas del Grupo <?php echo $numero_grupo; ?></h4>
-
-                            <?php if(!count($entregas)): ?>
-                                <p class="text-danger" align="center"> El grupo aún no ha realizado entregas. </p>
+                            <h4 class="page-title">Rúbricas de la Entrega <?php echo $numero_entrega; ?> (Grupo <?php echo $numero_grupo; ?>)</h4>
+                            <?php if(!count($rubricas)): ?>
+                                <p class="text-danger" align="center"> La entrega aún no cuenta con rúbricas asignadas. </p>
                             <?php else: ?>
+
                                 <div class="row">
-                                <?php foreach($entregas as $entrega): ?>
+                                    <?php foreach($rubricas as $rubrica): ?>
 
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <div class="card-title" align="center"> Entrega <?php echo $entrega['numero']; ?> </div>
-                                                <p align="center"> <b> <?php echo $entrega['descripcion']; ?> </b> </p>
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="card-title" align="center"> Rúbrica: <?php echo $rubrica['nombre']; ?>  </div>
+                                                </div>
+                                                <div class="card-body">
+
+                                                    <p align="center">Nota:</p>
+                                                    <?php if($rubrica['nota']<4): ?>
+                                                        <p align="center" class="text-danger"><b><?php echo $rubrica['nota']; ?></b></p>
+                                                    <?php else: ?> 
+                                                        <p align="center" class="text-success"><b><?php echo $rubrica['nota']; ?></b></p>
+                                                    <?php endif; ?>
+                                                    <div class="card-action">
+                                                        
+                                                        <a href="<?php echo base_url();?>evaluacion/categorias/<?php echo $rubrica['id']; ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver categorías</a>
+                                                       
+                                                    </div>
+                                                </div>
                                             </div>
-                                            
-                                                
-                                            <?php if($entrega['codigofuente']): ?>
-                                                <?php if(count($entrega['alumno_commits'])): ?>
-                                                <div id="grafico<?php echo $entrega['numero']; ?>" class="card-body">
-                                    
-                                               
-                                                    <script>
-                                                        generarGrafico(<?php echo $entrega['numero']; ?>, <?php echo json_encode($entrega['alumno_commits']); ?>);
-                                                    </script>
-
-                                                </div>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-
-                                                <div class="card-action">
-                                                    <a href="<?php echo base_url();?>archivos/ver/<?php echo $entrega['id']; ?>/<?php echo $id_grupo; ?>/<?php echo $entrega['numero']; ?>/<?php echo $numero_grupo; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver archivos </a>
-                                                    <p></p>
-                                                    <a href="<?php echo base_url();?>evaluacion/rubricas/<?php echo $entrega['id']; ?>/<?php echo $entrega['numero']; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>" class="btn btn-primary" style="width:100%;"><i class="la la-check-circle"></i> Evaluar</a>
-                                                </div>
-                                            
-                                            
                                         </div>
-                                    </div>
 
-                                <?php endforeach; ?>
-
+                                    <?php endforeach; ?>
                                 </div>
-                            <?php endif;?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

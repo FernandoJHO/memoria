@@ -98,6 +98,13 @@
                             </div>
                         </div>
                         <ul class="nav">
+
+                            <li class="nav-item">
+                                <a href="<?php echo base_url();?>profesores">
+                                    <i class="la la-users"></i>
+                                    <p>Gestión de profesores</p>
+                                </a>
+                            </li> 
                             <li class="nav-item">
                                 <a href="editarEntregas">
                                     <i class="la la-suitcase"></i>

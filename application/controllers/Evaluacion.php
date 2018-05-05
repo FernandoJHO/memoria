@@ -68,6 +68,25 @@ class Evaluacion extends CI_Controller {
 
                     $this->load->view("profesor_coordinador/rubricas_entrega",$datos);
                }
+               else{
+                    if($this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador')){
+                         
+                         $rubricas = $this->get_evaluacion_rubricas( $this->get_rubricas($id_entrega), $id_grupo ); 
+
+                         $datos = Array(
+                              'nombre' => $this->session->userdata('nombre'),
+                              'apellido' =>$this->session->userdata('apellido'),
+                              'mail' => $this->session->userdata('mail'),
+                              'rol' => 'Coordinador',
+                              'rubricas' => $rubricas,
+                              'numero_entrega' => $n_entrega,
+                              'numero_grupo' => $n_grupo,
+                              'id_grupo' => $id_grupo
+                              );
+
+                         $this->load->view("coordinador/rubricas_entrega",$datos);
+                    }
+               }
           }
 
      }
@@ -160,6 +179,25 @@ class Evaluacion extends CI_Controller {
                          );
 
                     $this->load->view("profesor_coordinador/categorias_rubrica_entrega",$datos);
+               }
+               else{
+                    if($this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador')){
+                         $categorias = $this->get_evaluacion_categorias( $this->get_categorias($id_rubrica), $id_grupo );
+
+                         $datos = Array(
+                              'nombre' => $this->session->userdata('nombre'),
+                              'apellido' =>$this->session->userdata('apellido'),
+                              'mail' => $this->session->userdata('mail'),
+                              'rol' => 'Coordinador',
+                              'categorias' => $categorias,
+                              'numero_entrega' => $n_entrega,
+                              'numero_grupo' => $n_grupo,
+                              'id_grupo' => $id_grupo,
+                              'id_rubrica' => $id_rubrica
+                              );
+
+                         $this->load->view("coordinador/categorias_rubrica_entrega",$datos);
+                    }
                }
           } 
 
@@ -483,6 +521,30 @@ class Evaluacion extends CI_Controller {
                          );
 
                     $this->load->view("profesor_coordinador/items_rubrica_entrega",$datos);
+               }
+
+               else{
+                    if($this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador')){
+                        $categoria = str_replace('_', ' ', urldecode($n_categoria));
+
+                        $items = $this->get_evaluacion_items( $this->get_items($id_categoria), $id_grupo );
+
+                         $datos = Array(
+                              'nombre' => $this->session->userdata('nombre'),
+                              'apellido' =>$this->session->userdata('apellido'),
+                              'mail' => $this->session->userdata('mail'),
+                              'rol' => 'Coordinador',
+                              'numero_entrega' => $n_entrega,
+                              'numero_grupo' => $n_grupo,
+                              'nombre_categoria' => $categoria,
+                              'id_grupo' => $id_grupo,
+                              'items' => $items,
+                              'id_categoria' => $id_categoria,
+                              'id_rubrica' => $id_rubrica
+                              );
+
+                         $this->load->view("coordinador/items_rubrica_entrega",$datos);
+                    }
                }
           } 
 
