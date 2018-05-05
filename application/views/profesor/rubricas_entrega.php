@@ -141,7 +141,7 @@
                                                     <?php if($rubrica['nota']<4): ?>
                                                         <p align="center" class="text-danger"><b><?php echo $rubrica['nota']; ?></b></p>
                                                     <?php else: ?> 
-                                                        <p align="center" class="text-success"><b><?php echo $rubrica['nota']; ?></b></p>
+                                                        <p align="center" class="text-primary"><b><?php echo $rubrica['nota']; ?></b></p>
                                                     <?php endif; ?>
                                                     <div class="card-action">
                                                         

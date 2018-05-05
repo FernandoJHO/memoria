@@ -143,7 +143,7 @@
                                                     <?php if($categoria['nota']<4): ?>
                                                         <p align="center" class="text-danger"><b><?php echo $categoria['nota']; ?></b></p>
                                                     <?php else: ?> 
-                                                        <p align="center" class="text-success"><b><?php echo $categoria['nota']; ?></b></p>
+                                                        <p align="center" class="text-primary"><b><?php echo $categoria['nota']; ?></b></p>
                                                     <?php endif; ?>
                                                     <div class="card-action">
                                                         
