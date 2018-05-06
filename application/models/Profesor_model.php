@@ -27,6 +27,29 @@ class Profesor_model extends CI_Model {
 
      }
 
+     function get_password($mail){
+
+          $this->db->where('MAIL',$mail);
+          $this->db->select('PASSWORD');
+          $query = $this->db->get('profesor');
+
+          return $query->row();
+
+     }
+
+     function set_password($mail,$password){
+
+          $data = array(
+               'PASSWORD' => md5($password)
+               );
+          $this->db->where('MAIL', $mail);
+
+          $this->db->update('profesor',$data);
+
+          return ($this->db->affected_rows() > 0);  
+
+     }
+
      public function get_seccion($mail) {
           $this->db->select('seccion.ID_SECCION, seccion.CODIGO');
           $this->db->from('seccion');

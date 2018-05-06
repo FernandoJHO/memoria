@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+    <head>
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title></title>
@@ -10,9 +10,9 @@
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/ready.css">
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/demo.css">
 
-        <script src="<?php echo base_url();?><?php echo base_url();?>lib/alertify/alertify.min.js"></script>
-        <link rel="stylesheet" href="<?php echo base_url();?><?php echo base_url();?>lib/alertify/alertify.min.css">
-        <script src="<?php echo base_url();?><?php echo base_url();?>lib/js/utils.js"></script>
+        <script src="<?php echo base_url();?>lib/alertify/alertify.min.js"></script>
+        <link rel="stylesheet" href="<?php echo base_url();?>lib/alertify/alertify.min.css">
+        <script src="<?php echo base_url();?>lib/js/utils.js"></script>
 
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
@@ -28,9 +28,21 @@
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/ready.min.js"></script>
 
+        <style>
+        .alertify-notifier .ajs-message.ajs-error{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        .alertify-notifier .ajs-message.ajs-success{
+            color: #fff;
+            background: rgba(217, 92, 92, 0,95);
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0,5);
+        }
+        </style>
 
-	</head>
-	<body>
+    </head>
+    <body>
         
         <div class="wrapper">
             <div class="main-header">
@@ -56,13 +68,12 @@
                                             <div class="u-img"><img src="<?php echo base_url();?>lib/ready-theme/assets/img/user_logo.png" alt="user"></div>
                                             <div class="u-text">
                                                 <h4><?php echo $nombre; ?> <?php echo $apellido; ?></h4>
-                                                
                                             </div>
                                         </li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="<?php echo base_url();?>cuenta/profesor"><i class="ti-settings"></i>Mi cuenta</a>
+                                        <a class="dropdown-item" href="<?php echo base_url();?>cuentas/profesor"><i class="ti-settings"></i>Mi cuenta</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="<?php echo base_url() ?>logout"><i class="fa fa-power-off"></i>Cerrar sesión</a>
+                                        <a class="dropdown-item" href="<?php echo base_url();?>logout"><i class="fa fa-power-off"></i>Cerrar sesión</a>
                                     </ul>
                                     <!-- /.dropdown-user -->
                                 </li>
@@ -89,7 +100,7 @@
                                 <div class="collapse in" id="collapseExample" aria-expanded="true" style="">
                                     <ul class="nav">
                                         <li>
-                                            <a href="<?php echo base_url();?>cuenta/profesor">
+                                            <a href="<?php echo base_url();?>cuentas/profesor">
                                                 <span class="link-collapse">Mi cuenta</span>
                                             </a>
                                         </li>
@@ -98,7 +109,7 @@
                             </div>
                         </div>
                         <ul class="nav">
-                            <li class="nav-item">
+                            <li class="nav-item ">
                                 <a href="<?php echo base_url();?>profesores">
                                     <i class="la la-users"></i>
                                     <p>Gestión de profesores</p>
@@ -110,73 +121,73 @@
                                     <p>Entregas</p>
                                 </a>
                             </li> 
-
-                            <li class="nav-item">
-                                <a href="<?php echo base_url();?>miSeccion">
-                                    <i class="la la-group"></i>
-                                    <p>Mi sección</p>
-                                </a>
-                            </li>
-                            
                             <li class="nav-item">
                                 <a href="<?php echo base_url();?>secciones">
                                     <i class="la la-list"></i>
                                     <p>Secciones</p>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="<?php echo base_url();?>gestionCopia">
-                                    <i class="la la-search"></i>
-                                    <p>Gestión de copia</p>
-                                </a>
-                            </li>   
+                            </li>                    
                             <li class="nav-item">
                                 <a href="<?php echo base_url();?>rubricas">
                                     <i class="la la-files-o"></i>
                                     <p>Rúbricas</p>
                                 </a>
-                            </li>                             
+                            </li>       
                         </ul>
                     </div>
                 </div>
 
                 <div class="main-panel">
                     <div class="content">
-                        <div id="refresh" class="container-fluid">
-                            <h4 class="page-title"> Criterios de Categoría <?php echo $nombre_categoria; ?> (Rúbrica Entrega <?php echo $numero_entrega; ?> | Grupo <?php echo $numero_grupo; ?>)</h4>
-                            <?php if(!count($criterios)): ?>
-                                <p class="text-danger" align="center"> La categoría aún no cuenta con criterios. </p>
-                            <?php else: ?>
+                        <div class="container-fluid">
+                            <h4 class="page-title">Mi cuenta</h4>
+                            <?php echo $this->session->flashdata('msg'); ?>
 
                                 <div class="row">
-                                    <?php foreach($criterios as $criterio): ?>
 
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <div class="card-title" align="center"> <?php echo $criterio['nombre']; ?>  </div>
-                                                </div>
-                                                <div class="card-body">
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <div class="card-title">Cambiar contraseña</div>
+                                            </div>
+                                            <div class="card-body">
+                                                <form method="post" action="<?php echo base_url() ?>cuenta/cambiar_password_profesor/">
 
-                                                    <div class="card-action">
-                                                        
-                                                        <a href="<?php echo base_url();?>evaluacion/items/<?php echo $criterio['id']; ?>/<?php echo str_replace(' ', '_', $criterio['nombre']); ?>/<?php echo str_replace(' ', '_', $nombre_categoria); ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>" class="btn btn-default" style="width:100%;" target="_blank"><i class="la la-pencil"></i> Evaluar items</a>
-                                                       
+                                                    <div class="form-group">
+                                                        <label>Ingresa tu contraseña actual</label>
+                                                        <input type="password" class="form-control" name="actual" required="true">
                                                     </div>
-                                                </div>
+
+                                                    <div class="form-group">
+                                                        <label>Ingresa la nueva contraseña</label>
+                                                        <input type="password" class="form-control" name="nueva" required="true">
+                                                    </div>   
+
+                                                    <div class="form-group">
+                                                        <label>Repite la nueva contraseña</label>
+                                                        <input type="password" class="form-control" name="nueva_verif" required="true">
+                                                    </div>
+                                     
+                                                    <div class="card-action">
+                                                        <button class="btn btn-success" type="submit" >Guardar cambios</button>
+                                                        <button class="btn btn-danger" type="reset">Cancelar</button>
+                                                    </div>
+
+                                                </form>
                                             </div>
                                         </div>
 
-                                    <?php endforeach; ?>
+                                    </div>
+
                                 </div>
-                            <?php endif; ?>
+
                         </div>
                     </div>
                 </div>
 
 
                 
-	</body>
+    </body>
 
 
 </html>
