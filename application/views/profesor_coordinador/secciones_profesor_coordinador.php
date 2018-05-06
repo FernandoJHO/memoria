@@ -68,7 +68,7 @@
                                             <div class="u-img"><img src="lib/ready-theme/assets/img/user_logo.png" alt="user"></div>
                                             <div class="u-text">
                                                 <h4><?php echo $nombre; ?> <?php echo $apellido; ?></h4>
-                                                
+                                                <p class="text-muted"><?php echo $mail; ?></p>
                                             </div>
                                         </li>
                                         <div class="dropdown-divider"></div>
