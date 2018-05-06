@@ -24,81 +24,6 @@
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/ready.min.js"></script>
 
-        <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="http://code.highcharts.com/modules/exporting.js"></script>
-
-        <script type="text/javascript">
-
-        function generarGrafico(id_container, integrante_commits){
-
-            //alert("flag");
-
-            var container = '#grafico'+id_container;
-            var nombres = [];
-            var commits = [];
-            var datos_finales = [];
-
-
-
-            $.each(integrante_commits, function( ){
-                $.each(this, function(key,value){
-                    if(key=="nombre"){
-                        nombres.push(value);
-                    }
-                    if(key=="commits"){
-                        commits.push(parseInt(value));
-                    }
-                });
-            }); 
-
-
-
-            for(var i=0; i<nombres.length; i++){
-                datos_finales.push({
-                    name: nombres[i],
-                    y: commits[i]
-                });
-            }
-
-
-            $(container).highcharts({
-                chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
-                    type: 'pie'
-                },
-                title: {
-                    text: 'Aporte por alumno'
-                },
-                tooltip: {
-                    
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                            style: {
-                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                            }
-                        }
-                    }
-                },
-                series: [{
-                    name: 'Commits',
-                    colorByPoint: true,
-                    data: datos_finales
-                }]
-            });
-
-            
-
-        }
-
-        </script>
 
     </head>
     <body>
@@ -131,7 +56,7 @@
                                             </div>
                                         </li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="<?php echo base_url();?>cuentas/profesor"><i class="ti-settings"></i>Mi cuenta</a>
+                                        <a class="dropdown-item" href="<?php echo base_url();?>cuenta/profesor"><i class="ti-settings"></i>Mi cuenta</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="<?php echo base_url();?>logout"><i class="fa fa-power-off"></i>Cerrar sesión</a>
                                     </ul>
@@ -160,7 +85,7 @@
                                 <div class="collapse in" id="collapseExample" aria-expanded="true" style="">
                                     <ul class="nav">
                                         <li>
-                                            <a href="<?php echo base_url();?>cuentas/profesor">
+                                            <a href="<?php echo base_url();?>cuenta/profesor">
                                                 <span class="link-collapse">Mi cuenta</span>
                                             </a>
                                         </li>
