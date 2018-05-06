@@ -20,6 +20,7 @@ class Login_alumno extends CI_Controller {
           //get the posted values
           $username = $this->input->post("txt_username");
           $password = $this->input->post("txt_password");
+          $remember = $this->input->post('remember_me_alumno');
 
           //set validations
           $this->form_validation->set_rules("txt_username", "Username", "trim|required");
@@ -42,14 +43,29 @@ class Login_alumno extends CI_Controller {
                          $nombres = explode(' ',$usr_result->NOMBRE);
                          $apellidos = explode(' ',$usr_result->APELLIDO);
                          //set the session variables
-                         $sessiondata = array(
-                                   //'username' => $username,
-                              'nombre' => $nombres[0],
-                              'apellido' => $apellidos[0],
-                              'mail' => $usr_result->MAIL,
-                              'loginuser' => TRUE,
-                              'rol' => 'Alumno'
-                              );
+
+                         if($remember){
+                              $sessiondata = array(
+                                        //'username' => $username,
+                                   'nombre' => $nombres[0],
+                                   'apellido' => $apellidos[0],
+                                   'mail' => $usr_result->MAIL,
+                                   'loginuser' => TRUE,
+                                   'rol' => 'Alumno',
+                                   'remember_me' => true
+                                   );
+                         }
+                         else{
+                              $sessiondata = array(
+                                        //'username' => $username,
+                                   'nombre' => $nombres[0],
+                                   'apellido' => $apellidos[0],
+                                   'mail' => $usr_result->MAIL,
+                                   'loginuser' => TRUE,
+                                   'rol' => 'Alumno',
+                                   'remember_me' => false
+                                   );
+                         }
                          $this->session->set_userdata($sessiondata);
                          redirect("mainAlumno"); 
 

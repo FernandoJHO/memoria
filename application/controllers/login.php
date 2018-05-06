@@ -16,7 +16,24 @@ class Login extends CI_Controller {
 
      public function index()
      {
-          $this->load->view('login');
+          
+          $session_set_value = $this->session->all_userdata();
+
+          if ($this->session->userdata('remember_me')) {
+               
+               if($this->session->userdata('rol')=='Alumno'){
+                    redirect('mainAlumno');
+               }
+               else{
+                    if($this->session->userdata('rol')=='Profesor'){
+                         redirect('mainProfesor');
+                    }
+               }
+
+          } 
+          else{
+               $this->load->view('login');
+          }
      }
 
 }

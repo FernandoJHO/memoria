@@ -20,6 +20,7 @@ class Login_profesor extends CI_Controller {
           //get the posted values
           $username = $this->input->post("txt_username");
           $password = $this->input->post("txt_password");
+          $remember = $this->input->post('remember_me_profesor');
 
           //set validations
           $this->form_validation->set_rules("txt_username", "Username", "trim|required");
@@ -42,16 +43,33 @@ class Login_profesor extends CI_Controller {
                          //set the session variables
                          $nombres = explode(' ',$usr_result->NOMBRE);
                          $apellidos = explode(' ',$usr_result->APELLIDO);
-                         $sessiondata = array(
-                                   //'username' => $username,
-                              'nombre' => $nombres[0],
-                              'apellido' => $apellidos[0],
-                              'mail' => $usr_result->MAIL,
-                              'loginuser' => TRUE,
-                              'coordinador' => $usr_result->COORDINADOR,
-                              'profesor_coordinador' => $usr_result->PROFESOR_COORDINADOR,
-                              'rol' => 'Profesor'
-                              );
+
+                         if($remember){
+                              $sessiondata = array(
+                                        //'username' => $username,
+                                   'nombre' => $nombres[0],
+                                   'apellido' => $apellidos[0],
+                                   'mail' => $usr_result->MAIL,
+                                   'loginuser' => TRUE,
+                                   'coordinador' => $usr_result->COORDINADOR,
+                                   'profesor_coordinador' => $usr_result->PROFESOR_COORDINADOR,
+                                   'rol' => 'Profesor',
+                                   'remember_me' => true
+                                   );
+                         }
+                         else{
+                              $sessiondata = array(
+                                        //'username' => $username,
+                                   'nombre' => $nombres[0],
+                                   'apellido' => $apellidos[0],
+                                   'mail' => $usr_result->MAIL,
+                                   'loginuser' => TRUE,
+                                   'coordinador' => $usr_result->COORDINADOR,
+                                   'profesor_coordinador' => $usr_result->PROFESOR_COORDINADOR,
+                                   'rol' => 'Profesor',
+                                   'remember_me' => false
+                                   );
+                         }
                          $this->session->set_userdata($sessiondata);
                          redirect('mainProfesor'); 
 

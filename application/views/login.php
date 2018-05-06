@@ -79,6 +79,9 @@
 				                        	<label class="sr-only" for="txt_password">Contraseña</label>
 				                        	<input class="form-password form-control"  placeholder="Contraseña" type="password" name="txt_password" id="txt_password" value="<?php echo set_value('txt_password'); ?>" required="true">
 				                        </div>
+                                        <div class="form-group">
+                                            <p align="center"><input type="checkbox" name="remember_me_profesor"/> Recordar</p>
+                                        </div>
 				                        <button id="btn_login" name="btn_login" type="submit" value="Login" class="btn">Ingresar</button>
 				                    </form>
                                     <?php echo form_close(); ?>
@@ -120,6 +123,9 @@
                                         <div class="form-group">
                                             <label class="sr-only" for="txt_password">Contraseña</label>
                                             <input class="form-password form-control" type="password" placeholder="Contraseña" name="txt_password" id="txt_password" value="<?php echo set_value('txt_password'); ?>" required="true">
+                                        </div>
+                                        <div class="form-group">
+                                            <p align="center"><input type="checkbox" name="remember_me_alumno"/> Recordar</p>
                                         </div>
                                         <button class="btn" id="btn_login" name="btn_login" type="submit" value="Login">Ingresar</button>
                                     </form>
