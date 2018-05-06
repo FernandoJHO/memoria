@@ -101,11 +101,6 @@
                                 <div class="collapse in" id="collapseExample" aria-expanded="true" style="">
                                     <ul class="nav">
                                         <li>
-                                            <a href="#profile">
-                                                <span class="link-collapse">Perfil</span>
-                                            </a>
-                                        </li>
-                                        <li>
                                             <a href="<?php echo base_url();?>cuenta/profesor">
                                                 <span class="link-collapse">Mi cuenta</span>
                                             </a>
