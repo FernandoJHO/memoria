@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<?php echo base_url(); ?>cuenta/alumno<!DOCTYPE html>
 <html lang="en">
 	<head>
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <title>Mi grupo</title>
+        <title>Mi cuenta</title>
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
         <link rel="stylesheet" href="<?php echo base_url(); ?>lib/ready-theme/assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
@@ -26,7 +26,7 @@
 
 	</head>
 	<body>
-        <?php if ($logeado && $rol=='Alumno'): ?> 
+      
         <div class="wrapper">
             <div class="main-header">
                 <div class="logo-header">
@@ -135,52 +135,43 @@
                 <div class="main-panel">
                     <div class="content">
                         <div class="container-fluid">
-                            <h4 class="page-title">Mi grupo</h4>
+                            <h4 class="page-title">Mi cuenta</h4>
                             <?php echo $this->session->flashdata('msg'); ?>
+
                             <div class="row">
 
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <?php if (count($grupo)): ?>
-                                                <div class="card-title">Información del grupo N°<?php echo $grupo['numero']; ?></div>
-                                            <?php else: ?> 
-                                                <div class="card-title">Información del grupo</div>
-                                            <?php endif; ?> 
+                                            <div class="card-title">Cambiar contraseña</div>
                                         </div>
                                         <div class="card-body">
-                                            <?php if (count($grupo)): ?> 
-                                                <p align="center"> <b> Integrantes </b> </p>
-                                                <?php foreach($grupo['integrantes'] as $integrante): ?>
-                                                    <p align="center"> <?php echo $integrante; ?> </p>
-                                                <?php endforeach; ?>
-                                                <!--<form id="" method="post" action=""> </form>-->
+                                            <form method="post" action="<?php echo base_url() ?>cuenta/cambiar_password_alumno/">
 
-                                                    <!--<div class="form-group">
-                                                        <label for="email">Nombre</label>
-                                                        <input type="text" class="form-control" name="grupo_name" placeholder="Nombre del grupo" value="<?php echo $grupo['nombre']; ?>">
-                                                    </div> -->
-                                                <?php echo form_open_multipart(base_url().'grupos/upload_proyecto');?>
-                                                    <div class="form-group">
-                                                        <label for="userfile"> Selecciona archivo del proyecto (PDF) (Tamaño máximo: 50MB) </label>
-                                                        
-                                                        <input type="file" id="userfile" name="userfile" size="20" required="true" />
-                                                    </div>
-                                                    <input type="hidden" name="id_grupo" value="<?php echo $grupo['id_grupo']; ?>" />
-                                                    <div class="card-action">
-                                                        <button class="btn btn-success" type="submit" ><i class="la la-upload"></i> Subir proyecto</button>
+                                                <div class="form-group">
+                                                    <label>Ingresa tu contraseña actual</label>
+                                                    <input type="password" class="form-control" name="actual" required="true">
+                                                </div>
 
-                                                        <?php if($grupo['ruta_proyecto']!=NULL): ?>
-                                                            <a href="<?php echo base_url();?><?php echo $grupo['ruta_proyecto']; ?>" class="btn btn-primary" target="_blank"><i class="la la-eye"></i> Ver proyecto</a>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                </form> 
+                                                <div class="form-group">
+                                                    <label>Ingresa la nueva contraseña</label>
+                                                    <input type="password" class="form-control" name="nueva" required="true">
+                                                </div>   
 
-                                            <?php else: ?>
-                                                <p class="text-danger" align="center"> Aún no formas parte de un grupo. </p>
-                                            <?php endif; ?>
+                                                <div class="form-group">
+                                                    <label>Repite la nueva contraseña</label>
+                                                    <input type="password" class="form-control" name="nueva_verif" required="true">
+                                                </div>
+                                 
+                                                <div class="card-action">
+                                                    <button class="btn btn-success" type="submit" >Guardar cambios</button>
+                                                    <button class="btn btn-danger" type="reset">Cancelar</button>
+                                                </div>
+
+                                            </form>
                                         </div>
-                                    </div>                                    
+                                    </div>
+
                                 </div>
 
                             </div>
@@ -189,7 +180,7 @@
                 </div>
 
 
-    <?php endif ?>            
+          
 	</body>
 
 

@@ -22,6 +22,29 @@ class Alumno_model extends CI_Model {
           return ($this->db->affected_rows() > 0);
      }
 
+     function get_password($mail){
+
+          $this->db->where('MAIL',$mail);
+          $this->db->select('PASSWORD');
+          $query = $this->db->get('alumno');
+
+          return $query->row();
+
+     }
+
+     function set_password($mail,$password){
+
+          $data = array(
+               'PASSWORD' => md5($password)
+               );
+          $this->db->where('MAIL', $mail);
+
+          $this->db->update('alumno',$data);
+
+          return ($this->db->affected_rows() > 0);  
+
+     }
+
      function get_alumno($usr, $pwd)
      {
           $sql = "select * from alumno where MAIL = '" . $usr . "' and PASSWORD = '" . md5($pwd) . "'";

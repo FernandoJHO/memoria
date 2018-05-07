@@ -101,4 +101,54 @@ class Cuenta extends CI_Controller {
 
      }
 
+     public function alumno(){
+
+          if($this->session->userdata('loginuser')&&($this->session->userdata('rol')=='Alumno')){
+
+               $datos = Array(
+                    'nombre' => $this->session->userdata('nombre'),
+                    'apellido' =>$this->session->userdata('apellido'),
+                    'mail' => $this->session->userdata('mail'),
+                    'rol' => $this->session->userdata('rol')
+                    );
+
+               $this->load->view("alumno/mi_cuenta",$datos);
+
+          }
+
+     }
+
+     public function cambiar_password_alumno(){
+
+          $mail = $this->session->userdata('mail');
+          $actual_input = md5($this->input->post('actual'));
+          $nueva = $this->input->post('nueva');
+          $nueva_verif = $this->input->post('nueva_verif');
+
+          $actual = ($this->alumno_model->get_password($mail))->PASSWORD;
+
+          if( $nueva == $nueva_verif ){
+
+               if( $actual_input == $actual ){
+
+                    $this->alumno_model->set_password($mail,$nueva);
+
+                    $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Contraseña modificada</div>');
+
+               }
+               else{
+                    $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">La contraseña que ingresaste no corresponde a la actual</div>');
+               }
+
+          }
+          else{
+               
+               $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Las nuevas contraseñas no coinciden</div>');
+          
+          }
+
+          redirect('cuenta/alumno');
+
+     }
+
 }

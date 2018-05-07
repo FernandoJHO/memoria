@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php echo base_url(); ?>cuenta/alumno<!DOCTYPE html>
 <html lang="en">
 	<head>
 
@@ -102,7 +102,7 @@
                                             </div>
                                         </li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="ti-settings"></i>Mi cuenta</a>
+                                        <a class="dropdown-item" href="<?php echo base_url(); ?>cuenta/alumno"><i class="ti-settings"></i>Mi cuenta</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="<?php echo base_url();?>logout"><i class="fa fa-power-off"></i>Cerrar sesión</a>
                                     </ul>
@@ -131,7 +131,7 @@
                                 <div class="collapse in" id="collapseExample" aria-expanded="true" style="">
                                     <ul class="nav">
                                         <li>
-                                            <a href="#settings">
+                                            <a href="<?php echo base_url(); ?>cuenta/alumno">
                                                 <span class="link-collapse">Mi cuenta</span>
                                             </a>
                                         </li>
