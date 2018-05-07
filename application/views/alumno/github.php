@@ -3,7 +3,7 @@
 	<head>
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <title></title>
+        <title>Datos Github</title>
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
         <link rel="stylesheet" href="lib/ready-theme/assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
@@ -62,11 +62,11 @@
                                             <div class="u-img"><img src="lib/ready-theme/assets/img/user_logo.png" alt="user"></div>
                                             <div class="u-text">
                                                 <h4><?php echo $nombre; ?> <?php echo $apellido; ?></h4>
-                                                <p class="text-muted"><?php echo $mail; ?></p><a href="#" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                                <p class="text-muted"><?php echo $mail; ?></p>
                                             </div>
                                         </li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="ti-settings"></i>Configuración</a>
+                                        <a class="dropdown-item" href="#"><i class="ti-settings"></i>Mi cuenta</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="logout"><i class="fa fa-power-off"></i>Cerrar sesión</a>
                                     </ul>
@@ -95,13 +95,8 @@
                                 <div class="collapse in" id="collapseExample" aria-expanded="true" style="">
                                     <ul class="nav">
                                         <li>
-                                            <a href="#profile">
-                                                <span class="link-collapse">Perfil</span>
-                                            </a>
-                                        </li>
-                                        <li>
                                             <a href="#settings">
-                                                <span class="link-collapse">Configuración</span>
+                                                <span class="link-collapse">Mi cuenta</span>
                                             </a>
                                         </li>
                                     </ul>

@@ -23,7 +23,7 @@
         <![endif]-->
 
         <!-- Favicon and touch icons -->
-        <link rel="shortcut icon" href="lib/logintheme/assets/ico/favicon.png">
+        <link rel="shortcut icon" href="lib/ready-theme/assets/img/favicon.ico"> 
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="lib/logintheme/ico/apple-touch-icon-144-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="lib/logintheme/ico/apple-touch-icon-114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="lib/logintheme/ico/apple-touch-icon-72-precomposed.png">

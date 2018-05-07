@@ -129,7 +129,7 @@
                 <div class="main-panel">
                     <div class="content">
                         <div id="refresh" class="container-fluid">
-                            <h4 class="page-title">Comparar códigos</h4>
+                            <h4 class="page-title">Comparación de códigos</h4>
 
                                 <div class="row">
 

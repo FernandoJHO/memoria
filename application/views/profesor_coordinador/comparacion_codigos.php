@@ -153,7 +153,7 @@
                 <div class="main-panel">
                     <div class="content">
                         <div class="container-fluid">
-                            <h4 class="page-title"></h4>
+                            <h4 class="page-title">Comparación de códigos</h4>
 
                                 <div class="row">
 
