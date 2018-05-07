@@ -1,4 +1,4 @@
-<?php echo base_url(); ?>cuenta/alumno<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 
