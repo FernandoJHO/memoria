@@ -44,7 +44,8 @@ class Evaluacion extends CI_Controller {
                     'rubricas' => $rubricas,
                     'numero_entrega' => $n_entrega,
                     'numero_grupo' => $n_grupo,
-                    'id_grupo' => $id_grupo
+                    'id_grupo' => $id_grupo,
+                    'id_entrega' => $id_entrega
                     );
 
                $this->load->view("profesor/rubricas_entrega",$datos);
@@ -63,7 +64,8 @@ class Evaluacion extends CI_Controller {
                          'rubricas' => $rubricas,
                          'numero_entrega' => $n_entrega,
                          'numero_grupo' => $n_grupo,
-                         'id_grupo' => $id_grupo
+                         'id_grupo' => $id_grupo,
+                         'id_entrega' => $id_entrega
                          );
 
                     $this->load->view("profesor_coordinador/rubricas_entrega",$datos);
@@ -81,7 +83,8 @@ class Evaluacion extends CI_Controller {
                               'rubricas' => $rubricas,
                               'numero_entrega' => $n_entrega,
                               'numero_grupo' => $n_grupo,
-                              'id_grupo' => $id_grupo
+                              'id_grupo' => $id_grupo,
+                              'id_entrega' => $id_entrega
                               );
 
                          $this->load->view("coordinador/rubricas_entrega",$datos);
@@ -140,7 +143,7 @@ class Evaluacion extends CI_Controller {
      }
 
 
-     public function categorias($id_rubrica,$n_entrega,$id_grupo,$n_grupo){
+     public function categorias($id_rubrica,$n_entrega,$id_grupo,$n_grupo,$id_entrega){
 
           if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
 
@@ -155,7 +158,8 @@ class Evaluacion extends CI_Controller {
                     'numero_entrega' => $n_entrega,
                     'numero_grupo' => $n_grupo,
                     'id_grupo' => $id_grupo,
-                    'id_rubrica' => $id_rubrica
+                    'id_rubrica' => $id_rubrica,
+                    'id_entrega' => $id_entrega
                     );
 
                $this->load->view("profesor/categorias_rubrica_entrega",$datos);
@@ -175,7 +179,8 @@ class Evaluacion extends CI_Controller {
                          'numero_entrega' => $n_entrega,
                          'numero_grupo' => $n_grupo,
                          'id_grupo' => $id_grupo,
-                         'id_rubrica' => $id_rubrica
+                         'id_rubrica' => $id_rubrica,
+                         'id_entrega' => $id_entrega
                          );
 
                     $this->load->view("profesor_coordinador/categorias_rubrica_entrega",$datos);
@@ -193,7 +198,8 @@ class Evaluacion extends CI_Controller {
                               'numero_entrega' => $n_entrega,
                               'numero_grupo' => $n_grupo,
                               'id_grupo' => $id_grupo,
-                              'id_rubrica' => $id_rubrica
+                              'id_rubrica' => $id_rubrica,
+                              'id_entrega' => $id_entrega
                               );
 
                          $this->load->view("coordinador/categorias_rubrica_entrega",$datos);
@@ -472,7 +478,7 @@ class Evaluacion extends CI_Controller {
 
      } */
 
-     public function items($id_categoria,$n_categoria,$n_entrega,$id_grupo,$n_grupo,$id_rubrica){
+     public function items($id_categoria,$n_categoria,$n_entrega,$id_grupo,$n_grupo,$id_rubrica,$id_entrega){
 
           if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
 
@@ -493,7 +499,8 @@ class Evaluacion extends CI_Controller {
                     'id_grupo' => $id_grupo,
                     'items' => $items,
                     'id_categoria' => $id_categoria,
-                    'id_rubrica' => $id_rubrica
+                    'id_rubrica' => $id_rubrica,
+                    'id_entrega' => $id_entrega
                     );
 
                $this->load->view("profesor/items_rubrica_entrega",$datos);
@@ -517,7 +524,8 @@ class Evaluacion extends CI_Controller {
                          'id_grupo' => $id_grupo,
                          'items' => $items,
                          'id_categoria' => $id_categoria,
-                         'id_rubrica' => $id_rubrica
+                         'id_rubrica' => $id_rubrica,
+                         'id_entrega' => $id_entrega
                          );
 
                     $this->load->view("profesor_coordinador/items_rubrica_entrega",$datos);
@@ -540,7 +548,8 @@ class Evaluacion extends CI_Controller {
                               'id_grupo' => $id_grupo,
                               'items' => $items,
                               'id_categoria' => $id_categoria,
-                              'id_rubrica' => $id_rubrica
+                              'id_rubrica' => $id_rubrica,
+                              'id_entrega' => $id_entrega
                               );
 
                          $this->load->view("coordinador/items_rubrica_entrega",$datos);
@@ -605,7 +614,7 @@ class Evaluacion extends CI_Controller {
                $counter++;
           }
 
-          $counter = $counter - 6;
+          $counter = $counter - 7;
 
           $counter = $counter / 2;
 
@@ -615,6 +624,7 @@ class Evaluacion extends CI_Controller {
           $id_grupo = intval($this->input->post('id_grupo'));
           $numero_grupo = $this->input->post('numero_grupo');
           $id_rubrica = intval($this->input->post('id_rubrica'));
+          $id_entrega = intval($this->input->post('id_entrega'));
 
           $items_eval = array();
           $aux = array();
@@ -641,7 +651,7 @@ class Evaluacion extends CI_Controller {
 
           $this->evaluar_rubrica($id_rubrica,$categorias_evaluadas,$id_grupo);
 
-          redirect('evaluacion/items/'.$id_categoria.'/'.str_replace(' ', '_', $nombre_categoria).'/'.$numero_entrega.'/'.$id_grupo.'/'.$numero_grupo.'/'.$id_rubrica);
+          redirect('evaluacion/items/'.$id_categoria.'/'.str_replace(' ', '_', $nombre_categoria).'/'.$numero_entrega.'/'.$id_grupo.'/'.$numero_grupo.'/'.$id_rubrica.'/'.$id_entrega);
 
      }
 

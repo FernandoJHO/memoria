@@ -141,7 +141,7 @@
                 <div class="main-panel">
                     <div class="content">
                         <div id="refresh" class="container-fluid">
-                            <h4 class="page-title">Categorías para rúbrica de Entrega N° <?php echo $numero_entrega; ?> <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newCategoriaModal"><i class="la la-plus"></i> Nueva</button></h4>
+                            <h4 class="page-title">Categorías para rúbrica de Entrega N° <?php echo $numero_entrega; ?> <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newCategoriaModal"><i class="la la-plus"></i> Nueva</button> <a href="<?php echo base_url();?>rubricas" class="btn btn-primary btn-sm"><i class="la la-arrow-left"></i> Volver a rúbricas</a></h4>
                             <?php echo $this->session->flashdata('msg'); ?>
 
                             <?php if(!count($categorias)): ?>
@@ -160,7 +160,7 @@
                                                     <p align="center">Porcentaje: <b><?php echo $categoria['porcentaje']; ?>%</b> </p>
                                                     <div class="card-action">
                                                         
-                                                        <a href="<?php echo base_url();?>rubricas/verItems/<?php echo $categoria['id']; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>/<?php echo $numero_entrega; ?>" class="btn btn-default" target="_blank" style="width:100%;"><i class="la la-pencil"></i> Editar items</a>
+                                                        <a href="<?php echo base_url();?>rubricas/verItems/<?php echo $categoria['id']; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>/<?php echo $numero_entrega; ?>/<?php echo $id_rubrica; ?>" class="btn btn-default" style="width:100%;"><i class="la la-pencil"></i> Editar items</a>
                                                         <p></p>
                                                         <button class="btn btn-danger" onclick="delete_categoria('<?php echo $categoria['id']; ?>','<?php echo $categoria['nombre']; ?>');" style="width:100%;"><i class="la la-close"></i> Eliminar</button>
                                                        

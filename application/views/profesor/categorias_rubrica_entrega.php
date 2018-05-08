@@ -117,7 +117,7 @@
                 <div class="main-panel">
                     <div class="content">
                         <div id="refresh" class="container-fluid">
-                            <h4 class="page-title">Categorías rúbrica Entrega <?php echo $numero_entrega; ?> (Grupo <?php echo $numero_grupo; ?>)</h4>
+                            <h4 class="page-title">Categorías rúbrica Entrega <?php echo $numero_entrega; ?> (Grupo <?php echo $numero_grupo; ?>) <a href="<?php echo base_url();?>evaluacion/rubricas/<?php echo $id_entrega; ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>" class="btn btn-primary btn-sm"><i class="la la-arrow-left"></i> Volver a rúbricas</a></h4>
                             <?php if(!count($categorias)): ?>
                                 <p class="text-danger" align="center"> La rúbrica aún no cuenta con categorías. </p>
                             <?php else: ?>
@@ -142,7 +142,7 @@
                                                     <?php endif; ?>
                                                     <div class="card-action">
                                                         
-                                                        <a href="<?php echo base_url();?>evaluacion/items/<?php echo $categoria['id']; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>/<?php echo $id_rubrica; ?>" class="btn btn-default" target="_blank" style="width:100%;"><i class="la la-pencil"></i> Evaluar items</a>
+                                                        <a href="<?php echo base_url();?>evaluacion/items/<?php echo $categoria['id']; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>/<?php echo $id_rubrica; ?>/<?php echo $id_entrega; ?>" class="btn btn-default" style="width:100%;"><i class="la la-pencil"></i> Evaluar items</a>
                                                     </div>
                                                 </div>
                                             </div>

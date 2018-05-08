@@ -140,7 +140,7 @@
                                                     <?php endif; ?>
                                                     <div class="card-action">
                                                         
-                                                        <a href="<?php echo base_url();?>evaluacion/categorias/<?php echo $rubrica['id']; ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver categorías</a>
+                                                        <a href="<?php echo base_url();?>evaluacion/categorias/<?php echo $rubrica['id']; ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>/<?php echo $id_entrega; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver categorías</a>
                                                        
                                                     </div>
                                                 </div>

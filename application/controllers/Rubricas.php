@@ -274,7 +274,7 @@ class Rubricas extends CI_Controller {
      }
 
 
-     public function verItems($id_categoria,$nombre_categoria,$numero_entrega){
+     public function verItems($id_categoria,$nombre_categoria,$numero_entrega,$id_rubrica){
 
           if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
 
@@ -290,7 +290,8 @@ class Rubricas extends CI_Controller {
                     'id_categoria' => $id_categoria,
                     'numero_entrega' => $numero_entrega,
                     'nombre_categoria' => $categoria,
-                    'items' => $items
+                    'items' => $items,
+                    'id_rubrica' => $id_rubrica
                     );
 
                $this->load->view("coordinador/items",$datos);
@@ -311,7 +312,8 @@ class Rubricas extends CI_Controller {
                          'id_categoria' => $id_categoria,
                          'numero_entrega' => $numero_entrega,
                          'nombre_categoria' => $categoria,
-                         'items' => $items
+                         'items' => $items,
+                         'id_rubrica' => $id_rubrica
                          );
 
                     $this->load->view("profesor_coordinador/items",$datos);
@@ -345,6 +347,7 @@ class Rubricas extends CI_Controller {
           $id_categoria = intval( $this->input->post('id_categoria') );
           $numero_entrega = $this->input->post('numero_entrega');
           $nombre_categoria = $this->input->post('nombre_categoria');
+          $id_rubrica = $this->input->post('id_rubrica');
           $item = $this->input->post('item');
 
           $result = $this->item_model->new_item($id_categoria,$item);
@@ -356,7 +359,7 @@ class Rubricas extends CI_Controller {
                $this->session->set_flashdata('msg_create', '<div class="alert alert-danger text-center">No se pudo crear item</div>');
           }
 
-          redirect('rubricas/verItems/'.$id_categoria.'/'.str_replace(' ', '_', $nombre_categoria).'/'.$numero_entrega);
+          redirect('rubricas/verItems/'.$id_categoria.'/'.str_replace(' ', '_', $nombre_categoria).'/'.$numero_entrega.'/'.$id_rubrica);
 
      }
 
@@ -368,13 +371,14 @@ class Rubricas extends CI_Controller {
                $counter++;
           }
 
-          $counter = $counter - 3;
+          $counter = $counter - 4;
 
           $counter = $counter / 2;
 
           $id_categoria = intval( $this->input->post('id_categoria') );
           $numero_entrega = $this->input->post('numero_entrega');
           $nombre_categoria = $this->input->post('nombre_categoria');
+          $id_rubrica = intval( $this->input->post('id_rubrica') );
 
           $items = array();
           $aux = array();
@@ -392,7 +396,7 @@ class Rubricas extends CI_Controller {
                $this->item_model->update_item($item['id_item'],$item['item']);
           }
 
-          redirect('rubricas/verItems/'.$id_categoria.'/'.str_replace(' ', '_', $nombre_categoria).'/'.$numero_entrega);
+          redirect('rubricas/verItems/'.$id_categoria.'/'.str_replace(' ', '_', $nombre_categoria).'/'.$numero_entrega.'/'.$id_rubrica);
 
      }
 

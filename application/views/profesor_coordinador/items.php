@@ -153,7 +153,7 @@
                 <div class="main-panel">
                     <div class="content">
                         <div id="refresh" class="container-fluid">
-                            <h4 class="page-title">Items (Categoría: <?php echo $nombre_categoria; ?> | Rúbrica: Entrega <?php echo $numero_entrega; ?>)</h4>
+                            <h4 class="page-title">Items (Categoría: <?php echo $nombre_categoria; ?> | Rúbrica: Entrega <?php echo $numero_entrega; ?>) <a href="<?php echo base_url();?>rubricas/verCategorias/<?php echo $id_rubrica; ?>/<?php echo $numero_entrega; ?>" class="btn btn-primary btn-sm"><i class="la la-arrow-left"></i> Volver a categorías</a></h4>
                             <?php echo $this->session->flashdata('msg_create'); ?>
                             <?php echo $this->session->flashdata('msg_update'); ?>
 
@@ -188,6 +188,7 @@
                                                     <input type="hidden" name="id_categoria" value="<?php echo $id_categoria; ?>">
                                                     <input type="hidden" name="nombre_categoria" value="<?php echo $nombre_categoria; ?>">
                                                     <input type="hidden" name="numero_entrega" value="<?php echo $numero_entrega; ?>">
+                                                    <input type="hidden" name="id_rubrica" value="<?php echo $id_rubrica; ?>">
                                                     <div class="card-action">
                                                         <button class="btn btn-success" type="submit">Guardar cambios</button>
                                                         <button class="btn btn-danger" type="reset">Cancelar</button>
@@ -225,6 +226,7 @@
                     <input type="hidden" name="id_categoria" value="<?php echo $id_categoria; ?>">
                     <input type="hidden" name="numero_entrega" value="<?php echo $numero_entrega; ?>">
                     <input type="hidden" name="nombre_categoria" value="<?php echo $nombre_categoria; ?>">
+                    <input type="hidden" name="id_rubrica" value="<?php echo $id_rubrica; ?>">
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
