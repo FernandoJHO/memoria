@@ -3,7 +3,7 @@
     <head>
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <title></title>
+        <title>Categorías rúbrica Entrega <?php echo $numero_entrega; ?></title>
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
@@ -174,7 +174,7 @@
                                                     <div class="card-action">
                                                         
                                                         <!--<a href="<?php echo base_url();?>rubricas/verCriterios/<?php echo $categoria['id']; ?>/<?php echo $numero_entrega; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver criterios</a> -->
-                                                        <a href="<?php echo base_url();?>rubricas/verItems/<?php echo $categoria['id']; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>/<?php echo $numero_entrega; ?>" class="btn btn-default" style="width:100%;"><i class="la la-pencil"></i> Editar items</a>
+                                                        <a href="<?php echo base_url();?>rubricas/verItems/<?php echo $categoria['id']; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>/<?php echo $numero_entrega; ?>" class="btn btn-default" target="_blank" style="width:100%;"><i class="la la-pencil"></i> Editar items</a>
                                                         <p></p>
                                                         <button class="btn btn-danger" onclick="delete_categoria('<?php echo $categoria['id']; ?>','<?php echo $categoria['nombre']; ?>');" style="width:100%;"><i class="la la-close"></i> Eliminar</button>
                                                        

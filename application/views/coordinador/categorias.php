@@ -160,7 +160,7 @@
                                                     <p align="center">Porcentaje: <b><?php echo $categoria['porcentaje']; ?>%</b> </p>
                                                     <div class="card-action">
                                                         
-                                                        <a href="<?php echo base_url();?>rubricas/verItems/<?php echo $categoria['id']; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>/<?php echo $numero_entrega; ?>" class="btn btn-default" style="width:100%;"><i class="la la-pencil"></i> Editar items</a>
+                                                        <a href="<?php echo base_url();?>rubricas/verItems/<?php echo $categoria['id']; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>/<?php echo $numero_entrega; ?>" class="btn btn-default" target="_blank" style="width:100%;"><i class="la la-pencil"></i> Editar items</a>
                                                         <p></p>
                                                         <button class="btn btn-danger" onclick="delete_categoria('<?php echo $categoria['id']; ?>','<?php echo $categoria['nombre']; ?>');" style="width:100%;"><i class="la la-close"></i> Eliminar</button>
                                                        

@@ -3,7 +3,7 @@
     <head>
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <title></title>
+        <title>Categorías rúbrica Entrega <?php echo $numero_entrega; ?></title>
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
@@ -142,7 +142,7 @@
                                                     <?php endif; ?>
                                                     <div class="card-action">
                                                         
-                                                        <a href="<?php echo base_url();?>evaluacion/items/<?php echo $categoria['id']; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>/<?php echo $id_rubrica; ?>" class="btn btn-default" style="width:100%;"><i class="la la-pencil"></i> Evaluar items</a>
+                                                        <a href="<?php echo base_url();?>evaluacion/items/<?php echo $categoria['id']; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>/<?php echo $id_rubrica; ?>" class="btn btn-default" target="_blank" style="width:100%;"><i class="la la-pencil"></i> Evaluar items</a>
                                                     </div>
                                                 </div>
                                             </div>
