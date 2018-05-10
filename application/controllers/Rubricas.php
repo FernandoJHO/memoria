@@ -17,7 +17,6 @@ class Rubricas extends CI_Controller {
           $this->load->model('rubrica_model');
           $this->load->model('entrega_model');
           $this->load->model('categoria_model');
-          $this->load->model('criterio_model');
           $this->load->model('item_model');
      }
 

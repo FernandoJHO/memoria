@@ -17,7 +17,6 @@ class Evaluacion extends CI_Controller {
           $this->load->model('grupo_model');
           $this->load->model('categoria_model');
           $this->load->model('item_model');
-          $this->load->model('criterio_model');
      }
 
      public function index()

@@ -127,6 +127,9 @@
                                         <div class="form-group">
                                             <p align="center"><input type="checkbox" name="remember_me_alumno"/> Recordar</p>
                                         </div>
+                                        <div class="form-group">
+                                            <p align="center"><a href="recuperarClave/verificacionAlumno">¿Olvidaste tu contraseña?</a><p>
+                                        </div>
                                         <button class="btn" id="btn_login" name="btn_login" type="submit" value="Login">Ingresar</button>
                                     </form>
                                     <?php echo form_close(); ?>
