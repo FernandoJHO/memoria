@@ -1,9 +1,9 @@
 <?php 
 
-require "./application/utils/date.php";
-require "./application/utils/github.php";
-require "./application/utils/sort.php";
-require "./application/utils/saveFile.php";
+require "./application/third_party/date.php";
+require "./application/third_party/github.php";
+require "./application/third_party/sort.php";
+require "./application/third_party/saveFile.php";
  
 class Entregas extends CI_Controller
 {

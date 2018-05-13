@@ -1,6 +1,6 @@
 <?php
 
-require "./application/utils/sort.php";
+require "./application/third_party/sort.php";
 
 class Rubricas extends CI_Controller {
 

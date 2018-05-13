@@ -1,8 +1,8 @@
 <?php
 
-require "./application/utils/date.php";
-require "./application/utils/sort.php";
-require "./application/utils/saveFile.php";
+require "./application/third_party/date.php";
+require "./application/third_party/sort.php";
+require "./application/third_party/saveFile.php";
 
 class Grupos extends CI_Controller {
 

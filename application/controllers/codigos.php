@@ -1,6 +1,6 @@
 <?php
 
-require "./application/utils/github.php";
+require "./application/third_party/github.php";
 
 class Codigos extends CI_Controller {
 

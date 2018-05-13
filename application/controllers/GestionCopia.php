@@ -1,7 +1,7 @@
 <?php
 
-require "./application/utils/moss.php";
-require "./application/utils/date.php";
+require "./application/third_party/moss.php";
+require "./application/third_party/date.php";
 
 class GestionCopia extends CI_Controller {
 

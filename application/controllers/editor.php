@@ -1,7 +1,7 @@
 <?php
 
-require "./application/utils/github.php";
-require "./application/utils/jdoodle.php";
+require "./application/third_party/github.php";
+require "./application/third_party/jdoodle.php";
 
 class Editor extends CI_Controller {
 

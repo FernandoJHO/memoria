@@ -1,7 +1,7 @@
 <?php
 
-require "./application/utils/saveFile.php";
-require "./application/utils/excelphp/Classes/PHPExcel/IOFactory.php";
+require "./application/third_party/saveFile.php";
+require "./application/third_party/excelphp/Classes/PHPExcel/IOFactory.php";
 
 class MiSeccion extends CI_Controller {
 
