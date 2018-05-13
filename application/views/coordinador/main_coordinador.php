@@ -124,12 +124,99 @@
                 <div class="main-panel">
                     <div class="content">
                         <div class="container-fluid">
+                            <h4 class="page-title">Hola, <?php echo $nombre; ?>.</h4>
                             <div class="row">
+
+                                <div class="col-md-3">
+                                    <a href="profesores" style="text-decoration: none">
+                                        <div class="card card-stats card-warning">
+                                            <div class="card-body ">
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div class="icon-big text-center">
+                                                            <i class="la la-users"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7 d-flex align-items-center">
+                                                        <div class="numbers">
+                                                            <h4 class="card-category">Gestión profesores</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a> 
+                                </div>
+
+                                <div class="col-md-3">
+                                    <a href="editarEntregas" style="text-decoration: none">
+                                        <div class="card card-stats card-success">
+                                            <div class="card-body ">
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div class="icon-big text-center">
+                                                            <i class="la la-suitcase"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7 d-flex align-items-center">
+                                                        <div class="numbers">
+                                                            <h4 class="card-category">Entregas</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a> 
+                                </div>
+
+                                <div class="col-md-3">
+                                    <a href="secciones" style="text-decoration: none">
+                                        <div class="card card-stats card-primary">
+                                            <div class="card-body ">
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div class="icon-big text-center">
+                                                            <i class="la la-list"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7 d-flex align-items-center">
+                                                        <div class="numbers">
+                                                            <h4 class="card-category">Secciones</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a> 
+                                </div>
+
+                                <div class="col-md-3">
+                                    <a href="rubricas" style="text-decoration: none">
+                                        <div class="card card-stats card-default">
+                                            <div class="card-body ">
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div class="icon-big text-center">
+                                                            <i class="la la-files-o"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7 d-flex align-items-center">
+                                                        <div class="numbers">
+                                                            <h4 class="card-category">Rúbricas</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a> 
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
-
+            </div> 
+        </div> 
 
                 
 	</body>

@@ -187,7 +187,8 @@
                         </div>
                     </div>
                 </div>
-
+            </div> 
+        </div> 
 
     <?php endif ?>            
 	</body>

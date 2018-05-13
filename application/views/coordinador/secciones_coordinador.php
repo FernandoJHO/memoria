@@ -166,6 +166,8 @@
                         </div>
                     </div>
                 </div>
+            </div> 
+        </div> 
 
         <div class="modal fade" id="newSeccionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">

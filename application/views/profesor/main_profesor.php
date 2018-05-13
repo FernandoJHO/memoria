@@ -112,11 +112,58 @@
                 <div class="main-panel">
                     <div class="content">
                         <div class="container-fluid">
+                            <h4 class="page-title">Hola, <?php echo $nombre; ?>.</h4>
                             <div class="row">
+
+                                <div class="col-md-3">
+                                    <a href="miSeccion" style="text-decoration: none">
+                                        <div class="card card-stats card-primary">
+                                            <div class="card-body ">
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div class="icon-big text-center">
+                                                            <i class="la la-users"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7 d-flex align-items-center">
+                                                        <div class="numbers">
+                                                            <h4 class="card-category">Mi sección</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a> 
+                                </div>
+
+                                <div class="col-md-3">
+                                    <a href="gestionCopia" style="text-decoration: none">
+                                        <div class="card card-stats card-success">
+                                            <div class="card-body ">
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div class="icon-big text-center">
+                                                            <i class="la la-suitcase"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7 d-flex align-items-center">
+                                                        <div class="numbers">
+                                                            <h4 class="card-category">Gestión de copia</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a> 
+                                </div>
+
+                                
                             </div>
                         </div>
                     </div>
                 </div>
+            </div> 
+        </div> 
 
 
                 

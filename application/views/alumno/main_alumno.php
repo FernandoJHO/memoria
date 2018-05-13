@@ -135,13 +135,99 @@
                 <div class="main-panel">
                     <div class="content">
                         <div class="container-fluid">
+                            <h4 class="page-title">Hola, <?php echo $nombre; ?>.</h4>
                             <div class="row">
+
+                                <div class="col-md-3">
+                                    <a href="grupos/miGrupo" style="text-decoration: none">
+                                        <div class="card card-stats card-warning">
+                                            <div class="card-body ">
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div class="icon-big text-center">
+                                                            <i class="la la-users"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7 d-flex align-items-center">
+                                                        <div class="numbers">
+                                                            <h4 class="card-category">Mi grupo</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a> 
+                                </div>
+
+                                <div class="col-md-3">
+                                    <a href="github" style="text-decoration: none">
+                                        <div class="card card-stats card-success">
+                                            <div class="card-body ">
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div class="icon-big text-center">
+                                                            <i class="la la-github"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7 d-flex align-items-center">
+                                                        <div class="numbers">
+                                                            <h4 class="card-category">Datos Github</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a> 
+                                </div>
+
+                                <div class="col-md-3">
+                                    <a href="entregas/all" style="text-decoration: none">
+                                        <div class="card card-stats card-primary">
+                                            <div class="card-body ">
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div class="icon-big text-center">
+                                                            <i class="la la-suitcase"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7 d-flex align-items-center">
+                                                        <div class="numbers">
+                                                            <h4 class="card-category">Entregas</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a> 
+                                </div>
+
+                                <div class="col-md-3">
+                                    <a href="codigos" style="text-decoration: none">
+                                        <div class="card card-stats card-default">
+                                            <div class="card-body ">
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div class="icon-big text-center">
+                                                            <i class="la la-file-code-o"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7 d-flex align-items-center">
+                                                        <div class="numbers">
+                                                            <h4 class="card-category">Códigos fuente</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a> 
+                                </div>
                                 
                             </div>
                         </div>
                     </div>
                 </div>
-
+            </div> 
+        </div> 
 
     <?php endif ?>            
 	</body>

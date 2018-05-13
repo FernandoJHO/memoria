@@ -141,6 +141,7 @@
                                     <div class="card">
                                         <div class="card-header">
                                             <div class="card-title">Tus datos</div>
+
                                         </div>
                                         <div class="card-body">
                                             <form method="post" action="<?php echo base_url() ?>github/set_user_data/">
@@ -164,7 +165,8 @@
                                 <div class="col-md-6">
                                     <div class="card">
                                         <div class="card-header">
-                                            <div class="card-title">Datos del repositorio</div>
+                                            <div class="card-title">Datos del repositorio </div>
+                                            <p class="card-category">IMPORTANTE: El repositorio debe estar en modo <b>público</b></p>
                                         </div>
                                         <div class="card-body">
                                             <?php if ($grupo): ?> 
@@ -194,7 +196,8 @@
                         </div>
                     </div>
                 </div>
-
+            </div> 
+        </div> 
 
     <?php endif ?>            
 	</body>
