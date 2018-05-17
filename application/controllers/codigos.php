@@ -203,8 +203,6 @@ class Codigos extends CI_Controller {
 
           $mail = $this->session->userdata('mail');
 
-          $github_credentials = $this->get_github_data($mail);
-
           $repositorio = $this->get_repositorio_grupo( intval($id_grupo) );
 
           $repositorio_info;
@@ -218,7 +216,7 @@ class Codigos extends CI_Controller {
 
           if( $repositorio_info ){
 
-               $archivos = $this->get_repo_files($github_credentials['usuario'],$github_credentials['contraseña'],$repositorio['repositorio'],$repositorio['dueño']);
+               $archivos = $this->get_repo_files(NULL,NULL,$repositorio['repositorio'],$repositorio['dueño']);
 
           }
           else{
@@ -280,23 +278,6 @@ class Codigos extends CI_Controller {
 
      }
      
-
-     public function get_github_data($mail){
-
-          $github = $this->profesor_model->get_github($mail);
-
-          $credenciales = array();
-
-          if(!empty($github)){
-
-               $credenciales['usuario'] = $github->GITHUB_ACC;
-               $credenciales['contraseña'] = $github->GITHUB_PASS;
-
-          }
-
-          return $credenciales;
-
-     }
 
      public function get_repositorio_grupo($id_grupo){
 

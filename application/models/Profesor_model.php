@@ -61,26 +61,6 @@ class Profesor_model extends CI_Model {
           return $query->result();
      }
 
-     function set_github($usr_git,$pwd_git,$mail){
-          $data = Array(
-               'GITHUB_ACC' => $usr_git,
-               'GITHUB_PASS' => $pwd_git
-               );
-
-          $this->db->where('MAIL',$mail);
-          $this->db->update('profesor',$data);
-     }
-
-     function get_github($mail){
-          $this->db->where('MAIL',$mail);
-          $this->db->select('GITHUB_ACC, GITHUB_PASS');
-          $query = $this->db->get('profesor');
-
-          return $query->row();
-          //$query->result() para más de una fila de resultados
-
-     }
-
      function new_profesor($nombres,$apellidos,$mail,$password,$coordinador,$prof_coordinador){
 
           $data = array(

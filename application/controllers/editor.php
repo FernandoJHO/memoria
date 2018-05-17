@@ -157,11 +157,9 @@ class Editor extends CI_Controller {
 
 		$mail = $this->session->userdata('mail');
 
-		$github_credentials = $this->get_github_credentials($mail);
-
 		$repositorio = $this->get_repositorio_grupo($id_grupo);
 
-		$contenido_archivo = $this->get_file_content($github_credentials['usuario'],$github_credentials['contraseña'],$repositorio['repositorio'],$repositorio['dueño'],$nombre_archivo);
+		$contenido_archivo = $this->get_file_content(NULL,NULL,$repositorio['repositorio'],$repositorio['dueño'],$nombre_archivo);
 
           if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador')){
 
@@ -209,24 +207,6 @@ class Editor extends CI_Controller {
                     }
                }
           }
-
-	}
-
-
-	public function get_github_credentials($mail){
-
-		$github = $this->profesor_model->get_github($mail);
-
-		$credenciales = array();
-
-		if(!empty($github)){
-
-			$credenciales['usuario'] = $github->GITHUB_ACC;
-			$credenciales['contraseña'] = $github->GITHUB_PASS;
-
-		}
-
-		return $credenciales;
 
 	}
 
