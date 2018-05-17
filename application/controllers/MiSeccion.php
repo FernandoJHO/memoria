@@ -100,10 +100,16 @@ class MiSeccion extends CI_Controller {
 
                     $password = $primero.$segundo.$antesguion.$despuesguion;
 
-                    if( !$this->alumno_model->new_alumno($nombre_alumno,$apellidos_alumno,$mail_alumno,$password,$id_seccion) ){
-                         $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudieron crear uno o más alumnos</div>');
-                         redirect('miSeccion');
 
+                    if( !$this->alumno_model->verifica_existe($mail_alumno) ){
+                         if( !$this->alumno_model->new_alumno($nombre_alumno,$apellidos_alumno,$mail_alumno,$password,$id_seccion) ){
+                              $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudieron crear uno o más alumnos</div>');
+                              redirect('miSeccion');
+
+                         }
+                    }
+                    else{
+                         $this->alumno_model->set_password_seccion($mail_alumno,$password,$id_seccion);
                     }
 
                }

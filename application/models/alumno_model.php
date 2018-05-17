@@ -143,4 +143,14 @@ class Alumno_model extends CI_Model {
           return $query;
      }
 
+     function set_password_seccion($mail,$password,$id_seccion){
+          $data = Array(
+               'PASSWORD' => md5($password),
+               'ID_SECCION' => $id_seccion 
+               );
+
+          $this->db->where('MAIL',$mail);
+          $this->db->update('alumno',$data);  
+     }
+
 }
