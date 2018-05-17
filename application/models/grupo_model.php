@@ -68,6 +68,8 @@ class Grupo_model extends CI_Model {
      }
 
      public function new_grupo($numero_grupo,$id_seccion,$año,$semestre){
+          $insert_id = 0;
+
           $data = Array(
                'NUMERO' => $numero_grupo,
                'ID_SECCION' => $id_seccion,
@@ -76,8 +78,9 @@ class Grupo_model extends CI_Model {
                );
 
           $this->db->insert('grupo',$data);
+          $insert_id = $this->db->insert_id();
 
-          return ($this->db->affected_rows() > 0);
+          return $insert_id;
      }
 
      public function add_integrante($id_grupo,$mail_alumno){
@@ -90,7 +93,7 @@ class Grupo_model extends CI_Model {
           return ($this->db->affected_rows() > 0);
      }
 
-     public function get_idgrupo_by_number($numero_grupo,$id_seccion){
+     /*public function get_idgrupo_by_number($numero_grupo,$id_seccion){
           $this->db->where('NUMERO',$numero_grupo);
           $this->db->where('ID_SECCION',$id_seccion);
           $this->db->select('ID_GRUPO');
@@ -98,7 +101,7 @@ class Grupo_model extends CI_Model {
           $query = $this->db->get('grupo');
 
           return $query->row();
-     }
+     } */
 
      public function get_idgrupo_by_mail($mail_alumno){
           $this->db->where('MAIL_ALUMNO',$mail_alumno);
