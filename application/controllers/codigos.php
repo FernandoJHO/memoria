@@ -142,7 +142,7 @@ class Codigos extends CI_Controller {
                $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo crear archivo. El grupo no ha indicado los datos del repositorio</div>');
           }
 
-          redirect(codigos);
+          redirect('codigos');
      }
 
      public function delete_file(){
