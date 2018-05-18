@@ -341,7 +341,7 @@ class Entregas extends CI_Controller
                               $mail_alumno = $integrante->MAIL_ALUMNO;
                               $commits = ($this->alumno_model->get_commits($mail_alumno))->COMMITS;
 
-                              $this->entrega_model->set_entrega_commits($mail_alumno,$id_entrega,$commits);
+                              $this->entrega_model->set_entrega_commits($mail_alumno,$id_entrega,$commits,$user_data['id_grupo']);
                          }
                          echo json_encode("Ok");
                     }    
@@ -626,7 +626,7 @@ class Entregas extends CI_Controller
                $mail_alumno = $integrante->MAIL_ALUMNO;
                $alumno = $this->alumno_model->get_nombre($mail_alumno);
                $nombre_alumno = $alumno->NOMBRE.' '.$alumno->APELLIDO;
-               $entrega_commits = $this->get_entregas_commits($mail_alumno);
+               $entrega_commits = $this->get_entregas_commits($mail_alumno,$id_grupo);
 
                $aux['nombre'] = $nombre_alumno;
                $aux['mail'] = $mail_alumno;
@@ -638,11 +638,11 @@ class Entregas extends CI_Controller
           return $integrante_commits;
      }
 
-     public function get_entregas_commits($mail_alumno){
+     public function get_entregas_commits($mail_alumno,$id_grupo){
           $entregas_commits = array();
           $aux = array();
 
-          $result_query = $this->entrega_model->get_entrega_commits($mail_alumno);
+          $result_query = $this->entrega_model->get_entrega_commits($mail_alumno,$id_grupo);
 
           foreach($result_query as $entrega_commits){
                $aux['id_entrega'] = $entrega_commits->ID_ENTREGA;

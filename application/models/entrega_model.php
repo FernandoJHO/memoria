@@ -118,11 +118,12 @@ class Entrega_model extends CI_Model {
           return $query->result();
      }
 
-     public function set_entrega_commits($mail_alumno,$id_entrega,$commits){
+     public function set_entrega_commits($mail_alumno,$id_entrega,$commits,$id_grupo){
           $data = Array(
                'MAIL_ALUMNO' => $mail_alumno,
                'ID_ENTREGA' => $id_entrega,
-               'COMMITS' => $commits
+               'COMMITS' => $commits,
+               'ID_GRUPO' => $id_grupo
                );
 
           $this->db->insert('entrega_commits',$data);
@@ -130,10 +131,11 @@ class Entrega_model extends CI_Model {
           return ($this->db->affected_rows() > 0);
      }
 
-     public function get_entrega_commits($mail_alumno){
+     public function get_entrega_commits($mail_alumno,$id_grupo){
           $this->db->select('ID_ENTREGA, COMMITS');
           $this->db->from('entrega_commits');
           $this->db->where('MAIL_ALUMNO', $mail_alumno);
+          $this->db->where('ID_GRUPO', $id_grupo);
 
           $query = $this->db->get();
 
