@@ -44,6 +44,8 @@ class Grupo_model extends CI_Model {
 
           $this->db->where('ID_GRUPO',$id_grupo);
           $this->db->update('grupo',$data);
+
+          return ($this->db->affected_rows() > 0); 
      }
 
      function get_seccion($id_grupo){

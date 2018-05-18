@@ -136,6 +136,7 @@
                     <div class="content">
                         <div class="container-fluid">
                             <h4 class="page-title">Datos Github</h4>
+                            <?php echo $this->session->flashdata('msg'); ?>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="card">

@@ -85,6 +85,8 @@ class Alumno_model extends CI_Model {
 
           $this->db->where('MAIL',$mail);
           $this->db->update('alumno',$data);
+
+          return ($this->db->affected_rows() > 0); 
      }
 
      function get_github($mail){

@@ -62,8 +62,15 @@ class Github extends CI_Controller {
           $password = $this->input->post('password');
           $mail = $this->session->userdata('mail');
 
-          $this->alumno_model->set_github($usuario,$password,$mail);
-          redirect(github);
+          if($this->alumno_model->set_github($usuario,$password,$mail)){
+
+               $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Credenciales Github actualizadas correctamente</div>');
+          }
+          else{
+               $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudieron actualizar credenciales Github</div>');    
+          }
+
+          redirect('github');
      }
 
      public function get_data($mail){
@@ -100,8 +107,15 @@ class Github extends CI_Controller {
           $mail = $this->session->userdata('mail');
           $grupo_id = $this->alumno_model->get_grupo($mail);
 
-          $this->grupo_model->set_repo_info($grupo_id->ID_GRUPO,$repo_name,$repo_owner);
-          redirect(github);
+          if($this->grupo_model->set_repo_info($grupo_id->ID_GRUPO,$repo_name,$repo_owner)){
+
+               $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Información del repositorio actualizada correctamente</div>');
+          }
+          else{
+               $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo actualizar información del repositorio</div>'); 
+          }
+
+          redirect('github');
      }
 
 }
