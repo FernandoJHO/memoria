@@ -118,6 +118,7 @@
                     <div class="content">
                         <div id="refresh" class="container-fluid">
                             <h4 class="page-title"> Items (Categoría: <?php echo $nombre_categoria; ?> | Rúbrica: Entrega <?php echo $numero_entrega; ?> | Grupo <?php echo $numero_grupo; ?>) <a href="<?php echo base_url();?>evaluacion/categorias/<?php echo $id_rubrica; ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>/<?php echo $id_entrega; ?>" class="btn btn-primary btn-sm"><i class="la la-arrow-left"></i> Volver a categorías</a></h4>
+                            <?php echo $this->session->flashdata('msg'); ?>
 
 
                             <div class="row">

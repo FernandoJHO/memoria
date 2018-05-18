@@ -637,7 +637,12 @@ class Evaluacion extends CI_Controller {
           }
 
           foreach($items_eval as $item_eval){
-               $this->item_model->evaluar_item($item_eval['id_item'],$id_grupo,$item_eval['valor']);
+               if($this->item_model->evaluar_item($item_eval['id_item'],$id_grupo,$item_eval['valor'])){
+                    $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Item(s) evaluado(s) correctamente</div>');
+               }
+               else{
+                    $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo evaluar uno o más items</div>');
+               }
           }
 
           //AGREGAR LLAMADAS A FUNCIONES PARA EVALUAR CATEGORIAS Y RUBRICA

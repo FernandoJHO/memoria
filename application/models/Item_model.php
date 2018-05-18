@@ -43,6 +43,8 @@ class Item_model extends CI_Model {
           $this->db->where('ID_ITEM',$id_item);
           $this->db->update('item',$data);
 
+          return ($this->db->affected_rows() > 0);
+
      }
 
      public function get_evaluacion_item($id_item,$id_grupo){
@@ -79,6 +81,8 @@ class Item_model extends CI_Model {
                     );
                $this->db->insert('evaluacion_item',$data);
           }
+
+          return ($this->db->affected_rows() > 0);
 
      }
 

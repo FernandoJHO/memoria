@@ -392,7 +392,12 @@ class Rubricas extends CI_Controller {
 
 
           foreach($items as $item){
-               $this->item_model->update_item($item['id_item'],$item['item']);
+               if($this->item_model->update_item($item['id_item'],$item['item'])){
+                    $this->session->set_flashdata('msg_update', '<div class="alert alert-success text-center">Item(s) modificado(s) correctamente</div>');
+               }
+               else{
+                    $this->session->set_flashdata('msg_update', '<div class="alert alert-danger text-center">No se pudo modificar uno o más items</div>');
+               }
           }
 
           redirect('rubricas/verItems/'.$id_categoria.'/'.str_replace(' ', '_', $nombre_categoria).'/'.$numero_entrega.'/'.$id_rubrica);
