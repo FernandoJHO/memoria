@@ -151,6 +151,11 @@
                                         <div class="card">
                                             <div class="card-body">
                                                 <h6 align="center"> Sección <?php echo $seccion['codigo']; ?> </h6>
+                                                <p></p>
+                                                <p align="center"><b>Profesor(es)</b></p>
+                                                <?php foreach($seccion['profesores'] as $profesor): ?>
+                                                    <p align="center"><?php echo $profesor['nombre']; ?> (<?php echo $profesor['mail']; ?>)</p>
+                                                <?php endforeach; ?>
 
                                                 <div class="card-action">
                                                     <a href="grupos/all/<?php echo $seccion['id']; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver grupos</a>

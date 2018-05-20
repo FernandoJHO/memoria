@@ -19,7 +19,8 @@ class Secciones extends CI_Controller {
      {
           
           if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
-               $secciones = $this->get_secciones();
+
+               $secciones = $this->get_profesores_seccion($this->get_secciones());
 
                $datos = Array(
                     'nombre' => $this->session->userdata('nombre'),
@@ -34,7 +35,8 @@ class Secciones extends CI_Controller {
           }
           else{
                if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && $this->session->userdata('profesor_coordinador') ){
-                    $secciones = $this->get_secciones();
+
+                    $secciones = $this->get_profesores_seccion($this->get_secciones());
 
                     $datos = Array(
                          'nombre' => $this->session->userdata('nombre'),
@@ -64,6 +66,38 @@ class Secciones extends CI_Controller {
           }
 
           return $secciones;
+     }
+
+     public function get_profesores_seccion($secciones){
+
+          $secciones_final = array();
+          $profesores = array();
+          $aux = array();
+          $aux2 = array();
+
+          foreach($secciones as $seccion){
+               $result_query = $this->seccion_model->get_profesores($seccion['id']);
+
+               foreach($result_query as $profesor){
+                    $nombre = $profesor->NOMBRE.' '.$profesor->APELLIDO;
+                    $mail = $profesor->MAIL;
+                    $aux2['nombre'] = $nombre;
+                    $aux2['mail'] = $mail;
+
+                    array_push($profesores, $aux2);
+               }
+
+               $aux['id'] = $seccion['id'];
+               $aux['codigo'] = $seccion['codigo'];
+               $aux['profesores'] = $profesores;
+
+               array_push($secciones_final, $aux);
+
+               $profesores = array();
+          }
+
+          return $secciones_final;
+
      }
 
      public function new_seccion(){

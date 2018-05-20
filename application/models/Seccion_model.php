@@ -37,5 +37,16 @@ class Seccion_model extends CI_Model {
           return ($this->db->affected_rows() > 0);
      }
 
+     public function get_profesores($id_seccion){
+          $this->db->select('profesor.NOMBRE, profesor.APELLIDO, profesor.MAIL');
+          $this->db->from('profesor');
+          $this->db->join('profesor_seccion', 'profesor_seccion.MAIL_PROFESOR = profesor.MAIL', 'inner');
+          $this->db->where('profesor_seccion.ID_SECCION', $id_seccion);
+
+          $query = $this->db->get();
+
+          return $query->result();
+     }
+
 
 }
