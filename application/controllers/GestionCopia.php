@@ -66,6 +66,9 @@ class GestionCopia extends CI_Controller {
 
                     $this->load->view('profesor_coordinador/comparacion_codigos',$datos); 
                }
+               else{
+                    redirect('login');
+               }
           }
      }
 

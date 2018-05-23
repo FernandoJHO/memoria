@@ -57,6 +57,9 @@ class Rubricas extends CI_Controller {
 
                     $this->load->view("profesor_coordinador/rubricas",$datos);
                }
+               else{
+                    redirect('login');
+               }
           }
           
      }
@@ -214,6 +217,9 @@ class Rubricas extends CI_Controller {
 
                     $this->load->view("profesor_coordinador/categorias",$datos);
                }
+               else{
+                    redirect('login');
+               }
           }
 
      }
@@ -316,6 +322,9 @@ class Rubricas extends CI_Controller {
                          );
 
                     $this->load->view("profesor_coordinador/items",$datos);
+               }
+               else{
+                    redirect('login');
                }
           }
 

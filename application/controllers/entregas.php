@@ -107,6 +107,9 @@ class Entregas extends CI_Controller
                $this->load->view('alumno/entregas',$datos);
 
           }
+          else{
+               redirect('login');
+          }
      }
 
      public function check_entrega_codigo($n_entrega){
@@ -339,7 +342,8 @@ class Entregas extends CI_Controller
 
                          foreach($integrantes as $integrante){
                               $mail_alumno = $integrante->MAIL_ALUMNO;
-                              $commits = ($this->alumno_model->get_commits($mail_alumno))->COMMITS;
+                              $commits_ = $this->alumno_model->get_commits($mail_alumno);
+                              $commits = $commits_->COMMITS;
 
                               $this->entrega_model->set_entrega_commits($mail_alumno,$id_entrega,$commits,$user_data['id_grupo']);
                          }
@@ -546,6 +550,9 @@ class Entregas extends CI_Controller
                               );
 
                          $this->load->view('profesor_coordinador/entregas_realizadas_prof_coord',$datos);                 
+                    }
+                    else{
+                         redirect('login');
                     }
                }
           }

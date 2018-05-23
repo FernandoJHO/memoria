@@ -50,6 +50,9 @@ class MiSeccion extends CI_Controller {
 
                     $this->load->view('profesor_coordinador/mi_seccion',$datos); 
                }
+               else{
+                    redirect('login');
+               }
           }
      }
 

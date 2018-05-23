@@ -63,6 +63,9 @@ class Cuenta extends CI_Controller {
 
                          $this->load->view("coordinador/mi_cuenta",$datos);
                     }
+                    else{
+                         redirect('login');
+                    }
                }
           }
 
@@ -75,7 +78,8 @@ class Cuenta extends CI_Controller {
           $nueva = $this->input->post('nueva');
           $nueva_verif = $this->input->post('nueva_verif');
 
-          $actual = ($this->profesor_model->get_password($mail))->PASSWORD;
+          $actual_ = $this->profesor_model->get_password($mail);
+          $actual = $actual_->PASSWORD;
 
           if( $nueva == $nueva_verif ){
 
@@ -115,6 +119,9 @@ class Cuenta extends CI_Controller {
                $this->load->view("alumno/mi_cuenta",$datos);
 
           }
+          else{
+               redirect('login');
+          }
 
      }
 
@@ -125,7 +132,8 @@ class Cuenta extends CI_Controller {
           $nueva = $this->input->post('nueva');
           $nueva_verif = $this->input->post('nueva_verif');
 
-          $actual = ($this->alumno_model->get_password($mail))->PASSWORD;
+          $actual_ = $this->alumno_model->get_password($mail);
+          $actual = $actual_->PASSWORD;
 
           if( $nueva == $nueva_verif ){
 

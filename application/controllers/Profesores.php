@@ -54,6 +54,9 @@ class Profesores extends CI_Controller {
 
                    $this->load->view('profesor_coordinador/gestion_profesores',$datos);
                }
+               else{
+                    redirect('login');
+               }
          }
 
      }

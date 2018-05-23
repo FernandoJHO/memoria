@@ -44,6 +44,9 @@ class Editor extends CI_Controller {
 
 			$this->load->view('alumno/editor',$data);
 		}
+		else{
+			redirect('login');
+		}
 	}
 
 	public function jdoodle(){
@@ -157,6 +160,7 @@ class Editor extends CI_Controller {
 
 		$mail = $this->session->userdata('mail');
 
+
 		$repositorio = $this->get_repositorio_grupo($id_grupo);
 
 		$contenido_archivo = $this->get_file_content(NULL,NULL,$repositorio['repositorio'],$repositorio['dueño'],$nombre_archivo);
@@ -207,6 +211,24 @@ class Editor extends CI_Controller {
                     }
                }
           }
+
+	}
+
+
+	public function get_github_credentials($mail){
+
+		$github = $this->profesor_model->get_github($mail);
+
+		$credenciales = array();
+
+		if(!empty($github)){
+
+			$credenciales['usuario'] = $github->GITHUB_ACC;
+			$credenciales['contraseña'] = $github->GITHUB_PASS;
+
+		}
+
+		return $credenciales;
 
 	}
 

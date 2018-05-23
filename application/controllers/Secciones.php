@@ -19,7 +19,6 @@ class Secciones extends CI_Controller {
      {
           
           if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && $this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
-
                $secciones = $this->get_profesores_seccion($this->get_secciones());
 
                $datos = Array(
@@ -35,7 +34,6 @@ class Secciones extends CI_Controller {
           }
           else{
                if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && $this->session->userdata('profesor_coordinador') ){
-
                     $secciones = $this->get_profesores_seccion($this->get_secciones());
 
                     $datos = Array(
@@ -47,6 +45,9 @@ class Secciones extends CI_Controller {
                          );
 
                     $this->load->view('profesor_coordinador/secciones_profesor_coordinador',$datos);  
+               }
+               else{
+                    redirect('login');
                }
           }
           

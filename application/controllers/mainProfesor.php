@@ -50,6 +50,9 @@ class MainProfesor extends CI_Controller {
 
                          $this->load->view('profesor_coordinador/main_profesor_coordinador',$datos);
                     }
+                    else{
+                         redirect('login');
+                    }
                }
           }
      }

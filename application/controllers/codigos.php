@@ -89,6 +89,9 @@ class Codigos extends CI_Controller {
 
      		$this->load->view('alumno/codigos',$datos);
           }
+          else{
+               redirect('login');
+          }
 	}
 
      public function get_data($mail){
@@ -203,6 +206,8 @@ class Codigos extends CI_Controller {
 
           $mail = $this->session->userdata('mail');
 
+          
+
           $repositorio = $this->get_repositorio_grupo( intval($id_grupo) );
 
           $repositorio_info;
@@ -278,6 +283,23 @@ class Codigos extends CI_Controller {
 
      }
      
+
+     public function get_github_data($mail){
+
+          $github = $this->profesor_model->get_github($mail);
+
+          $credenciales = array();
+
+          if(!empty($github)){
+
+               $credenciales['usuario'] = $github->GITHUB_ACC;
+               $credenciales['contraseña'] = $github->GITHUB_PASS;
+
+          }
+
+          return $credenciales;
+
+     }
 
      public function get_repositorio_grupo($id_grupo){
 

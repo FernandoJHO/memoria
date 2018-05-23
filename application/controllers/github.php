@@ -55,6 +55,9 @@ class Github extends CI_Controller {
 
 		   $this->load->view('alumno/github',$datos);
           }
+          else{
+               redirect('login');
+          }
 	}
 
      public function set_user_data(){
@@ -69,7 +72,7 @@ class Github extends CI_Controller {
           else{
                $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudieron actualizar credenciales Github</div>');    
           }
-
+          
           redirect('github');
      }
 

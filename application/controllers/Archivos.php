@@ -86,6 +86,9 @@ class Archivos extends CI_Controller {
 
                          $this->load->view('profesor_coordinador/ver_archivos_prof_coord',$datos);         
                     }
+                    else{
+                         redirect('login');
+                    }
                }
           }
      }

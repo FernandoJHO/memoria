@@ -47,6 +47,9 @@ class EditarEntregas extends CI_Controller {
 
                    $this->load->view('profesor_coordinador/editar_entregas_prof_coord',$datos);
                }
+               else{
+                    redirect('login');
+               }
          }
 
      }
@@ -101,7 +104,7 @@ class EditarEntregas extends CI_Controller {
                $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo modificar entrega</div>');
           }
 
-          redirect(editarEntregas);
+          redirect('editarEntregas');
 
      }
 
@@ -123,7 +126,7 @@ class EditarEntregas extends CI_Controller {
                $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo crear entrega</div>');
           }
 
-          redirect(editarEntregas);
+          redirect('editarEntregas');
      }
 
      public function delete_entrega(){

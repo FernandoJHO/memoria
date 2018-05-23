@@ -17,6 +17,7 @@ class Evaluacion extends CI_Controller {
           $this->load->model('grupo_model');
           $this->load->model('categoria_model');
           $this->load->model('item_model');
+          $this->load->model('criterio_model');
      }
 
      public function index()
@@ -87,6 +88,9 @@ class Evaluacion extends CI_Controller {
                               );
 
                          $this->load->view("coordinador/rubricas_entrega",$datos);
+                    }
+                    else{
+                         redirect('login');
                     }
                }
           }
@@ -202,6 +206,9 @@ class Evaluacion extends CI_Controller {
                               );
 
                          $this->load->view("coordinador/categorias_rubrica_entrega",$datos);
+                    }
+                    else{
+                         redirect('login');
                     }
                }
           } 
@@ -552,6 +559,9 @@ class Evaluacion extends CI_Controller {
                               );
 
                          $this->load->view("coordinador/items_rubrica_entrega",$datos);
+                    }
+                    else{
+                         redirect('login');
                     }
                }
           } 

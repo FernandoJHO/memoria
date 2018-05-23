@@ -28,6 +28,9 @@ class MainAlumno extends CI_Controller {
 
      		$this->load->view('alumno/main_alumno',$datos);
           }
+          else{
+               redirect('login');
+          }
 	}
 
 }

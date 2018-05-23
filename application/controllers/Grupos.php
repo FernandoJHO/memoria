@@ -88,6 +88,9 @@ class Grupos extends CI_Controller {
 
                          $this->load->view('profesor_coordinador/grupos_all_prof_coord',$datos);
                     }
+                    else{
+                         redirect('login');
+                    }
                }
           }
 
@@ -257,9 +260,8 @@ class Grupos extends CI_Controller {
 
           if( $add_grupo ){
 
-               //$id_grupo = ($this->grupo_model->get_idgrupo_by_number($numero_grupo,$id_seccion))->ID_GRUPO;
-          	   $id_grupo = $add_grupo;
-
+               $id_grupo = $add_grupo;
+               
                foreach($integrantes as $integrante){
                   
                     $this->grupo_model->add_integrante($id_grupo,$integrante);
