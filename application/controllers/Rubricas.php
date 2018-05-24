@@ -367,7 +367,7 @@ class Rubricas extends CI_Controller {
                $this->session->set_flashdata('msg_create', '<div class="alert alert-danger text-center">No se pudo crear item</div>');
           }
 
-          redirect('rubricas/verItems/'.$id_categoria.'/'.str_replace(' ', '_', $nombre_categoria).'/'.$numero_entrega.'/'.$id_rubrica);
+          redirect('rubricas/verItems/'.$id_categoria.'/'.urlencode(str_replace(' ', '_', $nombre_categoria)).'/'.$numero_entrega.'/'.$id_rubrica);
 
      }
 
@@ -409,7 +409,7 @@ class Rubricas extends CI_Controller {
                }
           }
 
-          redirect('rubricas/verItems/'.$id_categoria.'/'.str_replace(' ', '_', $nombre_categoria).'/'.$numero_entrega.'/'.$id_rubrica);
+          redirect('rubricas/verItems/'.$id_categoria.'/'.urlencode(str_replace(' ', '_', $nombre_categoria)).'/'.$numero_entrega.'/'.$id_rubrica);
 
      }
 

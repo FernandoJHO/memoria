@@ -665,7 +665,7 @@ class Evaluacion extends CI_Controller {
 
           $this->evaluar_rubrica($id_rubrica,$categorias_evaluadas,$id_grupo);
 
-          redirect('evaluacion/items/'.$id_categoria.'/'.str_replace(' ', '_', $nombre_categoria).'/'.$numero_entrega.'/'.$id_grupo.'/'.$numero_grupo.'/'.$id_rubrica.'/'.$id_entrega);
+          redirect('evaluacion/items/'.$id_categoria.'/'.urlencode(str_replace(' ', '_', $nombre_categoria)).'/'.$numero_entrega.'/'.$id_grupo.'/'.$numero_grupo.'/'.$id_rubrica.'/'.$id_entrega);
 
      }
 
