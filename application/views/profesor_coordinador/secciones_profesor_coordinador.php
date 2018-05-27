@@ -169,7 +169,7 @@
                                                 <?php endforeach; ?>
 
                                                 <div class="card-action">
-                                                    <a href="grupos/all/<?php echo $seccion['id']; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver grupos</a>
+                                                    <a href="grupos/all/<?php echo $seccion['id']; ?>/<?php echo $seccion['codigo']; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver grupos</a>
                                                     <p></p>
                                                     <button class="btn btn-danger" style="width:100%;" type="button" onclick="delete_seccion('<?php echo $seccion['id']; ?>','<?php echo $seccion['codigo']; ?>');"><i class="la la-remove"></i> Eliminar</button>
                                                 </div>

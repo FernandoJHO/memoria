@@ -162,7 +162,7 @@
                                                 <div class="form-group">
                                                     <button type="submit" class="btn btn-success" style="width:100%;"><i class="la la-check"></i> Inscribir alumnos </button>
                                                     <p></p>
-                                                    <a href="grupos/all/<?php echo $seccion['id']; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver grupos <a/>
+                                                    <a href="grupos/all/<?php echo $seccion['id']; ?>/<?php echo $seccion['codigo']; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver grupos <a/>
                                                 </div>
                                             </form>
                                         </div>

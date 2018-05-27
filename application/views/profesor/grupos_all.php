@@ -129,7 +129,7 @@
                 <div class="main-panel">
                     <div class="content">
                         <div id="refresh" class="container-fluid">
-                            <h4 class="page-title">Grupos <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newGroupModal"><i class="la la-plus"></i> Crear</button></h4>
+                            <h4 class="page-title">Grupos de la sección <?php echo $codigo_seccion; ?> <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newGroupModal"><i class="la la-plus"></i> Crear</button></h4>
                             <?php echo $this->session->flashdata('msg_mails'); ?>
                             <?php echo $this->session->flashdata('msg_grupo'); ?>
                             <?php if(!count($grupos)): ?>

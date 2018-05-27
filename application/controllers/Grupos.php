@@ -32,7 +32,7 @@ class Grupos extends CI_Controller {
 
      ///////////////////////////////////////////////////            PROFESOR               /////////////////////////////////////////////////////////////////////
 
-     public function all($id_seccion){
+     public function all($id_seccion,$codigo_seccion){
 
           if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador')){
 
@@ -47,6 +47,7 @@ class Grupos extends CI_Controller {
                     'rol' => $this->session->userdata('rol'),
                     'grupos' => $grupos,
                     'seccion' => $id_seccion,
+                    'codigo_seccion' => urldecode($codigo_seccion),
                     'alumnos' => $alumnos
                     );
                $this->load->view('profesor/grupos_all',$datos);
@@ -64,6 +65,7 @@ class Grupos extends CI_Controller {
                          'rol' => 'Coordinador',
                          'grupos' => $grupos,
                          'seccion' => $id_seccion,
+                         'codigo_seccion' => urldecode($codigo_seccion),
                          'alumnos' => $alumnos
                          );
 
@@ -83,6 +85,7 @@ class Grupos extends CI_Controller {
                               'rol' => 'Profesor-Coordinador',
                               'grupos' => $grupos,
                               'seccion' => $id_seccion,
+                              'codigo_seccion' => urldecode($codigo_seccion),
                               'alumnos' => $alumnos
                               );
 
