@@ -208,6 +208,7 @@
                
                   </div> 
                   <input type="hidden" class="form-control" name="id_seccion" value="<?php echo $seccion; ?>">
+                  <input type="hidden" class="form-control" name="codigo_seccion" value="<?php echo $codigo_seccion; ?>">
                   <!--<div class="form-group">
                    <p align="center"> <button type="button" id="addfieldbtn" class="btn btn-success btn-xs"><i class="la la-plus"></i> Integrante</button> </p>
                   </div>   -->

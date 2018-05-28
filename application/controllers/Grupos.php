@@ -217,10 +217,11 @@ class Grupos extends CI_Controller {
                $counter++;
           }
 
-          $counter = $counter - 2;
+          $counter = $counter - 3;
 
           $numero_grupo = $this->input->post('numero_grupo');
           $id_seccion = intval($this->input->post('id_seccion'));
+          $codigo_seccion = $this->input->post('codigo_seccion');
 
           $integrantes = array();
 
@@ -276,7 +277,7 @@ class Grupos extends CI_Controller {
           }
 
 
-          redirect('grupos/all/'.strval($id_seccion));
+          redirect('grupos/all/'.strval($id_seccion).'/'.$codigo_seccion);
      }
 
 
