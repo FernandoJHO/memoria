@@ -135,6 +135,7 @@ class Grupos extends CI_Controller {
           $integrantes = array();
           $aux = array();
           $grupos_final = array();
+          $aux2 = array();
 
           foreach($grupos as $grupo){
                $result_query = $this->grupo_model->get_integrantes(intval($grupo['id']));
@@ -144,7 +145,9 @@ class Grupos extends CI_Controller {
                          $mail_alumno = $integrante->MAIL_ALUMNO;
                          $alumno = $this->alumno_model->get_nombre($mail_alumno);
                          $nombre_alumno = $alumno->NOMBRE.' '.$alumno->APELLIDO;
-                         array_push($integrantes,$nombre_alumno.' ('.$mail_alumno.')');
+                         $aux2['nombre'] = $nombre_alumno;
+                         $aux2['mail'] = $mail_alumno;
+                         array_push($integrantes, $aux2);
                     }
                }
                else{
@@ -209,6 +212,75 @@ class Grupos extends CI_Controller {
           }
      }
 
+     public function delete_integrante(){
+
+          $mail_integrante = $this->input->post('mail');
+          $id_grupo = intval( $this->input->post('id_grupo') );
+
+          if( $this->grupo_model->delete_integrante($mail_integrante, $id_grupo) ){
+               echo json_encode("Ok");
+          }
+          else{
+
+          }
+
+     }
+
+     public function edit_grupo(){
+
+          $counter = 0;
+
+          foreach($this->input->post() as $key => $val){
+               $counter++;
+          }
+
+          $counter = $counter - 4;
+
+          $id_seccion = intval($this->input->post('id_seccion'));
+          $codigo_seccion = $this->input->post('codigo_seccion');
+          $id_grupo = intval($this->input->post('id_grupo'));
+          $numero_grupo = $this->input->post('numero_grupo');
+
+          $nuevos_integrantes = array();
+
+          for($i = 1; $i<=$counter; $i++){
+               $mail_integrante = $this->input->post('integrante_'.$i);
+               if($mail_integrante!=NULL || $mail_integrante!=""){
+                    array_push($nuevos_integrantes,$mail_integrante);
+               }
+          }
+
+          $check = 1;
+          foreach($nuevos_integrantes as $integrante){
+             
+               if(!$this->grupo_model->add_integrante($id_grupo,$integrante)){
+                    $check = 0;
+               }
+              
+          }   
+
+          if(count($nuevos_integrantes)){
+               if(!$check){
+                    $this->session->set_flashdata('msg_grupo_edit_integrante', '<div class="alert alert-danger text-center">No se pudo agregar uno o más integrantes al grupo</div>');
+               }
+               else{
+                    $this->session->set_flashdata('msg_grupo_edit_integrante', '<div class="alert alert-success text-center">Integrante(s) añadido(s) correctamente</div>');
+               }
+          }
+          
+          if(!$this->grupo_model->set_numero_grupo($id_grupo,$numero_grupo)){
+          }
+          else{
+               $this->session->set_flashdata('msg_grupo_edit_nro', '<div class="alert alert-success text-center">Número del grupo modificado correctamente</div>');
+          }
+          
+
+   
+
+          redirect('grupos/all/'.strval($id_seccion).'/'.$codigo_seccion);
+
+     }
+
      public function new_grupo(){
 
           $counter = 0;
@@ -271,6 +343,8 @@ class Grupos extends CI_Controller {
                     $this->grupo_model->add_integrante($id_grupo,$integrante);
                    
                }
+
+               $this->session->set_flashdata('msg_grupo', '<div class="alert alert-success text-center">Grupo creado satisfactoriamente</div>');
           }
           else{
                $this->session->set_flashdata('msg_grupo', '<div class="alert alert-danger text-center">No se pudo crear grupo</div>');

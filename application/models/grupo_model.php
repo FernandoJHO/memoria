@@ -62,6 +62,19 @@ class Grupo_model extends CI_Model {
           return $query2->row();
      }
 
+     function set_numero_grupo($id_grupo,$numero){
+
+          $data = Array(
+               'NUMERO' => $numero
+               ); 
+
+          $this->db->where('ID_GRUPO',$id_grupo);      
+          $this->db->update('grupo',$data);
+
+          return ($this->db->affected_rows() > 0);
+
+     }
+
      public function delete_grupo($id_grupo){
           $this->db->where('ID_GRUPO', $id_grupo);
           $this->db->delete('grupo');
@@ -91,6 +104,15 @@ class Grupo_model extends CI_Model {
                'ID_GRUPO' => $id_grupo
                );   
           $this->db->insert('alumno_grupo',$data);
+
+          return ($this->db->affected_rows() > 0);
+     }
+
+     public function delete_integrante($mail, $id_grupo){
+          $this->db->where('ID_GRUPO', $id_grupo);
+          $this->db->where('MAIL_ALUMNO', $mail);
+
+          $this->db->delete('alumno_grupo');
 
           return ($this->db->affected_rows() > 0);
      }

@@ -156,6 +156,8 @@
                             <h4 class="page-title">Grupos de la sección <?php echo $codigo_seccion; ?> <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#newGroupModal"><i class="la la-plus"></i> Crear</button></h4>
                             <?php echo $this->session->flashdata('msg_mails'); ?>
                             <?php echo $this->session->flashdata('msg_grupo'); ?>
+                            <?php echo $this->session->flashdata('msg_grupo_edit_nro'); ?>
+                            <?php echo $this->session->flashdata('msg_grupo_edit_integrante'); ?>
                             <?php if(!count($grupos)): ?>
                                 <p class="text-danger" align="center"> La sección aún no cuenta con grupos formados para el actual semestre. </p>
                             <?php else: ?>
@@ -166,12 +168,13 @@
                                     <div class="col-md-6">
                                         <div class="card">
                                             <div class="card-header">
-                                                <div class="card-title" align="center"> Grupo <?php echo $grupo['numero']; ?>  </div>
+                                                <div class="card-title" align="center"><button type="button" data-toggle="modal" data-target="#GroupModal<?php echo $grupo['id']; ?>" title="Modificar grupo" class="btn btn-link <btn-simple-primary" ><i class="la la-edit"></i></button> Grupo <?php echo $grupo['numero']; ?> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-simple-danger" data-original-title="Eliminar grupo" onclick="delete_grupo('<?php echo $grupo['id']; ?>','<?php echo $grupo['numero']; ?>');"><i class="la la-remove"></i></button></div>
+
                                             </div>
                                             <div class="card-body">
                                                 <p align="center"> <b>Integrantes</b></p>
                                                 <?php foreach($grupo['integrantes'] as $integrante): ?>
-                                                    <p align="center"> <?php echo $integrante; ?> </p>
+                                                    <p align="center"> <?php echo $integrante['nombre']; ?> (<?php echo $integrante['mail']; ?>) </p>
                                                 <?php endforeach; ?>
                                                 
                                                 <div class="card-action">
@@ -183,8 +186,6 @@
                                                     <?php endif; ?>
                                                     
                                                     <a href="<?php echo base_url();?>codigos/ver/<?php echo $grupo['id']; ?>/<?php echo $grupo['numero']; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver códigos</a>
-                                                    <p></p>
-                                                    <button class="btn btn-danger" onclick="delete_grupo('<?php echo $grupo['id']; ?>','<?php echo $grupo['numero']; ?>')" style="width:100%;"><i class="la la-close"></i> Eliminar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -200,6 +201,60 @@
                 </div>
             </div> 
         </div> 
+
+        <?php foreach($grupos as $grupo): ?>
+
+            <div class="modal fade" id="GroupModal<?php echo $grupo['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modificar Grupo <?php echo $grupo['numero']; ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form method="post" action="<?php echo base_url() ?>grupos/edit_grupo/">
+                      <div id="container_form_<?php echo $grupo['id']; ?>"class="modal-body">
+     
+                        <div class="form-group">
+                            <label for="numero_grupo">Número grupo</label>
+                            <select class="form-control" name="numero_grupo" required="true">
+                                <?php for($i=0;$i<=20;$i++): ?>
+                                    <?php if($i==$grupo['numero']): ?>
+                                        <option value="<?php echo $grupo['numero']; ?>" selected><?php echo $grupo['numero']; ?></option>
+                                    <?php else: ?> 
+                                        <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                    <?php endif; ?>
+                                <?php endfor; ?>
+                            </select>
+                        </div> 
+                        <div class="form-group">
+                            <label>Integrantes</label>
+                            <?php foreach($grupo['integrantes'] as $integrante): ?>
+                                <p align="center"> <?php echo $integrante['nombre']; ?> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-simple-danger" data-original-title="Eliminar"><i class="la la-remove" onclick="delete_integrante('<?php echo $grupo['id']; ?>','<?php echo $integrante['mail']; ?>','<?php echo $integrante['nombre']; ?>');"></i></button></p>
+                            <?php endforeach; ?>
+                        </div>  
+                   
+                      </div> 
+
+                      <input type="hidden" class="form-control" name="id_seccion" value="<?php echo $seccion; ?>">
+                      <input type="hidden" class="form-control" name="codigo_seccion" value="<?php echo $codigo_seccion; ?>">
+                      <input type="hidden" class="form-control" name="id_grupo" value="<?php echo $grupo['id']; ?>">
+
+                      <div class="form-group">
+                       <p align="center"> <button type="button" onClick="add_dropdown2('<?php echo $seccion;?>','<?php echo $grupo['id']; ?>');" class="btn btn-success btn-xs"><i class="la la-plus"></i> Integrante</button> </p>
+                      </div>  
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                      </div>
+                  </form>
+                  
+                </div>
+              </div>
+            </div>
+
+        <?php endforeach; ?>
 
         <div class="modal fade" id="newGroupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -271,7 +326,22 @@ function delete_grupo(idgrupo,ngrupo){
         }
         , function(){
         }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
-}
+} 
+
+function delete_integrante(idgrupo,mail,nombre){
+
+    var url = '<?php echo base_url() ?>grupos/delete_integrante';
+
+    alertify.set('notifier','position', 'top-right');
+
+    alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar a '+nombre.bold()+ '?', function(){ 
+        alertify.success("Eliminando...");
+        deleteIntegrante(mail,idgrupo,url);
+        }
+        , function(){
+        }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
+
+} 
 
 var aux = 2;
 
@@ -283,6 +353,20 @@ function add_dropdown(id_seccion){
     addDropdown(url);
 
     aux++;
+
+}
+
+var aux2 = 1;
+
+function add_dropdown2(id_seccion,id_grupo){
+
+    var contador = aux2;
+
+    var url = '<?php echo base_url() ?>grupos/dropdown_html_builder/'+contador+'/'+id_seccion;
+
+    addDropdown2(url,id_grupo);
+
+    aux2++;
 
 }
 
