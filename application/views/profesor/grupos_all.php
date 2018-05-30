@@ -144,7 +144,8 @@
                                     <div class="col-md-6">
                                         <div class="card">
                                             <div class="card-header">
-                                                <div class="card-title" align="center"><button type="button" data-toggle="modal" data-target="#GroupModal<?php echo $grupo['id']; ?>" title="Modificar grupo" class="btn btn-link <btn-simple-primary" ><i class="la la-edit"></i></button> Grupo <?php echo $grupo['numero']; ?> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-simple-danger" data-original-title="Eliminar grupo" onclick="delete_grupo('<?php echo $grupo['id']; ?>','<?php echo $grupo['numero']; ?>');"><i class="la la-remove"></i></button></div>
+                                                <div class="card-title" align="center">Grupo <?php echo $grupo['numero']; ?></div>
+                                                <p align="center"><button type="button" data-toggle="modal" data-target="#GroupModal<?php echo $grupo['id']; ?>" title="Modificar grupo" class="btn btn-link <btn-simple-primary" ><i class="la la-edit"></i></button><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-simple-danger" data-original-title="Eliminar grupo" onclick="delete_grupo('<?php echo $grupo['id']; ?>','<?php echo $grupo['numero']; ?>');"><i class="la la-remove"></i></button></p>
 
                                             </div>
                                             <div class="card-body">
