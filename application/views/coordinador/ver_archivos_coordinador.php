@@ -124,15 +124,13 @@
                 <div class="main-panel">
                     <div class="content">
                         <div class="container-fluid">
-                            <h4 class="page-title">Archivos de la Entrega <?php echo $numero_entrega; ?>
-                                <form method="post" action="<?php echo base_url();?>archivos/download_all">
-                                     <input type="hidden" name="identrega" value="<?php echo $id_entrega; ?>">
-                                     <input type="hidden" name="idgrupo" value="<?php echo $id_grupo; ?>">
-                                     <input type="hidden" name="entrega" value="<?php echo $numero_entrega; ?>">
-                                     <input type="hidden" name="grupo" value="<?php echo $numero_grupo; ?>">
-                                     <button type="submit" class="btn btn-primary btn-sm" ><i class="la la-download"></i> Descargar todos</button>
-                                </form>
-                            </h4>
+                            <form id="downloadform" method="post" action="<?php echo base_url();?>archivos/download_all">
+                                 <input type="hidden" name="identrega" value="<?php echo $id_entrega; ?>">
+                                 <input type="hidden" name="idgrupo" value="<?php echo $id_grupo; ?>">
+                                 <input type="hidden" name="entrega" value="<?php echo $numero_entrega; ?>">
+                                 <input type="hidden" name="grupo" value="<?php echo $numero_grupo; ?>">
+                            </form>
+                            <h4 class="page-title">Archivos de la Entrega <?php echo $numero_entrega; ?> <button type="submit" form="downloadform" class="btn btn-primary btn-sm" ><i class="la la-download"></i> Descargar todos</button></h4>
 
 
                                 <div class="row">
