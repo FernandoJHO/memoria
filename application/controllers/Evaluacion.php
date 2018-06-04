@@ -17,7 +17,6 @@ class Evaluacion extends CI_Controller {
           $this->load->model('grupo_model');
           $this->load->model('categoria_model');
           $this->load->model('item_model');
-          $this->load->model('criterio_model');
      }
 
      public function index()
@@ -30,7 +29,7 @@ class Evaluacion extends CI_Controller {
                );
      }
 
-     public function rubricas($id_entrega,$n_entrega,$id_grupo,$n_grupo){
+     public function rubricas($id_entrega,$n_entrega,$id_grupo,$n_grupo,$id_seccion,$codigo_seccion){
 
           if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
 
@@ -45,7 +44,9 @@ class Evaluacion extends CI_Controller {
                     'numero_entrega' => $n_entrega,
                     'numero_grupo' => $n_grupo,
                     'id_grupo' => $id_grupo,
-                    'id_entrega' => $id_entrega
+                    'id_entrega' => $id_entrega,
+                    'id_seccion' => $id_seccion,
+                    'codigo_seccion' => urldecode($codigo_seccion)
                     );
 
                $this->load->view("profesor/rubricas_entrega",$datos);
@@ -65,7 +66,9 @@ class Evaluacion extends CI_Controller {
                          'numero_entrega' => $n_entrega,
                          'numero_grupo' => $n_grupo,
                          'id_grupo' => $id_grupo,
-                         'id_entrega' => $id_entrega
+                         'id_entrega' => $id_entrega,
+                         'id_seccion' => $id_seccion,
+                         'codigo_seccion' => urldecode($codigo_seccion)
                          );
 
                     $this->load->view("profesor_coordinador/rubricas_entrega",$datos);
@@ -84,7 +87,9 @@ class Evaluacion extends CI_Controller {
                               'numero_entrega' => $n_entrega,
                               'numero_grupo' => $n_grupo,
                               'id_grupo' => $id_grupo,
-                              'id_entrega' => $id_entrega
+                              'id_entrega' => $id_entrega, 
+                              'id_seccion' => $id_seccion,
+                              'codigo_seccion' => urldecode($codigo_seccion)
                               );
 
                          $this->load->view("coordinador/rubricas_entrega",$datos);
@@ -146,7 +151,7 @@ class Evaluacion extends CI_Controller {
      }
 
 
-     public function categorias($id_rubrica,$n_entrega,$id_grupo,$n_grupo,$id_entrega){
+     public function categorias($id_rubrica,$n_entrega,$id_grupo,$n_grupo,$id_entrega,$id_seccion,$codigo_seccion){
 
           if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
 
@@ -162,7 +167,9 @@ class Evaluacion extends CI_Controller {
                     'numero_grupo' => $n_grupo,
                     'id_grupo' => $id_grupo,
                     'id_rubrica' => $id_rubrica,
-                    'id_entrega' => $id_entrega
+                    'id_entrega' => $id_entrega,
+                    'id_seccion' => $id_seccion,
+                    'codigo_seccion' => urldecode($codigo_seccion)
                     );
 
                $this->load->view("profesor/categorias_rubrica_entrega",$datos);
@@ -183,7 +190,9 @@ class Evaluacion extends CI_Controller {
                          'numero_grupo' => $n_grupo,
                          'id_grupo' => $id_grupo,
                          'id_rubrica' => $id_rubrica,
-                         'id_entrega' => $id_entrega
+                         'id_entrega' => $id_entrega,
+                         'id_seccion' => $id_seccion,
+                         'codigo_seccion' => urldecode($codigo_seccion)
                          );
 
                     $this->load->view("profesor_coordinador/categorias_rubrica_entrega",$datos);
@@ -202,7 +211,9 @@ class Evaluacion extends CI_Controller {
                               'numero_grupo' => $n_grupo,
                               'id_grupo' => $id_grupo,
                               'id_rubrica' => $id_rubrica,
-                              'id_entrega' => $id_entrega
+                              'id_entrega' => $id_entrega,
+                              'id_seccion' => $id_seccion,
+                              'codigo_seccion' => urldecode($codigo_seccion)
                               );
 
                          $this->load->view("coordinador/categorias_rubrica_entrega",$datos);
@@ -484,7 +495,7 @@ class Evaluacion extends CI_Controller {
 
      } */
 
-     public function items($id_categoria,$n_categoria,$n_entrega,$id_grupo,$n_grupo,$id_rubrica,$id_entrega){
+     public function items($id_categoria,$n_categoria,$n_entrega,$id_grupo,$n_grupo,$id_rubrica,$id_entrega,$id_seccion,$codigo_seccion){
 
           if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
 
@@ -506,7 +517,9 @@ class Evaluacion extends CI_Controller {
                     'items' => $items,
                     'id_categoria' => $id_categoria,
                     'id_rubrica' => $id_rubrica,
-                    'id_entrega' => $id_entrega
+                    'id_entrega' => $id_entrega,
+                    'id_seccion' => $id_seccion,
+                    'codigo_seccion' => urldecode($codigo_seccion)
                     );
 
                $this->load->view("profesor/items_rubrica_entrega",$datos);
@@ -531,7 +544,9 @@ class Evaluacion extends CI_Controller {
                          'items' => $items,
                          'id_categoria' => $id_categoria,
                          'id_rubrica' => $id_rubrica,
-                         'id_entrega' => $id_entrega
+                         'id_entrega' => $id_entrega,
+                         'id_seccion' => $id_seccion,
+                         'codigo_seccion' => urldecode($codigo_seccion)
                          );
 
                     $this->load->view("profesor_coordinador/items_rubrica_entrega",$datos);
@@ -555,7 +570,9 @@ class Evaluacion extends CI_Controller {
                               'items' => $items,
                               'id_categoria' => $id_categoria,
                               'id_rubrica' => $id_rubrica,
-                              'id_entrega' => $id_entrega
+                              'id_entrega' => $id_entrega,
+                              'id_seccion' => $id_seccion,
+                              'codigo_seccion' => urldecode($codigo_seccion)
                               );
 
                          $this->load->view("coordinador/items_rubrica_entrega",$datos);
@@ -623,7 +640,7 @@ class Evaluacion extends CI_Controller {
                $counter++;
           }
 
-          $counter = $counter - 7;
+          $counter = $counter - 9;
 
           $counter = $counter / 2;
 
@@ -634,6 +651,8 @@ class Evaluacion extends CI_Controller {
           $numero_grupo = $this->input->post('numero_grupo');
           $id_rubrica = intval($this->input->post('id_rubrica'));
           $id_entrega = intval($this->input->post('id_entrega'));
+          $id_seccion = intval($this->input->post('id_seccion'));
+          $codigo_seccion = $this->input->post('codigo_seccion');
 
           $items_eval = array();
           $aux = array();
@@ -665,7 +684,7 @@ class Evaluacion extends CI_Controller {
 
           $this->evaluar_rubrica($id_rubrica,$categorias_evaluadas,$id_grupo);
 
-          redirect('evaluacion/items/'.$id_categoria.'/'.urlencode(str_replace(' ', '_', $nombre_categoria)).'/'.$numero_entrega.'/'.$id_grupo.'/'.$numero_grupo.'/'.$id_rubrica.'/'.$id_entrega);
+          redirect('evaluacion/items/'.$id_categoria.'/'.urlencode(str_replace(' ', '_', $nombre_categoria)).'/'.$numero_entrega.'/'.$id_grupo.'/'.$numero_grupo.'/'.$id_rubrica.'/'.$id_entrega.'/'.$id_seccion.'/'.urlencode($codigo_seccion));
 
      }
 

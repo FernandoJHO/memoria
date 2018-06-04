@@ -486,7 +486,7 @@ class Entregas extends CI_Controller
 
      //////////////////////////////////////////////               PROFESOR                 //////////////////////////////////////////////////////////
 
-     public function verEntregas($id_grupo,$n_grupo){
+     public function verEntregas($id_grupo,$n_grupo,$id_seccion,$codigo_seccion){
           
           $entregas = $this->entregas_realizadas(intval($id_grupo));
           $integrantes_entregas_commits = $this->get_entrega_integrante_commits(intval($id_grupo));
@@ -510,7 +510,9 @@ class Entregas extends CI_Controller
                     //'integrantes_commits' => $integrantes_commits
                     //'integrantes_entregas_commits' => $integrantes_entregas_commits,
                     'id_grupo' => $id_grupo,
-                    'numero_grupo' => $n_grupo
+                    'numero_grupo' => $n_grupo,
+                    'codigo_seccion' => urldecode($codigo_seccion),
+                    'id_seccion' => $id_seccion
                     );
 
                $this->load->view('profesor/entregas_realizadas',$datos);
@@ -530,7 +532,9 @@ class Entregas extends CI_Controller
                          'entregas' => $entregas_final,
                          //'integrantes_entregas_commits' => $integrantes_entregas_commits,
                          'id_grupo' => $id_grupo,
-                         'numero_grupo' => $n_grupo
+                         'numero_grupo' => $n_grupo,
+                         'codigo_seccion' => urldecode($codigo_seccion),
+                         'id_seccion' => $id_seccion
                          );
 
                     $this->load->view('coordinador/entregas_realizadas_coordinador',$datos);
@@ -546,7 +550,9 @@ class Entregas extends CI_Controller
                               'entregas' => $entregas_final,
                               //'integrantes_entregas_commits' => $integrantes_entregas_commits,
                               'id_grupo' => $id_grupo,
-                              'numero_grupo' => $n_grupo
+                              'numero_grupo' => $n_grupo,
+                              'codigo_seccion' => urldecode($codigo_seccion),
+                              'id_seccion' => $id_seccion
                               );
 
                          $this->load->view('profesor_coordinador/entregas_realizadas_prof_coord',$datos);                 

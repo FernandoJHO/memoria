@@ -125,7 +125,8 @@
                 <div class="main-panel">
                     <div class="content">
                         <div class="container-fluid">
-                            <h4 class="page-title"> Items (Categoría: <?php echo $nombre_categoria; ?> | Rúbrica: Entrega <?php echo $numero_entrega; ?> | Grupo <?php echo $numero_grupo; ?>) <a href="<?php echo base_url();?>evaluacion/categorias/<?php echo $id_rubrica; ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>/<?php echo $id_entrega; ?>" class="btn btn-primary btn-sm"><i class="la la-arrow-left"></i> Volver a categorías</a></h4>
+                            <h4 class="page-title"> Items (Categoría: <?php echo $nombre_categoria; ?> | Rúbrica: Entrega <?php echo $numero_entrega; ?> | Grupo <?php echo $numero_grupo; ?>) <a href="<?php echo base_url();?>evaluacion/categorias/<?php echo $id_rubrica; ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>/<?php echo $id_entrega; ?>/<?php echo $id_seccion; ?>/<?php echo $codigo_seccion; ?>" class="btn btn-primary btn-sm"><i class="la la-arrow-left"></i> Volver a categorías</a></h4>
+                            <?php echo $this->session->flashdata('msg'); ?>
 
 
                             <div class="row">
@@ -162,6 +163,8 @@
                                                     <input type="hidden" name="numero_grupo" value="<?php echo $numero_grupo; ?>">
                                                     <input type="hidden" name="id_rubrica" value="<?php echo $id_rubrica; ?>">
                                                     <input type="hidden" name="id_entrega" value="<?php echo $id_entrega; ?>">
+                                                    <input type="hidden" name="id_seccion" value="<?php echo $id_seccion; ?>">
+                                                    <input type="hidden" name="codigo_seccion" value="<?php echo $codigo_seccion; ?>">
                                                     <div class="card-action">
                                                         <button class="btn btn-success" type="submit">Guardar cambios</button>
                                                         <button class="btn btn-danger" type="reset">Cancelar</button>

@@ -188,7 +188,7 @@
                 <div class="main-panel">
                     <div class="content">
                         <div class="container-fluid">
-                            <h4 class="page-title">Entregas del Grupo <?php echo $numero_grupo; ?></h4>
+                            <h4 class="page-title">Entregas del Grupo <?php echo $numero_grupo; ?> <a href="<?php echo base_url();?>grupos/all/<?php echo $id_seccion; ?>/<?php echo $codigo_seccion; ?>" class="btn btn-primary btn-sm"><i class="la la-arrow-left"></i> Volver a grupos</a></h4>
 
                             <?php if(!count($entregas)): ?>
                                 <p class="text-danger" align="center"> El grupo aún no ha realizado entregas. </p>
@@ -220,7 +220,7 @@
                                                 <div class="card-action">
                                                     <a href="<?php echo base_url();?>archivos/ver/<?php echo $entrega['id']; ?>/<?php echo $id_grupo; ?>/<?php echo $entrega['numero']; ?>/<?php echo $numero_grupo; ?>" class="btn btn-default" style="width:100%;"><i class="la la-eye"></i> Ver archivos </a>
                                                     <p></p>
-                                                    <a href="<?php echo base_url();?>evaluacion/rubricas/<?php echo $entrega['id']; ?>/<?php echo $entrega['numero']; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>" class="btn btn-primary" style="width:100%;"><i class="la la-check-circle"></i> Evaluar</a>
+                                                    <a href="<?php echo base_url();?>evaluacion/rubricas/<?php echo $entrega['id']; ?>/<?php echo $entrega['numero']; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>/<?php echo $id_seccion; ?>/<?php echo $codigo_seccion; ?>" class="btn btn-primary" style="width:100%;"><i class="la la-check-circle"></i> Evaluar</a>
                                                 </div>
                                             
                                             
