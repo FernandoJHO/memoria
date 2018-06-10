@@ -80,7 +80,8 @@ class SaveFile {
 		$result = array();
 
 		$config['upload_path']          = $dir;
-		$config['allowed_types']        = 'gif|jpg|png|pdf|jpeg|mp4|3gp|flv';
+		$config['max_size']				= '10000';
+		$config['allowed_types']        = 'pdf|zip';
 
 		$CI =& get_instance();
 
@@ -113,6 +114,7 @@ class SaveFile {
           $result = array();
 
           $config['upload_path']          = $dir;
+          $config['max_size']				= '10000';
           $config['allowed_types']        = 'pdf';
 
           $CI =& get_instance();

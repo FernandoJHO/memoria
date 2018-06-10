@@ -189,7 +189,7 @@
 
                                                     <?php echo form_open_multipart(base_url().'entregas/upload_file');?>
                                                         <div class="form-group">
-                                                            <label> Selecciona tu presentación o informe a entregar (Tamaño máximo: 50MB. Sólo archivos PDF) </label>
+                                                            <label> Selecciona tu presentación o informe a entregar (Tamaño máximo: 10MB. Sólo archivos PDF o ZIP) </label>
                                                             
                                                             <input type="file" id="userfile" name="userfile<?php echo $entrega['numero']; ?>" size="20" required="true" />
                                                            

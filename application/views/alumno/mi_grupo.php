@@ -162,7 +162,7 @@
                                                     </div> -->
                                                 <?php echo form_open_multipart(base_url().'grupos/upload_proyecto');?>
                                                     <div class="form-group">
-                                                        <label for="userfile"> Selecciona archivo del proyecto (PDF) (Tamaño máximo: 50MB) </label>
+                                                        <label for="userfile"> Selecciona archivo del proyecto (sólo PDF) (Tamaño máximo: 10MB) </label>
                                                         
                                                         <input type="file" id="userfile" name="userfile" size="20" required="true" />
                                                     </div>
