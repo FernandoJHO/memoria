@@ -108,6 +108,15 @@ class SaveFile {
           if(is_dir('./uploads/proyectos/'.$id_grupo)==FALSE){
                mkdir('./uploads/proyectos/'.$id_grupo.'/');
           }
+		  else{
+		  	  $files = glob('./uploads/proyectos/'.$id_grupo.'/*');
+
+			  foreach($files as $file){
+				  if(is_file($file)){
+					  unlink($file);
+				  }
+			  }
+		  }
 
           $dir = './uploads/proyectos/'.$id_grupo.'/';
 
