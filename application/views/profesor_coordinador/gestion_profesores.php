@@ -289,7 +289,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                   <p align="center"> <button type="button" onClick="add_dropdown();" class="btn btn-success btn-xs"><i class="la la-plus"></i> Seccion</button> </p>
+                   <p align="center"> <button type="button" onClick="add_dropdown_secciones();" class="btn btn-success btn-xs"><i class="la la-plus"></i> Seccion</button> </p>
                   </div> 
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -303,37 +303,53 @@
 	</body>
 
 <script type="text/javascript">
+    alertify.defaults.transition = "slide";
+    alertify.defaults.theme.ok = "btn btn-success";
+    alertify.defaults.theme.cancel = "btn btn-danger";
+    function delete_profesor(mail,nombre,apellido){
+        var url = '<?php echo base_url() ?>profesores/delete_profesor/';
+        alertify.set('notifier','position', 'top-right');
+        alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar al profesor '+nombre.bold()+ ' '+ apellido.bold()+ '?', function(){ 
+            alertify.success("Eliminando...");
+            deleteProfesor(mail,url);
+            }
+            , function(){
+            }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
+    }
+    var aux = 2;
 
-alertify.defaults.transition = "slide";
-alertify.defaults.theme.ok = "btn btn-success";
-alertify.defaults.theme.cancel = "btn btn-danger";
+    function add_dropdown_secciones(){
 
-function delete_profesor(mail,nombre,apellido){
-    var url = '<?php echo base_url() ?>profesores/delete_profesor/';
+        var url = '<?php echo base_url() ?>profesores/get_secciones_json';
 
-    alertify.set('notifier','position', 'top-right');
+        addDropdownSecciones(url);
 
-    alertify.confirm('Confirma', '¿Estás seguro que deseas eliminar al profesor '+nombre.bold()+ ' '+ apellido.bold()+ '?', function(){ 
-        alertify.success("Eliminando...");
-        deleteProfesor(mail,url);
+
+    }
+
+    function add_dropdown_secciones_success(result){
+
+        var contador = aux;
+
+        var html = '<div class="form-group"> <label >Seccion</label> <select class="form-control" name="seccion_'+contador+'"> <option disabled selected>Selecciona una sección...</option> ';
+
+        for(i in result){
+            html = html+'<option value="'+result[i].id+'">'+result[i].codigo+'</option>';
         }
-        , function(){
-        }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
-}
 
-var aux = 2;
+        html = html+'</select> </div>';
 
-function add_dropdown(){
+        $("#container_form").append(html);
 
-    var contador = aux;
-    var url = '<?php echo base_url() ?>profesores/dropdown_html_builder/'+contador;
+        aux++;
+    }
 
-    addDropdownSecciones(url);
-
-    aux++;
-
-}
-
+    /*function add_dropdown(){
+        var contador = aux;
+        var url = '<?php echo base_url() ?>profesores/dropdown_html_builder/'+contador;
+        addDropdownSecciones(url);
+        aux++;
+    }*/
 </script>
 
 </html>

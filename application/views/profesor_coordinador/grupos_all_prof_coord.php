@@ -347,6 +347,29 @@ function delete_integrante(idgrupo,mail,nombre){
 var aux = 2;
 
 function add_dropdown(id_seccion){
+    var url = '<?php echo base_url() ?>grupos/get_alumnos_json/'+id_seccion;
+
+    addDropdown(url);
+}
+
+function add_dropdown_success(result){
+    var contador = aux;
+
+    var html = '<div class="form-group"> <label >Integrante</label> <select class="form-control" name="integrante_'+contador+'"> <option disabled selected>Selecciona un integrante...</option> ';
+
+    for(i in result){
+        html = html+'<option value="'+result[i].mail+'">'+result[i].nombre+' ('+result[i].mail+')</option>';
+    } 
+
+    html = html+'</select> </div>';
+
+    $("#container_form").append(html); 
+
+    aux++;
+
+}
+
+/*function add_dropdown(id_seccion){
 
     var contador = aux;
     var url = '<?php echo base_url() ?>grupos/dropdown_html_builder/'+contador+'/'+id_seccion;
@@ -355,11 +378,40 @@ function add_dropdown(id_seccion){
 
     aux++;
 
-}
+} */
 
 var aux2 = 1;
+var idgrupo;
 
 function add_dropdown2(id_seccion,id_grupo){
+
+    var url = '<?php echo base_url() ?>grupos/get_alumnos_json/'+id_seccion;
+
+    idgrupo = id_grupo;
+
+    addDropdown2(url);
+
+}
+
+function add_dropdown2_success(result){
+
+    var contador = aux2;
+
+    var html = '<div class="form-group"> <label >Integrante</label> <select class="form-control" name="integrante_'+contador+'"> <option disabled selected>Selecciona un integrante...</option> ';
+
+    for(i in result){
+        html = html+'<option value="'+result[i].mail+'">'+result[i].nombre+' ('+result[i].mail+')</option>';
+    } 
+
+    html = html+'</select> </div>';
+
+    $("#container_form_"+idgrupo).append(html);
+
+    aux2++;
+
+}
+
+/*function add_dropdown2(id_seccion,id_grupo){
 
     var contador = aux2;
 
@@ -369,7 +421,7 @@ function add_dropdown2(id_seccion,id_grupo){
 
     aux2++;
 
-}
+}*/
 
 /*$(document).ready(function() {
     var wrapper = $("#container_form");

@@ -354,8 +354,28 @@ class Grupos extends CI_Controller {
           redirect('grupos/all/'.strval($id_seccion).'/'.$codigo_seccion);
      }
 
+     public function get_alumnos_json($id_seccion){
 
-     public function dropdown_html_builder($contador,$id_seccion){
+          $alumnos = $this->get_alumnos_seccion( intval($id_seccion) );
+
+          $alumnos_array = array();
+          $aux = array();
+
+          foreach($alumnos as $alumno){
+
+               $aux['nombre'] = $alumno['nombre'];
+               $aux['mail'] = $alumno['mail'];
+
+               array_push($alumnos_array, $aux);
+
+          }
+
+          echo json_encode($alumnos_array);
+
+     }
+
+
+     /*public function dropdown_html_builder($contador,$id_seccion){
 
           $html = '<div class="form-group"> <label >Integrante</label> <select class="form-control" name="integrante_'.$contador.'"> <option disabled selected>Selecciona un integrante...</option> ';
 
@@ -373,7 +393,7 @@ class Grupos extends CI_Controller {
 
           echo json_encode($response);
 
-     }
+     }*/
 
 
      ///////////////////////////////////////////////////            PROFESOR               /////////////////////////////////////////////////////////////////////

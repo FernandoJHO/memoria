@@ -132,7 +132,24 @@ class Profesores extends CI_Controller {
 
      }
 
-     public function dropdown_html_builder($contador){
+     public function get_secciones_json(){
+
+          $secciones = array();
+          $aux = array();
+          $secciones_all = $this->get_all_secciones();
+
+          foreach($secciones_all as $seccion){
+               $aux['id'] = $seccion['id'];
+               $aux['codigo'] = $seccion['codigo'];
+
+               array_push($secciones, $aux);
+          }
+
+          echo json_encode($secciones);
+
+     }
+
+     /*public function dropdown_html_builder($contador){
 
           $html = '<div class="form-group"> <label >Seccion</label> <select class="form-control" name="seccion_'.$contador.'"> <option disabled selected>Selecciona una sección...</option> ';
 
@@ -150,7 +167,8 @@ class Profesores extends CI_Controller {
 
           echo json_encode($response);
 
-     }
+     }*/
+
 
      public function delete_profesor(){
 
