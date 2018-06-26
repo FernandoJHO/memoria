@@ -36,6 +36,26 @@
         <script src="lib/ready-theme/assets/js/ready.min.js"></script>
 
 
+        <style type="text/css">
+            .loader {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('lib/img/loader.gif') 50% 50% no-repeat rgb(249,249,249);
+                opacity: .8;
+            }
+        </style>
+
+        <script type="text/javascript">
+            $(window).on("load", function() {
+                $(".loader").fadeOut("slow");
+            });
+        </script>
+
+
         <style>
         .alertify-notifier .ajs-message.ajs-error{
             color: #fff;
@@ -51,19 +71,7 @@
     </head>
 
     <body>
-
-        <!--<div class="row" id="editor">
-        </div>
-
-        <button onclick="execute()">Execute</button>
-        <button onclick="commit()">Commit</button>
-
-        <div class="row">
-            <textarea id="input" rows="10" cols="40"></textarea>
-        </div>
-        <div class="row">
-            <textarea id="output" rows="10" cols="60"></textarea>
-        </div> -->
+        <div class="loader"></div>
         <?php if ($logeado && $rol=='Alumno'): ?> 
         <div class="wrapper">
             <div class="main-header">

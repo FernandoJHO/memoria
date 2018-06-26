@@ -28,11 +28,33 @@
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/ready.min.js"></script>
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+
+        <style type="text/css">
+            .loader {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('<?php echo base_url();?>lib/img/loader.gif') 50% 50% no-repeat rgb(249,249,249);
+                opacity: .8;
+            }
+        </style>
+
+        <script type="text/javascript">
+            $(window).load(function() {
+                $(".loader").fadeOut("slow");
+            });
+        </script>
+
 
 
     </head>
     <body>
-        
+        <div class="loader"></div>
         <div class="wrapper">
             <div class="main-header">
                 <div class="logo-header">

@@ -29,10 +29,31 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="lib/logintheme/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="lib/logintheme/ico/apple-touch-icon-57-precomposed.png">
 
+        <script src="<?php echo base_url(); ?>lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
+
+        <style type="text/css">
+            .loader {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('lib/img/loader.gif') 50% 50% no-repeat rgb(249,249,249);
+                opacity: .8;
+            }
+        </style>
+
+        <script type="text/javascript">
+            $(window).on("load", function() {
+                $(".loader").fadeOut("slow");
+            });
+        </script>
+
     </head>
 
     <body>
-
+        <div class="loader"></div>
         <!-- Top content -->
         <div class="top-content">
         	

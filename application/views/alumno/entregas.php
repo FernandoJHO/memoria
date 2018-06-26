@@ -28,24 +28,26 @@
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/ready.min.js"></script>
 
-    <!--<style>
 
-    a:link{
-      color:inherit;
-    }
-    a:visited{
-      color:inherit;
-    }
-    a:hover{
-      color:inherit;
-    }
-    a:focus{
-      color:inherit;
-    }
-    a:active{
-      color:inherit;
-    }
-    </style> -->
+
+        <style type="text/css">
+            .loader {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('<?php echo base_url();?>lib/img/loader.gif') 50% 50% no-repeat rgb(249,249,249);
+                opacity: .8;
+            }
+        </style>
+
+        <script type="text/javascript">
+            $(window).on("load", function() {
+                $(".loader").fadeOut("slow");
+            });
+        </script>
 
         <style>
         .alertify-notifier .ajs-message.ajs-error{
@@ -62,6 +64,7 @@
 
 	</head>
 	<body>
+        <div class="loader"></div>
         <?php if ($logeado && $rol=='Alumno'): ?> 
         <div class="wrapper">
             <div class="main-header">

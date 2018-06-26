@@ -27,6 +27,27 @@
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="http://code.highcharts.com/modules/exporting.js"></script>
 
+
+        <style type="text/css">
+            .loader {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('<?php echo base_url();?>lib/img/loader.gif') 50% 50% no-repeat rgb(249,249,249);
+                opacity: .8;
+            }
+        </style>
+
+        <script type="text/javascript">
+            $(window).on("load", function() {
+                $(".loader").fadeOut("slow");
+            });
+        </script>
+
+
         <script type="text/javascript">
 
         function generarGrafico(id_container, integrante_commits){
@@ -100,9 +121,11 @@
 
         </script>
 
+
     </head>
     <body>
-        
+        <div class="loader"></div>
+        <div class="loader"></div>
         <div class="wrapper">
             <div class="main-header">
                 <div class="logo-header">
