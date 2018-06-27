@@ -59,6 +59,8 @@
 
             //alert("flag");
 
+            document.getElementById('loader_chart').style.visibility = "visible";
+
             var container = '#grafico'+id_container;
             var nombres = [];
             var commits = [];
@@ -120,7 +122,7 @@
                 }]
             });
 
-            
+            document.getElementById('loader_chart').style.visibility = "hidden";
 
         }
 
@@ -234,7 +236,7 @@
                                                 <?php if(count($entrega['alumno_commits'])): ?>
                                                 <div id="grafico<?php echo $entrega['numero']; ?>" class="card-body">
                                                     
-                                                    <div class="loaderchart"></div>
+                                                    <div id="loader_chart" class="loaderchart"></div>
 
                                                     <script>
                                                         generarGrafico(<?php echo $entrega['numero']; ?>, <?php echo json_encode($entrega['alumno_commits']); ?>);
