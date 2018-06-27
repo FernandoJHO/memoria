@@ -354,7 +354,7 @@ class Grupos extends CI_Controller {
           redirect('grupos/all/'.strval($id_seccion).'/'.$codigo_seccion);
      }
 
-     public function get_alumnos_json($id_seccion){
+     /* public function get_alumnos_json($id_seccion){
 
           $alumnos = $this->get_alumnos_seccion( intval($id_seccion) );
 
@@ -372,7 +372,7 @@ class Grupos extends CI_Controller {
 
           echo json_encode($alumnos_array);
 
-     }
+     } */
 
 
      /*public function dropdown_html_builder($contador,$id_seccion){

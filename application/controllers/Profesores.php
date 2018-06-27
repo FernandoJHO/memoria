@@ -132,7 +132,7 @@ class Profesores extends CI_Controller {
 
      }
 
-     public function get_secciones_json(){
+     /* public function get_secciones_json(){
 
           $secciones = array();
           $aux = array();
@@ -147,7 +147,7 @@ class Profesores extends CI_Controller {
 
           echo json_encode($secciones);
 
-     }
+     } */
 
      /*public function dropdown_html_builder($contador){
 

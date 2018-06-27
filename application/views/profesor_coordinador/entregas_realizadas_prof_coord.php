@@ -36,7 +36,13 @@
                 height: 100%;
                 z-index: 9999;
                 background: url('<?php echo base_url();?>lib/img/loader.gif') 50% 50% no-repeat rgb(249,249,249);
-                opacity: .8;
+            }
+
+            .loaderchart{
+                content: url('<?php echo base_url();?>lib/img/loader_chart.gif');
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
             }
         </style>
 
@@ -252,7 +258,8 @@
                                             <?php if($entrega['codigofuente']): ?>
                                                 <?php if(count($entrega['alumno_commits'])): ?>
                                                 <div id="grafico<?php echo $entrega['numero']; ?>" class="card-body">
-                                    
+                                                
+                                                    <div class="loaderchart"></div>
                                                
                                                     <script>
                                                         generarGrafico(<?php echo $entrega['numero']; ?>, <?php echo json_encode($entrega['alumno_commits']); ?>);
