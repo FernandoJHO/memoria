@@ -28,6 +28,9 @@
         <script src="lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="lib/ready-theme/assets/js/ready.min.js"></script>
 
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
         <style type="text/css">
             .loader {
                 position: fixed;
@@ -45,6 +48,14 @@
             $(window).on("load", function() {
                 $(".loader").fadeOut("slow");
             });
+
+              $(document).ready(function(){
+                 $('#tabla_profesores').DataTable({
+                  "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                  }
+                 });
+              });
         </script>
 
         <style>
@@ -186,7 +197,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div id="refresh" class="table-full-width">
-                                                <table class="table">
+                                                <table id="tabla_profesores" class="table">
                                                     <thead>
                                                         <tr>
                                                             <th>Nombre </th>
