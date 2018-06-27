@@ -346,9 +346,10 @@
             , function(){
             }).set('labels', {ok:'Aceptar', cancel:'Cancelar'});
     }
+    
     var aux = 2;
 
-    function add_dropdown_secciones(){
+    /* function add_dropdown_secciones(){
 
         var url = '<?php echo base_url() ?>profesores/get_secciones_json';
 
@@ -372,6 +373,26 @@
         $("#container_form").append(html);
 
         aux++;
+    } */
+
+    function add_dropdown_secciones(){
+
+        var contador = aux;
+
+        var secciones = <?php echo json_encode($secciones_all); ?>;
+
+        var html = '<div class="form-group"> <label >Seccion</label> <select class="form-control" name="seccion_'+contador+'"> <option disabled selected>Selecciona una sección...</option> ';
+
+        for(i in secciones){
+            html = html+'<option value="'+secciones[i].id+'">'+secciones[i].codigo+'</option>';
+        }
+
+        html = html+'</select> </div>';
+
+        $("#container_form").append(html);
+
+        aux++;
+
     }
 
     /*function add_dropdown(){
