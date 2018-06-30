@@ -15,6 +15,9 @@
 		<link rel="stylesheet" href="lib/logintheme/css/form-elements.css">
         <link rel="stylesheet" href="lib/logintheme/css/style.css">
 
+        <link rel="stylesheet" href="<?php echo base_url(); ?>lib/css/pace-theme-minimal.css">
+        <script src="<?php echo base_url(); ?>lib/js/pace.min.js" type='text/javascript'></script>
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>

@@ -10,6 +10,10 @@
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/ready.css">
         <link rel="stylesheet" href="<?php echo base_url();?>lib/ready-theme/assets/css/demo.css">
 
+
+        <link rel="stylesheet" href="<?php echo base_url(); ?>lib/css/pace-theme-minimal.css">
+        <script src="<?php echo base_url(); ?>lib/js/pace.min.js" type='text/javascript'></script>
+        
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
         <script src="<?php echo base_url();?>lib/ready-theme/assets/js/core/popper.min.js"></script>

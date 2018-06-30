@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="lib/ready-theme/assets/css/ready.css">
         <link rel="stylesheet" href="lib/ready-theme/assets/css/demo.css">
 
+        <link rel="stylesheet" href="lib/css/pace-theme-minimal.css">
+
         <script src="lib/ready-theme/assets/js/core/jquery.3.2.1.min.js"></script>
         <script src="lib/ready-theme/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
         <script src="lib/ready-theme/assets/js/core/popper.min.js"></script>
@@ -24,6 +26,7 @@
         <script src="lib/ready-theme/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="lib/ready-theme/assets/js/ready.min.js"></script>
 
+        <script src="lib/js/pace.min.js" type='text/javascript'></script>
 
 
         <style type="text/css">
@@ -43,8 +46,8 @@
             $(window).on("load", function() {
                 $(".loader").fadeOut("slow");
             });
-        </script>
-
+        </script> 
+ 
 	</head>
 	<body>
         <div class="loader"></div>

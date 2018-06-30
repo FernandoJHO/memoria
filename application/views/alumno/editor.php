@@ -11,6 +11,9 @@
         <link rel="stylesheet" href="lib/ready-theme/assets/css/ready.css">
         <link rel="stylesheet" href="lib/ready-theme/assets/css/demo.css">
 
+        <link rel="stylesheet" href="lib/css/pace-theme-minimal.css">
+        <script src="lib/js/pace.min.js" type='text/javascript'></script>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="lib/codemirror/codemirror.js"></script>
         <script src="lib/js/utils.js"></script>
