@@ -79,8 +79,8 @@
         <div class="wrapper">
             <div class="main-header">
                 <div class="logo-header">
-                    <a href="mainAlumno" class="logo">
-                        MEMORIA
+                    <a href="mainAlumno" style="text-decoration: none;" class="logo">
+                        <img src="<?php echo base_url(); ?>lib/img/usach.png" style="width: 100%; height: 100%">
                     </a>
                     <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>

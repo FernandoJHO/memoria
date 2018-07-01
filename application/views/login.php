@@ -65,7 +65,7 @@
                 	
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
-                            <h1>MEMORIA 2018</h1>
+                            <img src="<?php echo base_url(); ?>lib/img/usach.png" style="width: 100%; height: 100%">
                             <div class="description">
                             	<p>
 	                            	
