@@ -1,6 +1,7 @@
 <?php
 
 require "./application/third_party/github.php";
+require "./application/third_party/date.php";
 
 class Codigos extends CI_Controller {
 
@@ -96,17 +97,54 @@ class Codigos extends CI_Controller {
 
      public function get_data($mail){
           $datos_user = $this->alumno_model->get_github($mail);
-          $grupo_id = $this->alumno_model->get_grupo($mail);
+          $grupos_id = $this->alumno_model->get_grupo($mail);
 
-          if(!empty($grupo_id)){
-               $repo_info = $this->grupo_model->get_repo_info($grupo_id->ID_GRUPO);
-               $data = Array(
-                    'github_acc' => $datos_user->GITHUB_ACC,
-                    'github_pass' => $datos_user->GITHUB_PASS,
-                    'repositorio' => $repo_info->REPOSITORIO,
-                    'owner_repo' => $repo_info->REPO_OWNER,
-                    'grupo' => 1
-                    );
+          $date = new Date();
+          $fecha = $date->get_fecha();
+          $mes = $fecha['mon'];
+          $anno_actual = $fecha['year'];
+
+          if($mes<=7){
+               $semestre_actual = 1;
+          }else{
+               $semestre_actual = 2;
+          }
+
+          if(!empty($grupos_id)){
+
+               foreach($grupos_id as $result_grupo){
+                    $grupoid = $result_grupo->ID_GRUPO;
+                    $grupo = $this->grupo_model->get_grupo_by_id($grupoid);
+
+                    if(($semestre_actual==$grupo->SEMESTRE) && ($anno_actual==$grupo->ANNO)){
+                         $repo_info = $this->grupo_model->get_repo_info($grupoid);
+
+                         $data = Array(
+                              'github_acc' => $datos_user->GITHUB_ACC,
+                              'github_pass' => $datos_user->GITHUB_PASS,
+                              'repositorio' => $repo_info->REPOSITORIO,
+                              'owner_repo' => $repo_info->REPO_OWNER,
+                              'grupo' => 1
+                              );
+
+                         break;
+                    }else {
+                         $data = Array(
+                              'github_acc' => $datos_user->GITHUB_ACC,
+                              'github_pass' => $datos_user->GITHUB_PASS,
+                              'grupo' => 0
+                              );            
+                    }
+               }
+
+               // $repo_info = $this->grupo_model->get_repo_info($grupo_id->ID_GRUPO);
+               // $data = Array(
+               //      'github_acc' => $datos_user->GITHUB_ACC,
+               //      'github_pass' => $datos_user->GITHUB_PASS,
+               //      'repositorio' => $repo_info->REPOSITORIO,
+               //      'owner_repo' => $repo_info->REPO_OWNER,
+               //      'grupo' => 1
+               //      );
 
           }
           else{

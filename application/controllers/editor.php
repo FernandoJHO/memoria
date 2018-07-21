@@ -2,6 +2,7 @@
 
 require "./application/third_party/github.php";
 require "./application/third_party/jdoodle.php";
+require "./application/third_party/date.php";
 
 class Editor extends CI_Controller {
 
@@ -98,15 +99,45 @@ class Editor extends CI_Controller {
 
 	public function get_github_data($mail){
 		$datos_user = $this->alumno_model->get_github($mail);
-		$grupo_id = $this->alumno_model->get_grupo($mail);
-		$repo_info = $this->grupo_model->get_repo_info($grupo_id->ID_GRUPO);
+		$grupos_id = $this->alumno_model->get_grupo($mail);
 
-		$data = Array(
-			'github_acc' => $datos_user->GITHUB_ACC,
-			'github_pass' => $datos_user->GITHUB_PASS,
-			'repositorio' => $repo_info->REPOSITORIO,
-			'owner_repo' => $repo_info->REPO_OWNER
-			); 
+        $date = new Date();
+        $fecha = $date->get_fecha();
+        $mes = $fecha['mon'];
+        $anno_actual = $fecha['year'];
+
+        if($mes<=7){
+             $semestre_actual = 1;
+        }else{
+             $semestre_actual = 2;
+        }
+
+		foreach($grupos_id as $result_grupo){
+			$grupoid = $result_grupo->ID_GRUPO;
+			$grupo = $this->grupo_model->get_grupo_by_id($grupoid);
+
+			if(($semestre_actual==$grupo->SEMESTRE) && ($anno_actual==$grupo->ANNO)){
+				$repo_info = $this->grupo_model->get_repo_info($grupoid);
+
+				$data = Array(
+					'github_acc' => $datos_user->GITHUB_ACC,
+					'github_pass' => $datos_user->GITHUB_PASS,
+					'repositorio' => $repo_info->REPOSITORIO,
+					'owner_repo' => $repo_info->REPO_OWNER
+					); 
+
+				break;
+			}
+		}
+
+		// $repo_info = $this->grupo_model->get_repo_info($grupo_id->ID_GRUPO);
+
+		// $data = Array(
+		// 	'github_acc' => $datos_user->GITHUB_ACC,
+		// 	'github_pass' => $datos_user->GITHUB_PASS,
+		// 	'repositorio' => $repo_info->REPOSITORIO,
+		// 	'owner_repo' => $repo_info->REPO_OWNER
+		// 	); 
 
 		return $data;
 	}

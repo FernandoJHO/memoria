@@ -462,6 +462,8 @@ class Grupos extends CI_Controller {
                          }
 
                          $grupo['integrantes'] = $integrantes;
+
+                         break;
                     } else{
 
                     }

@@ -125,7 +125,8 @@ class Alumno_model extends CI_Model {
                $this->db->where('ID_GRUPO',$id_grupo);
                $query2 = $this->db->get('grupo');
 
-               return $query2->row();
+               //return $query2->row();
+               return $query2->result();
 
           }
           else{
