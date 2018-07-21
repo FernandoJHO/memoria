@@ -77,6 +77,8 @@ class MiSeccion extends CI_Controller {
           $id_seccion = intval($this->input->post('id_seccion'));
           $archivo = 'userfile';
 
+          $this->desinscribir_alumnos($id_seccion);
+
           $upload = new SaveFile();
 
           $upload_result = $upload->upload_nomina($id_seccion,$archivo);
@@ -124,6 +126,12 @@ class MiSeccion extends CI_Controller {
           }
 
           redirect('miSeccion');
+
+     }
+
+     public function desinscribir_alumnos($id_seccion){
+
+          $this->alumno_model->set_seccion_null($id_seccion);
 
      }
 

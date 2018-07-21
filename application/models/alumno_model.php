@@ -169,4 +169,15 @@ class Alumno_model extends CI_Model {
           $this->db->update('alumno',$data);  
      }
 
+     function set_seccion_null($id_seccion){
+
+          $data = Array(
+               'ID_SECCION' => NULL
+               );
+
+          $this->db->where('ID_SECCION',$id_seccion);
+          $this->db->update('alumno',$data);  
+
+     }
+
 }
