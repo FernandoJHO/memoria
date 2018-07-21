@@ -55,7 +55,7 @@
         <div class="wrapper">
             <div class="main-header">
                 <div class="logo-header">
-                    <a href="mainAlumno" style="text-decoration: none;" class="logo">
+                    <a href="<?php echo base_url(); ?>mainAlumno" style="text-decoration: none;" class="logo">
                         <img src="<?php echo base_url(); ?>lib/img/usach.png" style="width: 100%; height: 100%; max-width: 155px;">
                     </a>
                     <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
