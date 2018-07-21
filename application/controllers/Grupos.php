@@ -185,7 +185,8 @@ class Grupos extends CI_Controller {
           $alumnos = array();
           $aux = array();
 
-          $result_query = $this->alumno_model->get_alumnos_seccion_singrupo($id_seccion);
+          //$result_query = $this->alumno_model->get_alumnos_seccion_singrupo($id_seccion);
+          $result_query = $this->alumno_model->get_alumnos_seccion($id_seccion);
 
           foreach($result_query as $alumno){
                $aux['nombre'] = $alumno->NOMBRE.' '.$alumno->APELLIDO;
@@ -424,29 +425,68 @@ class Grupos extends CI_Controller {
           $grupo = array();
           $integrantes = array();
 
+          $date = new Date();
+          $fecha = $date->get_fecha();
+          $mes = $fecha['mon'];
+          $anno_actual = $fecha['year'];
+
+          if($mes<=7){
+               $semestre_actual = 1;
+          }else{
+               $semestre_actual = 2;
+          }
+
           $result_query = $this->grupo_model->get_idgrupo_by_mail($mail);
 
           if(!empty($result_query)){
-               $id_grupo = intval($result_query->ID_GRUPO);
 
-               $result_query_grupo = $this->grupo_model->get_grupo_by_id($id_grupo);
-               $grupo['id_grupo'] = $result_query_grupo->ID_GRUPO;
-               $grupo['numero'] = $result_query_grupo->NUMERO;
-               $grupo['nombre'] = $result_query_grupo->NOMBRE;
-               $grupo['ruta_proyecto'] = $result_query_grupo->PROYECTO;
+               foreach($result_query as $result_grupo){
+                    $idgrupo = $result_grupo->ID_GRUPO;
+                    $grupo_ = $this->grupo_model->get_grupo_by_id($idgrupo);
 
-               $result_query_integrantes = $this->grupo_model->get_integrantes($id_grupo);
+                    if(($semestre_actual==$grupo_->SEMESTRE) && ($anno_actual==$grupo_->ANNO)){
+                         $grupo['id_grupo'] = $grupo_->ID_GRUPO;
+                         $grupo['numero'] = $grupo_->NUMERO;
+                         $grupo['nombre'] = $grupo_->NOMBRE;
+                         $grupo['ruta_proyecto'] = $grupo_->PROYECTO;
 
-               foreach($result_query_integrantes as $integrante){
+                         $result_query_integrantes = $this->grupo_model->get_integrantes($idgrupo);
 
-                    $mail_alumno = $integrante->MAIL_ALUMNO;
-                    $alumno = $this->alumno_model->get_nombre($mail_alumno);
-                    $nombre_alumno = $alumno->NOMBRE.' '.$alumno->APELLIDO;
-                    array_push($integrantes,$nombre_alumno.' ('.$mail_alumno.')');
+                         foreach($result_query_integrantes as $integrante){
 
+                              $mail_alumno = $integrante->MAIL_ALUMNO;
+                              $alumno = $this->alumno_model->get_nombre($mail_alumno);
+                              $nombre_alumno = $alumno->NOMBRE.' '.$alumno->APELLIDO;
+                              array_push($integrantes,$nombre_alumno.' ('.$mail_alumno.')');
+
+                         }
+
+                         $grupo['integrantes'] = $integrantes;
+                    } else{
+
+                    }
                }
 
-               $grupo['integrantes'] = $integrantes;
+               // $id_grupo = intval($result_query->ID_GRUPO);
+
+               // $result_query_grupo = $this->grupo_model->get_grupo_by_id($id_grupo);
+               // $grupo['id_grupo'] = $result_query_grupo->ID_GRUPO;
+               // $grupo['numero'] = $result_query_grupo->NUMERO;
+               // $grupo['nombre'] = $result_query_grupo->NOMBRE;
+               // $grupo['ruta_proyecto'] = $result_query_grupo->PROYECTO;
+
+               // $result_query_integrantes = $this->grupo_model->get_integrantes($id_grupo);
+
+               // foreach($result_query_integrantes as $integrante){
+
+               //      $mail_alumno = $integrante->MAIL_ALUMNO;
+               //      $alumno = $this->alumno_model->get_nombre($mail_alumno);
+               //      $nombre_alumno = $alumno->NOMBRE.' '.$alumno->APELLIDO;
+               //      array_push($integrantes,$nombre_alumno.' ('.$mail_alumno.')');
+
+               // }
+
+               //$grupo['integrantes'] = $integrantes;
           }
           else{
                //ESTUDIANTE NO TIENE GRUPO

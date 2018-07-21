@@ -133,12 +133,13 @@ class Grupo_model extends CI_Model {
 
           $query = $this->db->get('alumno_grupo');
 
-          return $query->row();
+          //return $query->row();
+          return $query->result();
      }
 
      public function get_grupo_by_id($id_grupo){
           $this->db->where('ID_GRUPO',$id_grupo);
-          $this->db->select('ID_GRUPO, NUMERO, NOMBRE, PROYECTO');
+          $this->db->select('ID_GRUPO, NUMERO, NOMBRE, PROYECTO, SEMESTRE, ANNO');
 
           $query = $this->db->get('grupo');
 
