@@ -113,12 +113,12 @@ class Alumno_model extends CI_Model {
 
      }
 
-     function get_grupo($mail){
+     /*function get_grupo($mail){
           $this->db->where('MAIL_ALUMNO',$mail);
           $this->db->select('ID_GRUPO');
           $query = $this->db->get('alumno_grupo');
 
-          if(! is_null($query->row())){
+          if(! is_null($query->result())){
 
                $id_grupo = $query->row()->ID_GRUPO;
 
@@ -133,7 +133,7 @@ class Alumno_model extends CI_Model {
                $array = array();
                return $array;
           }
-     }
+     }*/
 
      function set_commits($mail,$commits){
           $data = Array(

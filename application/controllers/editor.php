@@ -99,7 +99,8 @@ class Editor extends CI_Controller {
 
 	public function get_github_data($mail){
 		$datos_user = $this->alumno_model->get_github($mail);
-		$grupos_id = $this->alumno_model->get_grupo($mail);
+		//$grupos_id = $this->alumno_model->get_grupo($mail);
+		$grupos_id = $this->grupo_model->get_idgrupo_by_mail($mail);
 
         $date = new Date();
         $fecha = $date->get_fecha();

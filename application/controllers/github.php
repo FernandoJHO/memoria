@@ -79,7 +79,8 @@ class Github extends CI_Controller {
 
      public function get_data($mail){
           $datos_user = $this->alumno_model->get_github($mail);
-          $grupos_id = $this->alumno_model->get_grupo($mail);
+          //$grupos_id = $this->alumno_model->get_grupo($mail);
+          $grupos_id = $this->grupo_model->get_idgrupo_by_mail($mail);
 
           $date = new Date();
           $fecha = $date->get_fecha();
@@ -145,9 +146,31 @@ class Github extends CI_Controller {
           $repo_owner = $this->input->post('repo_owner');
 
           $mail = $this->session->userdata('mail');
-          $grupo_id = $this->alumno_model->get_grupo($mail);
+          //$grupo_id = $this->alumno_model->get_grupo($mail);
+          $grupos_id = $this->grupo_model->get_idgrupo_by_mail($mail);
 
-          if($this->grupo_model->set_repo_info($grupo_id->ID_GRUPO,$repo_name,$repo_owner)){
+          $date = new Date();
+          $fecha = $date->get_fecha();
+          $mes = $fecha['mon'];
+          $anno_actual = $fecha['year'];
+
+          if($mes<=7){
+               $semestre_actual = 1;
+          }else{
+               $semestre_actual = 2;
+          }
+
+          foreach($grupos_id as $result_grupo){
+               $grupoid = $result_grupo->ID_GRUPO;
+               $grupo = $this->grupo_model->get_grupo_by_id($grupoid);
+
+               if(($semestre_actual==$grupo->SEMESTRE) && ($anno_actual==$grupo->ANNO)){
+                    $idgrupo = $grupoid;
+               }else {
+               }
+          }
+
+          if($this->grupo_model->set_repo_info($idgrupo,$repo_name,$repo_owner)){
 
                $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Información del repositorio actualizada correctamente</div>');
           }
