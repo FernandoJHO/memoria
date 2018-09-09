@@ -15,6 +15,14 @@ class Rubrica_model extends CI_Model {
           return $query->result();
      }
 
+     public function get_rubrica($id_rubrica){
+          $this->db->select('*');
+          $this->db->where('ID_RUBRICA', $id_rubrica);
+          $query = $this->db->get('rubrica');
+
+          return $query->row();
+     }
+
      public function new_rubrica($nombre,$entrega,$criterio_min,$criterio_max){
           $data = array(
                'NOMBRE' => $nombre,

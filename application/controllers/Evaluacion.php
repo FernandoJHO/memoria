@@ -155,7 +155,7 @@ class Evaluacion extends CI_Controller {
      }
 
 
-     public function categorias($id_rubrica,$n_entrega,$id_grupo,$n_grupo,$id_entrega,$id_seccion,$codigo_seccion,$criterio_min,$criterio_max){
+     public function categorias($id_rubrica,$n_entrega,$id_grupo,$n_grupo,$id_entrega,$id_seccion,$codigo_seccion){
 
           if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
 
@@ -173,9 +173,7 @@ class Evaluacion extends CI_Controller {
                     'id_rubrica' => $id_rubrica,
                     'id_entrega' => $id_entrega,
                     'id_seccion' => $id_seccion,
-                    'codigo_seccion' => urldecode($codigo_seccion),
-                    'criterio_min' => $criterio_min,
-                    'criterio_max' => $criterio_max
+                    'codigo_seccion' => urldecode($codigo_seccion)
                     );
 
                $this->load->view("profesor/categorias_rubrica_entrega",$datos);
@@ -198,9 +196,7 @@ class Evaluacion extends CI_Controller {
                          'id_rubrica' => $id_rubrica,
                          'id_entrega' => $id_entrega,
                          'id_seccion' => $id_seccion,
-                         'codigo_seccion' => urldecode($codigo_seccion),
-                         'criterio_min' => $criterio_min,
-                         'criterio_max' => $criterio_max
+                         'codigo_seccion' => urldecode($codigo_seccion)
                          );
 
                     $this->load->view("profesor_coordinador/categorias_rubrica_entrega",$datos);
@@ -221,9 +217,7 @@ class Evaluacion extends CI_Controller {
                               'id_rubrica' => $id_rubrica,
                               'id_entrega' => $id_entrega,
                               'id_seccion' => $id_seccion,
-                              'codigo_seccion' => urldecode($codigo_seccion),
-                              'criterio_min' => $criterio_min,
-                              'criterio_max' => $criterio_max
+                              'codigo_seccion' => urldecode($codigo_seccion)
                               );
 
                          $this->load->view("coordinador/categorias_rubrica_entrega",$datos);
@@ -505,7 +499,7 @@ class Evaluacion extends CI_Controller {
 
      } */
 
-     public function items($id_categoria,$n_categoria,$n_entrega,$id_grupo,$n_grupo,$id_rubrica,$id_entrega,$id_seccion,$codigo_seccion,$criterio_min,$criterio_max){
+     public function items($id_categoria,$n_categoria,$n_entrega,$id_grupo,$n_grupo,$id_rubrica,$id_entrega,$id_seccion,$codigo_seccion){
 
           if( $this->session->userdata('loginuser') && $this->session->userdata('rol')=='Profesor' && !$this->session->userdata('coordinador') && !$this->session->userdata('profesor_coordinador') ){
 
@@ -514,6 +508,8 @@ class Evaluacion extends CI_Controller {
                $categoria = str_replace('_', ' ', urldecode($n_categoria));
 
                $items = $this->get_evaluacion_items( $this->get_items($id_categoria), $id_grupo );
+
+               $rubrica = $this->get_rubrica($id_rubrica);
                     
                $datos = Array(
                     'nombre' => $this->session->userdata('nombre'),
@@ -530,8 +526,8 @@ class Evaluacion extends CI_Controller {
                     'id_entrega' => $id_entrega,
                     'id_seccion' => $id_seccion,
                     'codigo_seccion' => urldecode($codigo_seccion),
-                    'criterio_min' => $criterio_min,
-                    'criterio_max' => $criterio_max
+                    'criterio_min' => $rubrica['criterio_min'],
+                    'criterio_max' => $rubrica['criterio_max']
                     );
 
                $this->load->view("profesor/items_rubrica_entrega",$datos);
@@ -543,6 +539,8 @@ class Evaluacion extends CI_Controller {
                    $categoria = str_replace('_', ' ', urldecode($n_categoria));
 
                    $items = $this->get_evaluacion_items( $this->get_items($id_categoria), $id_grupo );
+
+                   $rubrica = $this->get_rubrica($id_rubrica);
 
                     $datos = Array(
                          'nombre' => $this->session->userdata('nombre'),
@@ -559,8 +557,8 @@ class Evaluacion extends CI_Controller {
                          'id_entrega' => $id_entrega,
                          'id_seccion' => $id_seccion,
                          'codigo_seccion' => urldecode($codigo_seccion),
-                         'criterio_min' => $criterio_min,
-                         'criterio_max' => $criterio_max
+                         'criterio_min' => $rubrica['criterio_min'],
+                         'criterio_max' => $rubrica['criterio_max']
                          );
 
                     $this->load->view("profesor_coordinador/items_rubrica_entrega",$datos);
@@ -571,6 +569,8 @@ class Evaluacion extends CI_Controller {
                         $categoria = str_replace('_', ' ', urldecode($n_categoria));
 
                         $items = $this->get_evaluacion_items( $this->get_items($id_categoria), $id_grupo );
+
+                        $rubrica = $this->get_rubrica($id_rubrica);
 
                          $datos = Array(
                               'nombre' => $this->session->userdata('nombre'),
@@ -587,8 +587,8 @@ class Evaluacion extends CI_Controller {
                               'id_entrega' => $id_entrega,
                               'id_seccion' => $id_seccion,
                               'codigo_seccion' => urldecode($codigo_seccion),
-                              'criterio_min' => $criterio_min,
-                              'criterio_max' => $criterio_max
+                              'criterio_min' => $rubrica['criterio_min'],
+                              'criterio_max' => $rubrica['criterio_max']
                               );
 
                          $this->load->view("coordinador/items_rubrica_entrega",$datos);
@@ -598,6 +598,20 @@ class Evaluacion extends CI_Controller {
                     }
                }
           } 
+
+     }
+
+     public function get_rubrica($id_rubrica){
+
+          $aux = array();
+
+          $rubrica = $this->rubrica_model->get_rubrica($id_rubrica);
+
+          $aux['nombre'] = $rubrica->NOMBRE;
+          $aux['criterio_min'] = $rubrica->CRITERIO_MIN;
+          $aux['criterio_max'] = $rubrica->CRITERIO_MAX;
+
+          return $aux;
 
      }
 
