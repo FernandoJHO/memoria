@@ -163,7 +163,7 @@
                                                             
                                                             <P>  </P>
                                                             <label>Valor</label>
-                                                            <input type="number" class="form-control" name="valor_item_<?php echo $contador; ?>" min="0" max="3" value="<?php echo $item['valor_item']; ?>" required="true">
+                                                            <input type="number" class="form-control" name="valor_item_<?php echo $contador; ?>" min="<?php echo $criterio_min; ?>" max="<?php echo $criterio_max; ?>" value="<?php echo $item['valor_item']; ?>" required="true">
                                                         </div>  
                                                         <input type="hidden" name="id_item_<?php echo $contador; ?>" value="<?php echo $item['id']; ?>">
 

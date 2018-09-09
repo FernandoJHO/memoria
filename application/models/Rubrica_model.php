@@ -15,10 +15,12 @@ class Rubrica_model extends CI_Model {
           return $query->result();
      }
 
-     public function new_rubrica($nombre,$entrega){
+     public function new_rubrica($nombre,$entrega,$criterio_min,$criterio_max){
           $data = array(
                'NOMBRE' => $nombre,
-               'ID_ENTREGA' => $entrega
+               'ID_ENTREGA' => $entrega,
+               'CRITERIO_MIN' => $criterio_min,
+               'CRITERIO_MAX' => $criterio_max
                );
 
           $this->db->insert('rubrica',$data);

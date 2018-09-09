@@ -75,6 +75,8 @@ class Rubricas extends CI_Controller {
                $aux['id'] = $rubrica->ID_RUBRICA;
                $aux['nombre'] = $rubrica->NOMBRE;
                $aux['id_entrega'] = $rubrica->ID_ENTREGA;
+               $aux['criterio_min'] = $rubrica->CRITERIO_MIN;
+               $aux['criterio_max'] = $rubrica->CRITERIO_MAX;
 
                array_push($rubricas,$aux);
                $aux = array();
@@ -88,8 +90,10 @@ class Rubricas extends CI_Controller {
 
           $nombre = $this->input->post('nombre_rubrica');
           $entrega = intval($this->input->post('id_entrega'));
+          $criterio_min = intval($this->input->post('criterio_min'));
+          $criterio_max = intval($this->input->post('criterio_max'));
 
-          $result = $this->rubrica_model->new_rubrica($nombre,$entrega);
+          $result = $this->rubrica_model->new_rubrica($nombre,$entrega,$criterio_min,$criterio_max);
 
           if($result){
                $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Rúbrica creada</div>');

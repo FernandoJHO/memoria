@@ -173,7 +173,7 @@
                                                     <?php endif; ?>
                                                     <div class="card-action">
                                                         
-                                                        <a href="<?php echo base_url();?>evaluacion/items/<?php echo $categoria['id']; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>/<?php echo $id_rubrica; ?>/<?php echo $id_entrega; ?>/<?php echo $id_seccion; ?>/<?php echo $codigo_seccion; ?>" class="btn btn-default" style="width:100%;"><i class="la la-pencil"></i> Evaluar items</a>
+                                                        <a href="<?php echo base_url();?>evaluacion/items/<?php echo $categoria['id']; ?>/<?php echo str_replace(' ', '_', $categoria['nombre']); ?>/<?php echo $numero_entrega; ?>/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>/<?php echo $id_rubrica; ?>/<?php echo $id_entrega; ?>/<?php echo $id_seccion; ?>/<?php echo $codigo_seccion; ?>/<?php echo $criterio_min; ?>/<?php echo $criterio_max; ?>" class="btn btn-default" style="width:100%;"><i class="la la-pencil"></i> Evaluar items</a>
                                                     </div>
                                                 </div>
                                             </div>

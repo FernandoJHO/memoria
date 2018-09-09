@@ -229,6 +229,14 @@
                             <?php endforeach; ?>
                         </select>
                     </div> 
+                    <div class="form-group">
+                        <label for="criterio_min">Elige el valor mínimo para el puntaje de cada ítem</label>
+                        <input type="number" class="form-control" name="criterio_min" required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="criterio_max">Elige el valor máximo para el puntaje de cada ítem</label>
+                        <input type="number" class="form-control" name="criterio_max" required="true">
+                    </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
