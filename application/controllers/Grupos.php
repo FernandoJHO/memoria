@@ -278,7 +278,7 @@ class Grupos extends CI_Controller {
 
    
 
-          redirect('grupos/all/'.strval($id_seccion).'/'.$codigo_seccion);
+          redirect('grupos/'.strval($id_seccion).'/'.$codigo_seccion);
 
      }
 
@@ -352,7 +352,7 @@ class Grupos extends CI_Controller {
           }
 
 
-          redirect('grupos/all/'.strval($id_seccion).'/'.$codigo_seccion);
+          redirect('grupos/'.strval($id_seccion).'/'.$codigo_seccion);
      }
 
      /* public function get_alumnos_json($id_seccion){
@@ -514,7 +514,7 @@ class Grupos extends CI_Controller {
                $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo subir archivo del proyecto</div>');
           }
 
-          redirect('grupos/miGrupo');
+          redirect('miGrupo');
 
      }
 

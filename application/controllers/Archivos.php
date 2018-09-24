@@ -158,7 +158,7 @@ class Archivos extends CI_Controller {
           if(count($codigosfuente) || count($archivos)){
                $this->zip->download('entrega'.$n_entrega.'_grupo'.$n_grupo.'.zip'); 
           }else{
-               redirect('archivos/ver/'.$identrega.'/'.$idgrupo.'/'.$n_entrega.'/'.$n_grupo);
+               redirect('archivos/'.$identrega.'/'.$idgrupo.'/'.$n_entrega.'/'.$n_grupo);
           }
 
      }

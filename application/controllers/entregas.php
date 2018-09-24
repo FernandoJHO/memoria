@@ -396,7 +396,7 @@ class Entregas extends CI_Controller
                     $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">No se pudo subir archivo: La entrega ya caducó</div>');
                 }
 
-                redirect('entregas/all');
+                redirect('entregas');
         }      
 
 
