@@ -148,7 +148,7 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item">
-                                <a href="grupos/miGrupo">
+                                <a href="miGrupo">
                                     <i class="la la-group"></i>
                                     <p>Mi grupo</p>
                                 </a>
@@ -160,7 +160,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="entregas/all">
+                                <a href="entregas">
                                     <i class="la la-suitcase"></i>
                                     <p>Entregas</p>
                                 </a>

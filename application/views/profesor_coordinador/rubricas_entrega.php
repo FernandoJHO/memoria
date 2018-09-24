@@ -164,7 +164,7 @@
                 <div class="main-panel">
                     <div class="content">
                         <div id="refresh" class="container-fluid">
-                            <h4 class="page-title">Rúbricas de la Entrega <?php echo $numero_entrega; ?> (Grupo <?php echo $numero_grupo; ?>) <a href="<?php echo base_url();?>entregas/verEntregas/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>/<?php echo $id_seccion; ?>/<?php echo $codigo_seccion; ?>" class="btn btn-primary btn-sm"><i class="la la-arrow-left"></i> Volver a entregas</a></h4>
+                            <h4 class="page-title">Rúbricas de la Entrega <?php echo $numero_entrega; ?> (Grupo <?php echo $numero_grupo; ?>) <a href="<?php echo base_url();?>entregas/<?php echo $id_grupo; ?>/<?php echo $numero_grupo; ?>/<?php echo $id_seccion; ?>/<?php echo $codigo_seccion; ?>" class="btn btn-primary btn-sm"><i class="la la-arrow-left"></i> Volver a entregas</a></h4>
                             <?php if(!count($rubricas)): ?>
                                 <p class="text-danger" align="center"> La entrega aún no cuenta con rúbricas asignadas. </p>
                             <?php else: ?>

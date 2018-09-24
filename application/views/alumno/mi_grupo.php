@@ -130,7 +130,7 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item active">
-                                <a href="<?php echo base_url(); ?>grupos/miGrupo">
+                                <a href="<?php echo base_url(); ?>miGrupo">
                                     <i class="la la-group"></i>
                                     <p>Mi grupo</p>
                                 </a>
@@ -142,7 +142,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?php echo base_url(); ?>entregas/all">
+                                <a href="<?php echo base_url(); ?>entregas">
                                     <i class="la la-suitcase"></i>
                                     <p>Entregas</p>
                                 </a>

@@ -52,3 +52,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['grupos/(:num)/(:any)'] = 'grupos/all/$1/$2';
+$route['entregas/(:num)/(:num)/(:num)/(:any)'] = 'entregas/verEntregas/$1/$2/$3/$4';
+$route['archivos/(:num)/(:num)/(:num)/(:num)'] = 'archivos/ver/$1/$2/$3/$4';
+$route['codigos/(:num)/(:num)'] = 'codigos/ver/$1/$2';
+$route['miGrupo'] = 'grupos/miGrupo';
+$route['entregas'] = 'entregas/all';
