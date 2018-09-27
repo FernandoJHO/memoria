@@ -119,7 +119,7 @@ class Grupos extends CI_Controller {
           foreach($result_query as $grupo){
                $aux['id'] = $grupo->ID_GRUPO;
                $aux['numero'] = $grupo->NUMERO;
-               $aux['nombre'] = $grupo->NOMBRE;
+               #$aux['nombre'] = $grupo->NOMBRE;
                $aux['proyecto'] = $grupo->PROYECTO;
                $aux['semestre'] = $grupo->SEMESTRE;
                $aux['año'] = $grupo->ANNO;
@@ -157,7 +157,7 @@ class Grupos extends CI_Controller {
                
                $aux['id'] = $grupo['id'];
                $aux['numero'] = $grupo['numero'];
-               $aux['nombre'] = $grupo['nombre'];
+               #$aux['nombre'] = $grupo['nombre'];
                $aux['proyecto'] = $grupo['proyecto'];
                $aux['semestre'] = $grupo['semestre'];
                $aux['año'] = $grupo['año'];
@@ -447,7 +447,7 @@ class Grupos extends CI_Controller {
                     if(($semestre_actual==$grupo_->SEMESTRE) && ($anno_actual==$grupo_->ANNO)){
                          $grupo['id_grupo'] = $grupo_->ID_GRUPO;
                          $grupo['numero'] = $grupo_->NUMERO;
-                         $grupo['nombre'] = $grupo_->NOMBRE;
+                         #$grupo['nombre'] = $grupo_->NOMBRE;
                          $grupo['ruta_proyecto'] = $grupo_->PROYECTO;
 
                          $result_query_integrantes = $this->grupo_model->get_integrantes($idgrupo);

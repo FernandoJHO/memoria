@@ -13,7 +13,7 @@ class Grupo_model extends CI_Model {
           $this->db->where('ID_SECCION',$id_seccion);
           $this->db->where('ANNO',$año);
           $this->db->where('SEMESTRE',$semestre);
-          $this->db->select('ID_GRUPO,NUMERO,NOMBRE,PROYECTO,SEMESTRE,ANNO,REPOSITORIO,REPO_OWNER');
+          $this->db->select('ID_GRUPO,NUMERO,PROYECTO,SEMESTRE,ANNO,REPOSITORIO,REPO_OWNER');
           $query = $this->db->get('grupo');
 
           return $query->result();
@@ -139,7 +139,7 @@ class Grupo_model extends CI_Model {
 
      public function get_grupo_by_id($id_grupo){
           $this->db->where('ID_GRUPO',$id_grupo);
-          $this->db->select('ID_GRUPO, NUMERO, NOMBRE, PROYECTO, SEMESTRE, ANNO');
+          $this->db->select('ID_GRUPO, NUMERO, PROYECTO, SEMESTRE, ANNO');
 
           $query = $this->db->get('grupo');
 
