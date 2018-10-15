@@ -128,7 +128,7 @@ class GestionCopia extends CI_Controller {
           foreach($result_query as $grupo){
                $aux['id'] = $grupo->ID_GRUPO;
                $aux['numero'] = $grupo->NUMERO;
-               $aux['nombre'] = $grupo->NOMBRE;
+               //$aux['nombre'] = $grupo->NOMBRE;
                $aux['proyecto'] = $grupo->PROYECTO;
                $aux['semestre'] = $grupo->SEMESTRE;
                $aux['año'] = $grupo->ANNO;

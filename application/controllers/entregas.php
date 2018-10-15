@@ -215,7 +215,7 @@ class Entregas extends CI_Controller
                $data['descripcion'] = $entrega->DESCRIPCION;
                $data['fecha'] = $date;
                $data['hora'] = $time;
-               $data['porcentaje'] = $entrega->PORCENTAJE;
+               //$data['porcentaje'] = $entrega->PORCENTAJE;
                $data['codigofuente'] = $entrega->CODIGO_FUENTE;
                $data['codigo_entregado'] = $codigo_entregado;
                $data['archivo_entregado'] = $archivo_entregado;

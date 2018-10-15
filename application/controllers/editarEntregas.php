@@ -72,7 +72,7 @@ class EditarEntregas extends CI_Controller {
                $data['descripcion'] = $entrega->DESCRIPCION;
                $data['fecha'] = $fecha;
                $data['hora'] = $time;
-               $data['porcentaje'] = $entrega->PORCENTAJE;
+               //$data['porcentaje'] = $entrega->PORCENTAJE;
                $data['codigofuente'] = $entrega->CODIGO_FUENTE;
 
                array_push($entregas,$data);
